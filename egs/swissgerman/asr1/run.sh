@@ -32,11 +32,8 @@ lmtag=            # tag for managing LMs
 recog_model=model.acc.best # set a model to be used for decoding: 'model.acc.best' or 'model.loss.best'
 n_average=10
 
-datadir=downloads # original data directory to be stored
-lang=en # en de fr cy tt kab ca zh-TW it fa eu es ru
-
-# base url for downloads.
-data_url=https://voice-prod-bundler-ee1969a6ce8178826482b88e843c335139bd3fb4.s3.amazonaws.com/cv-corpus-3/$lang.tar.gz
+datadir=downloads/SwissText2020 # original data directory to be stored
+lang=ch
 
 # bpemode (unigram or bpe)
 nbpe=150 # 2020 for zh-TW
@@ -58,16 +55,10 @@ train_dev=valid_dev_${lang}
 test_set=valid_test_${lang}
 recog_set="valid_dev_${lang} valid_test_${lang}"
 
-if [ ${stage} -le -1 ] && [ ${stop_stage} -ge -1 ]; then
-    echo "stage -1: Data Download"
-    mkdir -p ${datadir}
-    local/download_and_untar.sh ${datadir} ${data_url} ${lang}.tar.gz
-fi
-
 if [ ${stage} -le 0 ] && [ ${stop_stage} -ge 0 ]; then
     ### Task dependent. You have to make data the following preparation part by yourself.
     ### But you can utilize Kaldi recipes in most cases 
-    for part in "validated"; do
+    for part in "data"; do
         # use underscore-separated names in data directories.
         local/data_prep.pl ${datadir} ${part} data/"$(echo "${part}_${lang}" | tr - _)"
     done
