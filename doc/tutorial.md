@@ -10,7 +10,7 @@ egs/                 # The complete recipe for each corpora
     an4/             # AN4 is tiny corpus and can be obtained freely, so it might be suitable for tutorial
       asr1/          # ASR recipe
           - run.sh   # Executable script
-          - cmd.sh   # To select the backend for job scheduler 
+          - cmd.sh   # To select the backend for job scheduler
           - path.sh  # Setup script for environment variables
           - conf/    # Containing COnfiguration files
           - steps/   # The utils scripts from Kaldi
@@ -44,23 +44,7 @@ With this main script, you can perform a full procedure of ASR experiments inclu
 - Recognition and scoring
 
 ### Setup in your cluster
-Change `cmd.sh` according to your cluster setup.
-If you run experiments with your local machine, you don't have to change it.
-For more information about `cmd.sh` see [Parallelization in Kaldi
-](http://kaldi-asr.org/doc/queue.html).
-It supports Grid Engine (`queue.pl`), SLURM (`slurm.pl`), etc.
-
-You also changing the configuration to use specified backend:
-
-
-|cmd     |Backend                                  | configuration file|
-|--------| :--------------------------------------:| :---------------: |
-|run.pl  | Local machine (default)                 |-                  |
-|queue.pl|Sun grid engine, or grid endine like tool|conf/queue.conf    |
-|slurm.pl|Slurm                                    |conf/queue.conf    |
-|pbs.pl  |PBS/Torque                               |conf/pbs.conf      |
-|ssh.pl  |SSH                                      |.queue/machines    |
-
+See [Using Job scheduling system](./parallelization.md)
 
 ### Logging
 
@@ -97,7 +81,7 @@ Note that we would not include the installation of Tensorboard to simplify our i
 
 ### Change options in run.sh
 
-We rely on [utils/parse_options.sh](https://github.com/kaldi-asr/kaldi/blob/master/egs/wsj/s5/utils/parse_options.sh) to paser command line arguments in shell script and it's used in run.sh: 
+We rely on [utils/parse_options.sh](https://github.com/kaldi-asr/kaldi/blob/master/egs/wsj/s5/utils/parse_options.sh) to paser command line arguments in shell script and it's used in run.sh:
 
 e.g. If the script has `ngpu` option
 
@@ -146,12 +130,15 @@ echo 2
   - Set 1 or more values for `--batchsize` option in `asr_recog.py` to enable GPU decoding
   - And execute the script (e.g., `run.sh --stage 5 --ngpu 1`)
   - You'll achieve significant speed improvement by using the GPU decoding
-- Note that if you want to use multi-gpu, the installation of [nccl](https://developer.nvidia.com/nccl) is required before setup.
 
+### Multiple GPU TIPs
+- Note that if you want to use multiple GPUs, the installation of [nccl](https://developer.nvidia.com/nccl) is required before setup.
+- Currently, we only support multiple GPU training within a single node. We don't support the distributed setup across multiple nodes. We also don't support GPU decoding.
+- If you could not get enough speed improvement with multiple GPUs, you should first check the GPU usage by `nvidia-smi`. If the GPU-Util percentage is low, the bottleneck would come from the disk access. You can apply data prefetching by `--n-iter-processes 2` in your `run.sh` to mitigate the problem. Note that this data prefetching consumes a lot of CPU memory, so please be careful when you increase the number of processes.
 
 ### Start from the middle stage or stop at specified stage
 
-`run.sh` has multiple stages including data prepration, traning, and etc., so you may likely want to start 
+`run.sh` has multiple stages including data prepration, traning, and etc., so you may likely want to start
 from the specified stage if some stages are failed by some reason for example.
 
 You can start from specified stage as following and stop the process at the specifed stage:
@@ -175,13 +162,13 @@ $ ./run.sh
 $ ./run.sh --mtlalpha 1.0 --ctc_weight 1.0 --recog_model model.loss.best
 
 # attention mode
-$ ./run.sh --mtlalpha 0.0 --ctc_weight 0.0
+$ ./run.sh --mtlalpha 0.0 --ctc_weight 0.0 --maxlenratio 0.8 --minlenratio 0.3
 ```
 
-The CTC training mode does not output the validation accuracy, and the optimum model is selected with its loss value
+- The CTC training mode does not output the validation accuracy, and the optimum model is selected with its loss value
 (i.e., `--recog_model model.loss.best`).
-About the effectiveness of the hybrid CTC/attention during training and recognition, see [2] and [3].
-
+- The pure attention mode requires to set the maximum and minimum hypothesis length (`--maxlenratio` and `--minlenratio`), appropriately. In general, if you have more insertion errors, you can decrease the `maxlenratio` value, while if you have more deletion errors you can increase the `minlenratio` value. Note that the optimum values depend on the ratio of the input frame and output label lengths, which is changed for each language and each BPE unit.
+- About the effectiveness of hybrid CTC/attention during training and recognition, see [2] and [3]. For example, hybrid CTC/attention is not sensitive to the above maximum and minimum hypothesis heuristics. 
 
 ### Changing the training configuration
 
