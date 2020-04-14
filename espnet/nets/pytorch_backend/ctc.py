@@ -1,3 +1,4 @@
+from distutils.version import LooseVersion
 import logging
 
 import numpy as np
@@ -22,8 +23,11 @@ class CTC(torch.nn.Module):
         self.dropout_rate = dropout_rate
         self.loss = None
         self.ctc_lo = torch.nn.Linear(eprojs, odim)
-        self.ctc_type = ctc_type
 
+        # In case of Pytorch >= 1.2.0, CTC will be always builtin
+        self.ctc_type = ctc_type if LooseVersion(torch.__version__) < LooseVersion('1.2.0') else 'builtin'
+        if ctc_type != self.ctc_type:
+            logging.warning(f'CTC was set to {self.ctc_type} due to PyTorch version.')
         if self.ctc_type == 'builtin':
             reduction_type = 'sum' if reduce else 'none'
             self.ctc_loss = torch.nn.CTCLoss(reduction=reduction_type)
@@ -83,10 +87,11 @@ class CTC(torch.nn.Module):
         # expected shape of seqLength x batchSize x alphabet_size
         dtype = ys_hat.dtype
         ys_hat = ys_hat.transpose(0, 1)
-        if self.ctc_type == "warpctc":
+        if self.ctc_type == "warpctc" or dtype == torch.float16:
             # warpctc only supports float32
+            # torch.ctc does not support float16 (#1751)
             ys_hat = ys_hat.to(dtype=torch.float32)
-        else:
+        if self.ctc_type == "builtin":
             # use GPU when using the cuDNN implementation
             ys_true = to_device(self, ys_true)
         self.loss = to_device(self, self.loss_fn(ys_hat, ys_true, hlens, olens)).to(dtype=dtype)
