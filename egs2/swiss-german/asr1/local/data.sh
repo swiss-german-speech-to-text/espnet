@@ -11,21 +11,15 @@
 stage=0       # start from 0 if you need to start from data preparation
 stop_stage=100
 SECONDS=0
-lang=cy # en de fr cy tt kab ca zh-TW it fa eu es ru
+lang=sg
+raw_data="downloads/SwissText2020"
 
-# base url for downloads.
-data_url=https://voice-prod-bundler-ee1969a6ce8178826482b88e843c335139bd3fb4.s3.amazonaws.com/cv-corpus-3/$lang.tar.gz
+. parse_options.sh
 
 log() {
     local fname=${BASH_SOURCE[1]##*/}
     echo -e "$(date '+%Y-%m-%dT%H:%M:%S') (${fname}:${BASH_LINENO[0]}:${FUNCNAME[1]}) $*"
 }
-
-mkdir ${COMMONVOICE}
-if [ ! -e "${COMMONVOICE}" ]; then
-    log "Fill the value of 'COMMONVOICE' of db.sh"
-    exit 1
-fi
 
 # Set bash to 'debug' mode, it will exit on :
 # -e 'error', -u 'undefined variable', -o ... 'error in pipeline', -x 'print commands',
@@ -39,19 +33,19 @@ test_set=valid_test_${lang}
 
 log "data preparation started"
 
-if [ ${stage} -le 0 ] && [ ${stop_stage} -ge 0 ]; then 
-    log "stage1: Download data to ${COMMONVOICE}"
-    mkdir -p ${COMMONVOICE}
-    local/download_and_untar.sh ${COMMONVOICE} ${data_url} ${lang}.tar.gz
-fi
+# if [ ${stage} -le 0 ] && [ ${stop_stage} -ge 0 ]; then
+#     log "stage1: Download data to ${COMMONVOICE}"
+#     mkdir -p ${COMMONVOICE}
+#     local/download_and_untar.sh ${COMMONVOICE} ${data_url} ${lang}.tar.gz
+# fi
 
 if [ ${stage} -le 1 ] && [ ${stop_stage} -ge 1 ]; then
-    log "stage2: Preparing data for commonvoice"
+    log "stage 2: Preparing data for SwissText2020"
     ### Task dependent. You have to make data the following preparation part by yourself.
     ### But you can utilize Kaldi recipes in most cases 
     for part in "validated"; do
         # use underscore-separated names in data directories.
-        local/data_prep.pl ${COMMONVOICE} ${part} data/"$(echo "${part}_${lang}" | tr - _)"
+        local/data_prep.pl ${raw_data} ${part} data/"$(echo "${part}_${lang}" | tr - _)"
     done
 
     # Kaldi Version Split
