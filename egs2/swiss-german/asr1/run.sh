@@ -5,13 +5,9 @@ set -e
 set -u
 set -o pipefail
 
-lang=sg
-
-raw_data="/media/nas08-data01/lukas/speech2text/espnet_swiss_german/downloads/SwissText2020"
-
-train_set=valid_train_${lang}
-train_dev=valid_dev_${lang}
-train_test=valid_test_${lang}
+train_set=de_ch_train
+train_dev=ch_dev
+train_test=ch_dev
 
 asr_config=conf/train_asr.yaml
 lm_config=conf/train_lm.yaml
@@ -19,8 +15,8 @@ decode_config=conf/decode_asr.yaml
 
 
 ./asr.sh \
-    --local_data_opts "--lang ${lang} --raw_data ${raw_data}" \
-    --use_lm false \
+    --local_data_opts "" \
+    --use_lm true \
     --lm_config "${lm_config}" \
     --token_type bpe \
     --nbpe 150 \

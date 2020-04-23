@@ -8,11 +8,12 @@
 . ./db.sh || exit 1;
 
 # general configuration
-stage=0       # start from 0 if you need to start from data preparation
+stage=1      # start from 0 if you need to start from data preparation
 stop_stage=100
 SECONDS=0
-lang=sg
-raw_data="downloads/SwissText2020"
+raw_data_de="downloads/common_voice"
+raw_data_ch_train="downloads/swisstext2020/train"
+raw_data_ch_test="downloads/swisstext2020/test"
 
 . parse_options.sh
 
@@ -27,35 +28,33 @@ set -e
 set -u
 set -o pipefail
 
-train_set=valid_train_${lang}
-train_dev=valid_dev_${lang}
-test_set=valid_test_${lang}
-
 log "data preparation started"
 
-# if [ ${stage} -le 0 ] && [ ${stop_stage} -ge 0 ]; then
-#     log "stage1: Download data to ${COMMONVOICE}"
-#     mkdir -p ${COMMONVOICE}
-#     local/download_and_untar.sh ${COMMONVOICE} ${data_url} ${lang}.tar.gz
-# fi
+if [ ${stage} -le 0 ] && [ ${stop_stage} -ge 0 ]; then
+    log "stage1: Download data to ${COMMONVOICE}"
+    mkdir -p ${raw_data_de}
+    mkdir -p ${raw_data_ch_train}
+    mkdir -p ${raw_data_ch_test}
+    #local/download_and_untar.sh ${raw_data_de} https://voice-prod-bundler-ee1969a6ce8178826482b88e843c335139bd3fb4.s3.amazonaws.com/cv-corpus-3/de.tar.gz de.tar.gz
+    wget https://drive.switch.ch/index.php/s/PpUArRmN5Ba5C8J/download?path=%2F&files=train.zip -P ${raw_data_ch_train}
+    wget https://drive.switch.ch/index.php/s/PpUArRmN5Ba5C8J/download?path=%2F&files=test.zip -P ${raw_data_ch_test}
+    unzip ${raw_data_ch_train}/train.zip
+    unzip ${raw_data_ch_test}/test.zip
+fi
 
 if [ ${stage} -le 1 ] && [ ${stop_stage} -ge 1 ]; then
     log "stage 2: Preparing data for SwissText2020"
     ### Task dependent. You have to make data the following preparation part by yourself.
-    ### But you can utilize Kaldi recipes in most cases 
-    for part in "validated"; do
-        # use underscore-separated names in data directories.
-        local/data_prep.pl ${raw_data} ${part} data/"$(echo "${part}_${lang}" | tr - _)"
-    done
+    ### But you can utilize Kaldi recipes in most cases
+    local/data_prep.pl ${raw_data_de} "validated" data/de_train
+    local/data_prep.pl ${raw_data_ch_train} "data" data/ch_train_dev
+    #local/data_prep.pl ${raw_data_ch_test} "data" data/ch_test
 
-    # Kaldi Version Split
-    # ./utils/subset_data_dir_tr_cv.sh data/validated data/valid_train data/valid_test_dev
-    # ./utils/subset_data_dir_tr_cv.sh --cv-spk-percent 50 data/valid_test_dev data/valid_test data/valid_dev
+    # split ch train data into train and dev
+    ./utils/subset_data_dir_tr_cv.sh data/ch_train_dev data/ch_train data/ch_dev
 
-    # ESPNet Version (same as voxforge)
-    # consider duplicated sentences (does not consider speaker split)
-    # filter out the same sentences (also same text) of test&dev set from validated set
-    local/split_tr_dt_et.sh data/validated_${lang} data/${train_set} data/${train_dev} data/${test_set}
+    # combine de train and ch train
+    utils/combine_data.sh data/de_ch_train data/de_train data/ch_train
 fi
 
 log "Successfully finished. [elapsed=${SECONDS}s]"
