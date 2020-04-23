@@ -5,7 +5,7 @@ set -e
 set -u
 set -o pipefail
 
-ngpu=1
+ngpu=4
 
 train_set=de_ch_train
 train_dev=ch_dev
