@@ -5,6 +5,8 @@ set -e
 set -u
 set -o pipefail
 
+ngpu=1
+
 train_set=de_ch_train
 train_dev=ch_dev
 train_test=ch_dev
@@ -20,6 +22,7 @@ decode_config=conf/decode_asr.yaml
     --lm_config "${lm_config}" \
     --token_type bpe \
     --nbpe 150 \
+    --ngpu ${ngpu} \
     --feats_type raw \
     --asr_config "${asr_config}" \
     --decode_config "${decode_config}" \
