@@ -31,19 +31,19 @@ set -o pipefail
 log "data preparation started"
 
 if [ ${stage} -le 0 ] && [ ${stop_stage} -ge 0 ]; then
-    log "stage1: Download data to ${COMMONVOICE}"
+    log "stage1: Download data to downloads"
     mkdir -p ${raw_data_de}
     mkdir -p ${raw_data_ch_train}
     mkdir -p ${raw_data_ch_test}
     local/download_and_untar.sh ${raw_data_de} https://voice-prod-bundler-ee1969a6ce8178826482b88e843c335139bd3fb4.s3.amazonaws.com/cv-corpus-3/de.tar.gz de.tar.gz
     wget https://drive.switch.ch/index.php/s/PpUArRmN5Ba5C8J/download?path=%2F&files=train.zip -O ${raw_data_ch_train}/train.zip
     wget https://drive.switch.ch/index.php/s/PpUArRmN5Ba5C8J/download?path=%2F&files=test.zip -O ${raw_data_ch_test}/test.zip
-    unzip ${raw_data_ch_train}/train.zip
-    unzip ${raw_data_ch_test}/test.zip
+    (cd ${raw_data_ch_train} && unzip train.zip)
+    (cd ${raw_data_ch_test} && unzip test.zip)
 fi
 
 if [ ${stage} -le 1 ] && [ ${stop_stage} -ge 1 ]; then
-    log "stage 2: Preparing data for SwissText2020"
+    log "stage 2: Preparing data: downloads -> data"
     ### Task dependent. You have to make data the following preparation part by yourself.
     ### But you can utilize Kaldi recipes in most cases
     local/data_prep.pl ${raw_data_de} "validated" data/de_train

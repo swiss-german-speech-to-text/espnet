@@ -24,7 +24,7 @@ specaug: specaug  # `None` to deactivate
 specaug_conf:
     apply_time_warp: True
     time_warp_window: 5
-    time_warp_mode: "bicubic"
+    time_warp_mode: "bicubic" # bilinear
     apply_freq_mask: True
     freq_mask_width_range: [0, 20]
     num_freq_mask: 2
