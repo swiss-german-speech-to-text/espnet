@@ -8,7 +8,7 @@
 . ./db.sh || exit 1;
 
 # general configuration
-stage=1      # start from 0 if you need to start from data preparation
+stage=0      # start from 0 if you need to start from data preparation
 stop_stage=100
 SECONDS=0
 raw_data_de="downloads/common_voice"
@@ -36,8 +36,8 @@ if [ ${stage} -le 0 ] && [ ${stop_stage} -ge 0 ]; then
     mkdir -p ${raw_data_ch_train}
     mkdir -p ${raw_data_ch_test}
     local/download_and_untar.sh ${raw_data_de} https://voice-prod-bundler-ee1969a6ce8178826482b88e843c335139bd3fb4.s3.amazonaws.com/cv-corpus-3/de.tar.gz de.tar.gz
-    wget https://drive.switch.ch/index.php/s/PpUArRmN5Ba5C8J/download?path=%2F&files=train.zip -O ${raw_data_ch_train}/train.zip
-    wget https://drive.switch.ch/index.php/s/PpUArRmN5Ba5C8J/download?path=%2F&files=test.zip -O ${raw_data_ch_test}/test.zip
+    wget -O ${raw_data_ch_train}/train.zip "https://drive.switch.ch/index.php/s/PpUArRmN5Ba5C8J/download?path=%2F&files=train.zip"
+    wget -O ${raw_data_ch_test}/test.zip "https://drive.switch.ch/index.php/s/PpUArRmN5Ba5C8J/download?path=%2F&files=test.zip"
     (cd ${raw_data_ch_train} && unzip train.zip)
     (cd ${raw_data_ch_test} && unzip test.zip)
 fi
