@@ -18,12 +18,12 @@ set -o pipefail
 # 11  Decoding: training_dir=${asr_exp}
 # 12  Scoring
 # 13  Pack model: ${asr_exp}/packed.tgz
-stage=6
+stage=9
 stop_stage=12
 
 ngpu=1
 
-train_set=de_ch_train # de_train, ch_train, de_ch_train
+train_set=ch_train # de_train, ch_train, de_ch_train
 train_dev=ch_dev
 train_test=ch_dev
 
@@ -35,7 +35,7 @@ decode_config=conf/decode_asr.yaml
     --stage ${stage} \
     --stop_stage ${stop_stage} \
     --local_data_opts "" \
-    --use_lm true \
+    --use_lm false \
     --lm_config "${lm_config}" \
     --token_type bpe \
     --nbpe 150 \

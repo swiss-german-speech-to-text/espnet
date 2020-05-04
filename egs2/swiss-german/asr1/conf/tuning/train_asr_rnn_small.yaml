@@ -5,19 +5,19 @@ encoder_conf:
     rnn_type: lstm     # encoder architecture type
     bidirectional: True
     use_projection: True
-    num_layers: 4
-    hidden_size: 1024
-    output_size: 1024
+    num_layers: 3
+    hidden_size: 256
+    output_size: 256
 
 # decoder related
 decoder: rnn
 decoder_conf:
     num_layers: 2
-    hidden_size: 1024
+    hidden_size: 256
     sampling_probability: 0
     att_conf:
         atype: location
-        adim: 1024
+        adim: 256
         aconv_chans: 10
         aconv_filts: 100
 
@@ -26,12 +26,11 @@ model_conf:
     ctc_weight: 0.5
 
 # minibatch related
-batch_size: 7
+batch_size: 15
 
 # optimization related
 optim: adadelta
-max_epoch: 15
-patience: 3
+max_epoch: 20
+patience: 20
 
-accum_grad: 4
-
+accum_grad: 2
