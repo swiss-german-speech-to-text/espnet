@@ -18,16 +18,17 @@ set -o pipefail
 # 11  Decoding: training_dir=${asr_exp}
 # 12  Scoring
 # 13  Pack model: ${asr_exp}/packed.tgz
-stage=9
+stage=0
 stop_stage=12
 
-ngpu=1
+ngpu=4
 
 train_set=ch_train # de_train, ch_train, de_ch_train
 train_dev=ch_dev
 train_test=ch_dev
 
-asr_config=conf/train_asr.yaml
+# asr_config=conf/train_asr.yaml
+asr_config=conf/train_asr_transformer_specaug.yaml
 lm_config=conf/train_lm.yaml
 decode_config=conf/decode_asr.yaml
 
