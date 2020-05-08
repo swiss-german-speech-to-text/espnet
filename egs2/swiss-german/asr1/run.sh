@@ -47,4 +47,5 @@ decode_config=conf/decode_asr.yaml
     --train_set "${train_set}" \
     --dev_set "${train_dev}" \
     --eval_sets "${train_test}" \
-    --srctexts "data/${train_set}/text" "$@"
+    --srctexts "data/${train_set}/text" "$@" \
+    --asr_tag "$(date '+%Y-%m-%d_%H:%M:%S')"
