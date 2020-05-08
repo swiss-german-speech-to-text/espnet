@@ -52,9 +52,11 @@ if [ ${stage} -le 1 ] && [ ${stop_stage} -ge 1 ]; then
 
     # split ch train data into train and dev
     ./utils/subset_data_dir_tr_cv.sh data/ch_train_dev data/ch_train data/ch_dev
+    ./utils/subset_data_dir.sh data/de_train 200000 data/de_train_200k
 
     # combine de train and ch train
     utils/combine_data.sh data/de_ch_train data/de_train data/ch_train
+    utils/combine_data.sh data/de_200k_ch_train data/de_train_200k data/ch_train
 fi
 
 log "Successfully finished. [elapsed=${SECONDS}s]"
