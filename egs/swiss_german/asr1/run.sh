@@ -242,10 +242,10 @@ if [ ${stage} -le 5 ] && [ ${stop_stage} -ge 5 ]; then
     nj=4
     if [[ $(get_yaml.py ${train_config} model-module) = *transformer* ]]; then
 	recog_model=model.last${n_average}.avg.best
-	#average_checkpoints.py --backend ${backend} \
-	#		       --snapshots ${expdir}/results/snapshot.ep.* \
-	#		       --out ${expdir}/results/${recog_model} \
-	#		       --num ${n_average}
+	average_checkpoints.py --backend ${backend} \
+			       --snapshots ${expdir}/results/snapshot.ep.* \
+			       --out ${expdir}/results/${recog_model} \
+			       --num ${n_average}
     fi
     pids=() # initialize pids
     for rtask in ${recog_set}; do
@@ -259,16 +259,16 @@ if [ ${stage} -le 5 ] && [ ${stop_stage} -ge 5 ]; then
         #### use CPU for decoding
         ngpu=0
 
-        #${decode_cmd} JOB=1:${nj} ${expdir}/${decode_dir}/log/decode.JOB.log \
-        #    asr_recog.py \
-        #    --config ${decode_config} \
-        #    --ngpu ${ngpu} \
-        #    --backend ${backend} \
-        #    --batchsize 0 \
-        #    --recog-json ${feat_recog_dir}/split${nj}utt/data_${bpemode}${nbpe}.JOB.json \
-        #    --result-label ${expdir}/${decode_dir}/data.JOB.json \
-        #    --model ${expdir}/results/${recog_model}  \
-        #    --rnnlm ${lmexpdir}/rnnlm.model.best
+        ${decode_cmd} JOB=1:${nj} ${expdir}/${decode_dir}/log/decode.JOB.log \
+            asr_recog.py \
+            --config ${decode_config} \
+            --ngpu ${ngpu} \
+            --backend ${backend} \
+            --batchsize 0 \
+            --recog-json ${feat_recog_dir}/split${nj}utt/data_${bpemode}${nbpe}.JOB.json \
+            --result-label ${expdir}/${decode_dir}/data.JOB.json \
+            --model ${expdir}/results/${recog_model}  \
+            --rnnlm ${lmexpdir}/rnnlm.model.best
 
         score_sclite.sh --bpe ${nbpe} --bpemodel ${bpemodel}.model --wer true ${expdir}/${decode_dir} ${dict}
 
