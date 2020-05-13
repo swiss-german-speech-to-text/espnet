@@ -8,7 +8,7 @@
 
 # general configuration
 backend=pytorch
-stage=-1       # start from 0 if you need to start from data preparation
+stage=0       # start from 0 if you need to start from data preparation
 stop_stage=100
 ngpu=1         # number of gpus ("0" uses cpu, otherwise use gpu)
 debugmode=1
@@ -50,25 +50,43 @@ set -e
 set -u
 set -o pipefail
 
-train_set=valid_train_${lang}
-train_dev=valid_dev_${lang}
-test_set=valid_test_${lang}
-recog_set="valid_dev_${lang} valid_test_${lang}"
+raw_data_de="downloads/common_voice"
+raw_data_ch_train="downloads/swisstext2020/train"
+raw_data_ch_test="downloads/swisstext2020/test"
+raw_data_europarl="downloads/europarl"
+
+train_set=de_200k_ch_train
+train_dev=ch_dev
+test_set=ch_test
+recog_set="ch_dev ch_test"
 
 if [ ${stage} -le -1 ] && [ ${stop_stage} -ge -1 ]; then
     echo "stage -1: Data Download"
-    mkdir -p ${datadir}
-    wget -O ${datadir}/train.zip "https://drive.switch.ch/index.php/s/PpUArRmN5Ba5C8J/download?path=%2F&files=train.zip"
-    (cd ${datadir} && unzip train.zip && mv data.tsv validated.tsv)
+    #mkdir -p ${datadir}
+    #wget -O ${datadir}/train.zip "https://drive.switch.ch/index.php/s/PpUArRmN5Ba5C8J/download?path=%2F&files=train.zip"
+    #(cd ${datadir} && unzip train.zip && mv data.tsv validated.tsv)
+    mkdir -p ${raw_data_de}
+    mkdir -p ${raw_data_ch_train}
+    mkdir -p ${raw_data_ch_test}
+    mkdir -p ${raw_data_europarl}
+    local/download_and_untar.sh ${raw_data_de} https://voice-prod-bundler-ee1969a6ce8178826482b88e843c335139bd3fb4.s3.amazonaws.com/cv-corpus-3/de.tar.gz de.tar.gz
+    wget -O ${raw_data_ch_train}/train.zip "https://drive.switch.ch/index.php/s/PpUArRmN5Ba5C8J/download?path=%2F&files=train.zip"
+    wget -O ${raw_data_ch_test}/test.zip "https://drive.switch.ch/index.php/s/PpUArRmN5Ba5C8J/download?path=%2F&files=test.zip"
+    wget -O ${raw_data_europarl}/de-en.tgz "https://www.statmt.org/europarl/v7/de-en.tgz"
+
+    (cd ${raw_data_ch_train} && unzip train.zip)
+    (cd ${raw_data_ch_test} && unzip test.zip)
+    # TODO bringt test data.tsv into common voice format
+    (cd ${raw_data_europarl} && tar -xvzf de-en.tgz)
 fi
 
 if [ ${stage} -le 0 ] && [ ${stop_stage} -ge 0 ]; then
     ### Task dependent. You have to make data the following preparation part by yourself.
     ### But you can utilize Kaldi recipes in most cases
-    for part in "validated"; do
-        # use underscore-separated names in data directories.
-        local/data_prep.pl ${datadir} ${part} data/"$(echo "${part}_${lang}" | tr - _)"
-    done
+    #for part in "validated"; do
+    #    # use underscore-separated names in data directories.
+    #    local/data_prep.pl ${datadir} ${part} data/"$(echo "${part}_${lang}" | tr - _)"
+    #done
 
     # Kaldi Version Split
     # ./utils/subset_data_dir_tr_cv.sh data/validated data/valid_train data/valid_test_dev
@@ -77,8 +95,20 @@ if [ ${stage} -le 0 ] && [ ${stop_stage} -ge 0 ]; then
     # ESPNet Version (same as voxforge)
     # consider duplicated sentences (does not consider speaker split)
     # filter out the same sentences (also same text) of test&dev set from validated set
-    echo data/validated_${lang} data/${train_set} data/${train_dev} data/${test_set}
-    local/split_tr_dt_et.sh data/validated_${lang} data/${train_set} data/${train_dev} data/${test_set}
+    #echo data/validated_${lang} data/${train_set} data/${train_dev} data/${test_set}
+    #local/split_tr_dt_et.sh data/validated_${lang} data/${train_set} data/${train_dev} data/${test_set}
+
+    local/data_prep.pl ${raw_data_de} "validated" data/de_train
+    local/data_prep.pl ${raw_data_ch_train} "data" data/ch_train_dev
+    local/data_prep.pl ${raw_data_ch_test} "data_fixed" data/ch_test
+
+    # split ch train data into train and dev
+    ./utils/subset_data_dir_tr_cv.sh data/ch_train_dev data/ch_train data/ch_dev
+    ./utils/subset_data_dir.sh data/de_train 200000 data/de_train_200k
+
+    # combine de train and ch train
+    utils/combine_data.sh data/de_ch_train data/de_train data/ch_train
+    utils/combine_data.sh data/de_200k_ch_train data/de_train_200k data/ch_train
 fi
 
 feat_tr_dir=${dumpdir}/${train_set}/delta${do_delta}; mkdir -p ${feat_tr_dir}
@@ -155,8 +185,13 @@ if [ ${stage} -le 3 ] && [ ${stop_stage} -ge 3 ]; then
     echo "stage 3: LM Preparation"
     lmdatadir=data/local/lm_train_${bpemode}${nbpe}
     mkdir -p ${lmdatadir}
-    cut -f 2- -d" " data/${train_set}/text | spm_encode --model=${bpemodel}.model --output_format=piece > ${lmdatadir}/train.txt
-    cut -f 2- -d" " data/${train_dev}/text | spm_encode --model=${bpemodel}.model --output_format=piece > ${lmdatadir}/valid.txt
+    cut -f 2- -d" " data/${train_set}/text | gzip -c > data/local/lm_train/${train_set}_text.gz
+    cut -f 2- -d" " ${raw_data_europarl}/europarl-v7.de-en.de | gzip -c > data/local/lm_train/europarl_text.gz
+    # combine external text and transcriptions and shuffle them with seed 777
+    zcat data/local/lm_train/europarl_text.gz data/local/lm_train/${train_set}_text.gz |\
+        spm_encode --model=${bpemodel}.model --output_format=piece > ${lmdatadir}/train.txt
+    cut -f 2- -d" " data/${train_dev}/text | spm_encode --model=${bpemodel}.model --output_format=piece \
+                                                        > ${lmdatadir}/valid.txt
 
     ${cuda_cmd} --gpu ${ngpu} ${lmexpdir}/train.log \
         lm_train.py \
@@ -207,10 +242,10 @@ if [ ${stage} -le 5 ] && [ ${stop_stage} -ge 5 ]; then
     nj=4
     if [[ $(get_yaml.py ${train_config} model-module) = *transformer* ]]; then
 	recog_model=model.last${n_average}.avg.best
-	average_checkpoints.py --backend ${backend} \
-			       --snapshots ${expdir}/results/snapshot.ep.* \
-			       --out ${expdir}/results/${recog_model} \
-			       --num ${n_average}
+	#average_checkpoints.py --backend ${backend} \
+	#		       --snapshots ${expdir}/results/snapshot.ep.* \
+	#		       --out ${expdir}/results/${recog_model} \
+	#		       --num ${n_average}
     fi
     pids=() # initialize pids
     for rtask in ${recog_set}; do
@@ -224,16 +259,16 @@ if [ ${stage} -le 5 ] && [ ${stop_stage} -ge 5 ]; then
         #### use CPU for decoding
         ngpu=0
 
-        ${decode_cmd} JOB=1:${nj} ${expdir}/${decode_dir}/log/decode.JOB.log \
-            asr_recog.py \
-            --config ${decode_config} \
-            --ngpu ${ngpu} \
-            --backend ${backend} \
-            --batchsize 0 \
-            --recog-json ${feat_recog_dir}/split${nj}utt/data_${bpemode}${nbpe}.JOB.json \
-            --result-label ${expdir}/${decode_dir}/data.JOB.json \
-            --model ${expdir}/results/${recog_model}  \
-            --rnnlm ${lmexpdir}/rnnlm.model.best
+        #${decode_cmd} JOB=1:${nj} ${expdir}/${decode_dir}/log/decode.JOB.log \
+        #    asr_recog.py \
+        #    --config ${decode_config} \
+        #    --ngpu ${ngpu} \
+        #    --backend ${backend} \
+        #    --batchsize 0 \
+        #    --recog-json ${feat_recog_dir}/split${nj}utt/data_${bpemode}${nbpe}.JOB.json \
+        #    --result-label ${expdir}/${decode_dir}/data.JOB.json \
+        #    --model ${expdir}/results/${recog_model}  \
+        #    --rnnlm ${lmexpdir}/rnnlm.model.best
 
         score_sclite.sh --bpe ${nbpe} --bpemodel ${bpemodel}.model --wer true ${expdir}/${decode_dir} ${dict}
 
