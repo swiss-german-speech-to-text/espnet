@@ -10,7 +10,7 @@
 backend=pytorch
 stage=0       # start from 0 if you need to start from data preparation
 stop_stage=100
-ngpu=4         # number of gpus ("0" uses cpu, otherwise use gpu)
+ngpu=1         # number of gpus ("0" uses cpu, otherwise use gpu)
 nj=32          # number of jobs
 debugmode=1
 dumpdir=dump   # directory to dump full features
@@ -82,26 +82,19 @@ if [ ${stage} -le -1 ] && [ ${stop_stage} -ge -1 ]; then
 fi
 
 if [ ${stage} -le 0 ] && [ ${stop_stage} -ge 0 ]; then
-    ### Task dependent. You have to make data the following preparation part by yourself.
-    ### But you can utilize Kaldi recipes in most cases
-    #for part in "validated"; do
-    #    # use underscore-separated names in data directories.
-    #    local/data_prep.pl ${datadir} ${part} data/"$(echo "${part}_${lang}" | tr - _)"
-    #done
+    # normalize text
+    python local/normalize_text.py downloads/validated.tsv downloads/validated_norm.tsv
+    python local/normalize_text.py downloads/europarl-v7.de-en.de downloads/europarl-v7.de-en.de_norm
 
-    # Kaldi Version Split
-    # ./utils/subset_data_dir_tr_cv.sh data/validated data/valid_train data/valid_test_dev
-    # ./utils/subset_data_dir_tr_cv.sh --cv-spk-percent 50 data/valid_test_dev data/valid_test data/valid_dev
+    python local/normalize_text.py ${raw_data_de}/validated.tsv ${raw_data_de}/validated_norm.tsv
+    python local/normalize_text.py ${raw_data_ch_train}/data.tsv ${raw_data_ch_train}/data_norm.tsv
+    python local/normalize_text.py ${raw_data_ch_train}/data_fixed.tsv ${raw_data_ch_train}/data_fixed_norm.tsv
+    python local/normalize_text.py ${raw_data_europarl}/europarl-v7.de-en.de ${raw_data_europarl}/europarl-v7.de-en.de_norm
 
-    # ESPNet Version (same as voxforge)
-    # consider duplicated sentences (does not consider speaker split)
-    # filter out the same sentences (also same text) of test&dev set from validated set
-    #echo data/validated_${lang} data/${train_set} data/${train_dev} data/${test_set}
-    #local/split_tr_dt_et.sh data/validated_${lang} data/${train_set} data/${train_dev} data/${test_set}
-
-    local/data_prep.pl ${raw_data_de} "validated" data/de_train
-    local/data_prep.pl ${raw_data_ch_train} "data" data/ch_train_dev
-    local/data_prep.pl ${raw_data_ch_test} "data_fixed" data/ch_test
+    # preprocess asr data
+    local/data_prep.pl ${raw_data_de} "validated_norm" data/de_train
+    local/data_prep.pl ${raw_data_ch_train} "data_norm" data/ch_train_dev
+    local/data_prep.pl ${raw_data_ch_test} "data_fixed_norm" data/ch_test
 
     # split ch train data into train and dev
     ./utils/subset_data_dir_tr_cv.sh data/ch_train_dev data/ch_train data/ch_dev
@@ -187,9 +180,9 @@ if [ ${stage} -le 3 ] && [ ${stop_stage} -ge 3 ]; then
     lmdatadir=data/local/lm_train_${bpemode}${nbpe}
     mkdir -p ${lmdatadir}
     cut -f 2- -d" " data/${train_set}/text | gzip -c > ${lmdatadir}/${train_set}_text.gz
-    cut -f 2- -d" " ${raw_data_europarl}/europarl-v7.de-en.de | gzip -c > ${lmdatadir}/europarl_text.gz
+    cut -f 2- -d" " ${raw_data_europarl}/europarl-v7.de-en.de_norm | gzip -c > ${lmdatadir}/europarl_text.gz
     # combine external text and transcriptions and shuffle them with seed 777
-    zcat data/local/lm_train/europarl_text.gz ${lmdatadir}/${train_set}_text.gz |\
+    zcat ${lmdatadir}/europarl_text.gz ${lmdatadir}/${train_set}_text.gz |\
         spm_encode --model=${bpemodel}.model --output_format=piece > ${lmdatadir}/train.txt
     cut -f 2- -d" " data/${train_dev}/text | spm_encode --model=${bpemodel}.model --output_format=piece \
                                                         > ${lmdatadir}/valid.txt
