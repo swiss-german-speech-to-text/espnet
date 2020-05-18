@@ -83,12 +83,9 @@ fi
 
 if [ ${stage} -le 0 ] && [ ${stop_stage} -ge 0 ]; then
     # normalize text
-    python local/normalize_text.py downloads/validated.tsv downloads/validated_norm.tsv
-    python local/normalize_text.py downloads/europarl-v7.de-en.de downloads/europarl-v7.de-en.de_norm
-
     python local/normalize_text.py ${raw_data_de}/validated.tsv ${raw_data_de}/validated_norm.tsv
     python local/normalize_text.py ${raw_data_ch_train}/data.tsv ${raw_data_ch_train}/data_norm.tsv
-    python local/normalize_text.py ${raw_data_ch_train}/data_fixed.tsv ${raw_data_ch_train}/data_fixed_norm.tsv
+    python local/normalize_text.py ${raw_data_ch_test}/data_fixed.tsv ${raw_data_ch_test}/data_fixed_norm.tsv
     python local/normalize_text.py ${raw_data_europarl}/europarl-v7.de-en.de ${raw_data_europarl}/europarl-v7.de-en.de_norm
 
     # preprocess asr data
