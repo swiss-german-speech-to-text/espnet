@@ -195,7 +195,8 @@ if [ ${stage} -le 3 ] && [ ${stop_stage} -ge 3 ]; then
         --train-label ${lmdatadir}/train.txt \
         --valid-label ${lmdatadir}/valid.txt \
         --resume ${lm_resume} \
-        --dict ${dict}
+        --dict ${dict} \
+        --dump-hdf5-path ${lmdatadir}
 fi
 
 if [ -z ${tag} ]; then
@@ -237,6 +238,7 @@ if [ ${stage} -le 5 ] && [ ${stop_stage} -ge 5 ]; then
 			       --out ${expdir}/results/${recog_model} \
 			       --num ${n_average}
     fi
+
     pids=() # initialize pids
     for rtask in ${recog_set}; do
     (
