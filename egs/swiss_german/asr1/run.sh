@@ -8,8 +8,8 @@
 
 # general configuration
 backend=pytorch
-stage=0       # start from 0 if you need to start from data preparation
-stop_stage=100
+stage=4        # start from 0 if you need to start from data preparation
+stop_stage=4
 ngpu=1         # number of gpus ("0" uses cpu, otherwise use gpu)
 nj=32          # number of jobs
 debugmode=1
@@ -22,7 +22,7 @@ resume=        # Resume the training from snapshot
 do_delta=false
 
 train_config=conf/train.yaml
-lm_config=conf/lm.yaml
+lm_config=conf/tuning/lm_transformer.yaml
 decode_config=conf/decode.yaml
 
 # rnnlm related
@@ -37,11 +37,10 @@ datadir=downloads # original data directory to be stored
 lang=ch # en de fr cy tt kab ca zh-TW it fa eu es ru
 
 # bpemode (unigram or bpe)
-nbpe=150 # 2020 for zh-TW
+nbpe=150
 bpemode=unigram
 
-# exp tag
-tag="" # tag for managing experiments.
+
 
 . utils/parse_options.sh || exit 1;
 
@@ -57,15 +56,17 @@ raw_data_ch_test="downloads/swisstext2020/test"
 raw_data_europarl="downloads/europarl"
 
 train_set=de_200k_ch_train
+train_subset="_ch_20" # empty for complete train set
 train_dev=ch_dev
 test_set=ch_test
-recog_set="ch_dev ch_test"
+recog_set="ch_test"
+# recog_set="ch_dev ch_test"
+
+# exp tag
+tag="train_$bpemode$nbpe$train_subset" # tag for managing experiments.
 
 if [ ${stage} -le -1 ] && [ ${stop_stage} -ge -1 ]; then
     echo "stage -1: Data Download"
-    #mkdir -p ${datadir}
-    #wget -O ${datadir}/train.zip "https://drive.switch.ch/index.php/s/PpUArRmN5Ba5C8J/download?path=%2F&files=train.zip"
-    #(cd ${datadir} && unzip train.zip && mv data.tsv validated.tsv)
     mkdir -p ${raw_data_de}
     mkdir -p ${raw_data_ch_train}
     mkdir -p ${raw_data_ch_test}
@@ -85,13 +86,14 @@ if [ ${stage} -le 0 ] && [ ${stop_stage} -ge 0 ]; then
     # normalize text
     python local/normalize_text.py ${raw_data_de}/validated.tsv ${raw_data_de}/validated_norm.tsv
     python local/normalize_text.py ${raw_data_ch_train}/data.tsv ${raw_data_ch_train}/data_norm.tsv
-    python local/normalize_text.py ${raw_data_ch_test}/data_fixed.tsv ${raw_data_ch_test}/data_fixed_norm.tsv
+    python local/normalize_text.py ${raw_data_ch_test}/test_public.tsv ${raw_data_ch_test}/test_public_norm.tsv
+    python local/reindex.py ${raw_data_ch_test}/test_public_norm.tsv ${raw_data_ch_test}/test_public_norm_reindex.tsv
     python local/normalize_text.py ${raw_data_europarl}/europarl-v7.de-en.de ${raw_data_europarl}/europarl-v7.de-en.de_norm
 
     # preprocess asr data
     local/data_prep.pl ${raw_data_de} "validated_norm" data/de_train
     local/data_prep.pl ${raw_data_ch_train} "data_norm" data/ch_train_dev
-    local/data_prep.pl ${raw_data_ch_test} "data_fixed_norm" data/ch_test
+    local/data_prep.pl ${raw_data_ch_test} "test_public_norm_reindex" data/ch_test
 
     # split ch train data into train and dev
     ./utils/subset_data_dir_tr_cv.sh data/ch_train_dev data/ch_train data/ch_dev
@@ -140,6 +142,7 @@ fi
 
 dict=data/lang_char/${train_set}_${bpemode}${nbpe}_units.txt
 bpemodel=data/lang_char/${train_set}_${bpemode}${nbpe}
+
 echo "dictionary: ${dict}"
 if [ ${stage} -le 2 ] && [ ${stop_stage} -ge 2 ]; then
     ### Task dependent. You have to check non-linguistic symbols used in the corpus.
@@ -155,6 +158,7 @@ if [ ${stage} -le 2 ] && [ ${stop_stage} -ge 2 ]; then
     echo "make json files"
     data2json.sh --feat ${feat_tr_dir}/feats.scp --bpecode ${bpemodel}.model \
                  data/${train_set} ${dict} > ${feat_tr_dir}/data_${bpemode}${nbpe}.json
+    python local/split_json.py ${feat_tr_dir}/data_${bpemode}${nbpe}.json
     data2json.sh --feat ${feat_dt_dir}/feats.scp --bpecode ${bpemodel}.model \
                  data/${train_dev} ${dict} > ${feat_dt_dir}/data_${bpemode}${nbpe}.json
     for rtask in ${recog_set}; do
@@ -177,7 +181,7 @@ if [ ${stage} -le 3 ] && [ ${stop_stage} -ge 3 ]; then
     lmdatadir=data/local/lm_train_${bpemode}${nbpe}
     mkdir -p ${lmdatadir}
     cut -f 2- -d" " data/${train_set}/text | gzip -c > ${lmdatadir}/${train_set}_text.gz
-    cut -f 2- -d" " ${raw_data_europarl}/europarl-v7.de-en.de_norm | gzip -c > ${lmdatadir}/europarl_text.gz
+    cat ${raw_data_europarl}/europarl-v7.de-en.de_norm | gzip -c > ${lmdatadir}/europarl_text.gz
     # combine external text and transcriptions and shuffle them with seed 777
     zcat ${lmdatadir}/europarl_text.gz ${lmdatadir}/${train_set}_text.gz |\
         spm_encode --model=${bpemodel}.model --output_format=piece > ${lmdatadir}/train.txt
@@ -225,7 +229,7 @@ if [ ${stage} -le 4 ] && [ ${stop_stage} -ge 4 ]; then
         --minibatches ${N} \
         --verbose ${verbose} \
         --resume ${resume} \
-        --train-json ${feat_tr_dir}/data_${bpemode}${nbpe}.json \
+        --train-json ${feat_tr_dir}/data_${bpemode}${nbpe}${train_subset}.json \
         --valid-json ${feat_dt_dir}/data_${bpemode}${nbpe}.json
 fi
 
