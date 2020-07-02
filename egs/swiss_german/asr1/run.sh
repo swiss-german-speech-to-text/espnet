@@ -10,7 +10,7 @@
 backend=pytorch
 stage=4        # start from 0 if you need to start from data preparation
 stop_stage=4
-ngpu=1         # number of gpus ("0" uses cpu, otherwise use gpu)
+ngpu=4         # number of gpus ("0" uses cpu, otherwise use gpu)
 nj=32          # number of jobs
 debugmode=1
 dumpdir=dump   # directory to dump full features
@@ -264,7 +264,8 @@ if [ ${stage} -le 5 ] && [ ${stop_stage} -ge 5 ]; then
             --recog-json ${feat_recog_dir}/split${nj}utt/data_${bpemode}${nbpe}.JOB.json \
             --result-label ${expdir}/${decode_dir}/data.JOB.json \
             --model ${expdir}/results/${recog_model}  \
-            --rnnlm ${lmexpdir}/rnnlm.model.best
+            --rnnlm ${lmexpdir}/rnnlm.model.best \
+            --api v2
 
         score_sclite.sh --bpe ${nbpe} --bpemodel ${bpemodel}.model --wer true ${expdir}/${decode_dir} ${dict}
 
