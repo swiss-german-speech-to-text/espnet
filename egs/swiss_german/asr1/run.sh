@@ -8,8 +8,8 @@
 
 # general configuration
 backend=pytorch
-stage=4        # start from 0 if you need to start from data preparation
-stop_stage=4
+stage=5        # start from 0 if you need to start from data preparation
+stop_stage=5
 ngpu=4         # number of gpus ("0" uses cpu, otherwise use gpu)
 nj=32          # number of jobs
 debugmode=1
@@ -37,7 +37,7 @@ datadir=downloads # original data directory to be stored
 lang=ch # en de fr cy tt kab ca zh-TW it fa eu es ru
 
 # bpemode (unigram or bpe)
-nbpe=150
+nbpe=5000
 bpemode=unigram
 
 
@@ -50,58 +50,42 @@ set -e
 set -u
 set -o pipefail
 
-raw_data_de="downloads/common_voice"
-raw_data_ch_train="downloads/swisstext2020/train"
-raw_data_ch_test="downloads/swisstext2020/test"
+raw_data_cv="downloads/common_voice"
+raw_data_bern_stadtrat="downloads/bern_stadtrat"
+raw_data_germeval="downloads/germeval"
+raw_data_clickworker="downloads/clickworker"
 raw_data_europarl="downloads/europarl"
 
-train_set=de_200k_ch_train
-train_subset="_ch_20" # empty for complete train set
-train_dev=ch_dev
-test_set=ch_test
-recog_set="ch_test"
+train_set=train_all
+train_subset="" # empty for complete train set
+train_dev=germeval_dev
+test_set=clickworker_test
+recog_set="clickworker_test"
 # recog_set="ch_dev ch_test"
 
 # exp tag
 tag="train_$bpemode$nbpe$train_subset" # tag for managing experiments.
 
-if [ ${stage} -le -1 ] && [ ${stop_stage} -ge -1 ]; then
-    echo "stage -1: Data Download"
-    mkdir -p ${raw_data_de}
-    mkdir -p ${raw_data_ch_train}
-    mkdir -p ${raw_data_ch_test}
-    mkdir -p ${raw_data_europarl}
-    local/download_and_untar.sh ${raw_data_de} https://voice-prod-bundler-ee1969a6ce8178826482b88e843c335139bd3fb4.s3.amazonaws.com/cv-corpus-3/de.tar.gz de.tar.gz
-    wget -O ${raw_data_ch_train}/train.zip "https://drive.switch.ch/index.php/s/PpUArRmN5Ba5C8J/download?path=%2F&files=train.zip"
-    wget -O ${raw_data_ch_test}/test.zip "https://drive.switch.ch/index.php/s/PpUArRmN5Ba5C8J/download?path=%2F&files=test.zip"
-    wget -O ${raw_data_europarl}/de-en.tgz "https://www.statmt.org/europarl/v7/de-en.tgz"
-
-    (cd ${raw_data_ch_train} && unzip train.zip)
-    (cd ${raw_data_ch_test} && unzip test.zip)
-    # TODO bringt test data.tsv into common voice format
-    (cd ${raw_data_europarl} && tar -xvzf de-en.tgz)
-fi
-
 if [ ${stage} -le 0 ] && [ ${stop_stage} -ge 0 ]; then
     # normalize text
-    python local/normalize_text.py ${raw_data_de}/validated.tsv ${raw_data_de}/validated_norm.tsv
-    python local/normalize_text.py ${raw_data_ch_train}/data.tsv ${raw_data_ch_train}/data_norm.tsv
-    python local/normalize_text.py ${raw_data_ch_test}/test_public.tsv ${raw_data_ch_test}/test_public_norm.tsv
-    python local/reindex.py ${raw_data_ch_test}/test_public_norm.tsv ${raw_data_ch_test}/test_public_norm_reindex.tsv
+    python local/normalize_text.py ${raw_data_cv}/validated.tsv ${raw_data_cv}/validated_norm.tsv
+    python local/normalize_text.py ${raw_data_bern_stadtrat}/train_0.8.tsv ${raw_data_bern_stadtrat}/train_08_norm.tsv
+    python local/normalize_text.py ${raw_data_germeval}/train_0.9.tsv ${raw_data_germeval}/train_09_norm.tsv
+    python local/normalize_text.py ${raw_data_clickworker}/all.tsv ${raw_data_clickworker}/all_norm.tsv
     python local/normalize_text.py ${raw_data_europarl}/europarl-v7.de-en.de ${raw_data_europarl}/europarl-v7.de-en.de_norm
 
     # preprocess asr data
-    local/data_prep.pl ${raw_data_de} "validated_norm" data/de_train
-    local/data_prep.pl ${raw_data_ch_train} "data_norm" data/ch_train_dev
-    local/data_prep.pl ${raw_data_ch_test} "test_public_norm_reindex" data/ch_test
+    local/data_prep.pl ${raw_data_cv} "validated_norm" data/cv_train
+    local/data_prep.pl ${raw_data_bern_stadtrat} "train_08_norm" data/bern_stadtrat_train
+    local/data_prep.pl ${raw_data_germeval} "train_09_norm" data/germeval_train_dev
+    local/data_prep.pl ${raw_data_clickworker} "all_norm" data/clickworker_test
 
     # split ch train data into train and dev
-    ./utils/subset_data_dir_tr_cv.sh data/ch_train_dev data/ch_train data/ch_dev
-    ./utils/subset_data_dir.sh data/de_train 200000 data/de_train_200k
+    ./utils/subset_data_dir_tr_cv.sh data/germeval_train_dev data/germeval_train data/germeval_dev
+    ./utils/subset_data_dir.sh data/cv_train 200000 data/cv_train_200k
 
     # combine de train and ch train
-    utils/combine_data.sh data/de_ch_train data/de_train data/ch_train
-    utils/combine_data.sh data/de_200k_ch_train data/de_train_200k data/ch_train
+    utils/combine_data.sh data/train_all data/cv_train_200k data/bern_stadtrat_train data/germeval_train
 fi
 
 feat_tr_dir=${dumpdir}/${train_set}/delta${do_delta}; mkdir -p ${feat_tr_dir}
