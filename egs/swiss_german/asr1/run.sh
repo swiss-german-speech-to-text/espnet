@@ -21,6 +21,8 @@ resume=        # Resume the training from snapshot
 # feature configuration
 do_delta=false
 
+# preprocess_config=conf/no_preprocess.yaml
+preprocess_config=conf/specaug.yaml
 train_config=conf/train.yaml
 lm_config=conf/tuning/lm_transformer.yaml
 decode_config=conf/decode.yaml
@@ -33,14 +35,9 @@ lmtag=            # tag for managing LMs
 recog_model=model.acc.best # set a model to be used for decoding: 'model.acc.best' or 'model.loss.best'
 n_average=10
 
-datadir=downloads # original data directory to be stored
-lang=ch # en de fr cy tt kab ca zh-TW it fa eu es ru
-
 # bpemode (unigram or bpe)
 nbpe=5000
 bpemode=unigram
-
-
 
 . utils/parse_options.sh || exit 1;
 
@@ -57,14 +54,13 @@ raw_data_clickworker="downloads/clickworker"
 raw_data_europarl="downloads/europarl"
 
 train_set=train_all
-train_subset="" # empty for complete train set
 train_dev=germeval_dev
 test_set=clickworker_test
 recog_set="clickworker_test"
 # recog_set="ch_dev ch_test"
 
 # exp tag
-tag="train_$bpemode$nbpe$train_subset" # tag for managing experiments.
+tag="train_$bpemode$nbpe" # tag for managing experiments.
 
 if [ ${stage} -le 0 ] && [ ${stop_stage} -ge 0 ]; then
     # normalize text
@@ -86,6 +82,13 @@ if [ ${stage} -le 0 ] && [ ${stop_stage} -ge 0 ]; then
 
     # combine de train and ch train
     utils/combine_data.sh data/train_all data/cv_train_200k data/bern_stadtrat_train data/germeval_train
+
+    # speed pertubation
+    utils/perturb_data_dir_speed.sh 0.9 data/train_all data/temp1
+    utils/perturb_data_dir_speed.sh 1.0 data/train_all data/temp2
+    utils/perturb_data_dir_speed.sh 1.1 data/train_all data/temp3
+    utils/combine_data.sh --extra-files utt2uniq data/train_all data/temp1 data/temp2 data/temp3
+    rm -r data/temp1 data/temp2 data/temp3
 fi
 
 feat_tr_dir=${dumpdir}/${train_set}/delta${do_delta}; mkdir -p ${feat_tr_dir}
@@ -167,10 +170,8 @@ if [ ${stage} -le 3 ] && [ ${stop_stage} -ge 3 ]; then
     cut -f 2- -d" " data/${train_set}/text | gzip -c > ${lmdatadir}/${train_set}_text.gz
     cat ${raw_data_europarl}/europarl-v7.de-en.de_norm | gzip -c > ${lmdatadir}/europarl_text.gz
     # combine external text and transcriptions and shuffle them with seed 777
-    zcat ${lmdatadir}/europarl_text.gz ${lmdatadir}/${train_set}_text.gz |\
-        spm_encode --model=${bpemodel}.model --output_format=piece > ${lmdatadir}/train.txt
-    cut -f 2- -d" " data/${train_dev}/text | spm_encode --model=${bpemodel}.model --output_format=piece \
-                                                        > ${lmdatadir}/valid.txt
+    zcat ${lmdatadir}/europarl_text.gz ${lmdatadir}/${train_set}_text.gz | spm_encode --model=${bpemodel}.model --output_format=piece > ${lmdatadir}/train.txt
+    cut -f 2- -d" " data/${train_dev}/text | spm_encode --model=${bpemodel}.model --output_format=piece > ${lmdatadir}/valid.txt
 
     ${cuda_cmd} --gpu ${ngpu} ${lmexpdir}/train.log \
         lm_train.py \
@@ -183,12 +184,11 @@ if [ ${stage} -le 3 ] && [ ${stop_stage} -ge 3 ]; then
         --train-label ${lmdatadir}/train.txt \
         --valid-label ${lmdatadir}/valid.txt \
         --resume ${lm_resume} \
-        --dict ${dict} \
-        --dump-hdf5-path ${lmdatadir}
+        --dict ${dict}
 fi
 
 if [ -z ${tag} ]; then
-    expname=${train_set}_${backend}_$(basename ${train_config%.*})
+    expname=${train_set}_${backend}_$(basename ${train_config%.*})_$(basename ${preprocess_config%.*})
     if ${do_delta}; then
         expname=${expname}_delta
     fi
@@ -203,6 +203,7 @@ if [ ${stage} -le 4 ] && [ ${stop_stage} -ge 4 ]; then
     ${cuda_cmd} --gpu ${ngpu} ${expdir}/train.log \
         asr_train.py \
         --config ${train_config} \
+        --preprocess-conf ${preprocess_config} \
         --ngpu ${ngpu} \
         --backend ${backend} \
         --outdir ${expdir}/results \
@@ -213,18 +214,21 @@ if [ ${stage} -le 4 ] && [ ${stop_stage} -ge 4 ]; then
         --minibatches ${N} \
         --verbose ${verbose} \
         --resume ${resume} \
-        --train-json ${feat_tr_dir}/data_${bpemode}${nbpe}${train_subset}.json \
+        --train-json ${feat_tr_dir}/data_${bpemode}${nbpe}.json \
         --valid-json ${feat_dt_dir}/data_${bpemode}${nbpe}.json
 fi
 
 if [ ${stage} -le 5 ] && [ ${stop_stage} -ge 5 ]; then
     echo "stage 5: Decoding"
-    if [[ $(get_yaml.py ${train_config} model-module) = *transformer* ]]; then
-	recog_model=model.last${n_average}.avg.best
-	average_checkpoints.py --backend ${backend} \
-			       --snapshots ${expdir}/results/snapshot.ep.* \
-			       --out ${expdir}/results/${recog_model} \
-			       --num ${n_average}
+    if [[ $(get_yaml.py ${train_config} model-module) = *transformer* ]] || \
+           [[ $(get_yaml.py ${train_config} model-module) = *conformer* ]] || \
+           [[ $(get_yaml.py ${train_config} etype) = transformer ]] || \
+           [[ $(get_yaml.py ${train_config} dtype) = transformer ]]; then
+        recog_model=model.last${n_average}.avg.best
+        average_checkpoints.py --backend ${backend} \
+                    --snapshots ${expdir}/results/snapshot.ep.* \
+                    --out ${expdir}/results/${recog_model} \
+                    --num ${n_average}
     fi
 
     pids=() # initialize pids
@@ -248,8 +252,7 @@ if [ ${stage} -le 5 ] && [ ${stop_stage} -ge 5 ]; then
             --recog-json ${feat_recog_dir}/split${nj}utt/data_${bpemode}${nbpe}.JOB.json \
             --result-label ${expdir}/${decode_dir}/data.JOB.json \
             --model ${expdir}/results/${recog_model}  \
-            --rnnlm ${lmexpdir}/rnnlm.model.best \
-            --api v2
+            --rnnlm ${lmexpdir}/rnnlm.model.best
 
         score_sclite.sh --bpe ${nbpe} --bpemodel ${bpemodel}.model --wer true ${expdir}/${decode_dir} ${dict}
 
