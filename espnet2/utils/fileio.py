@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import collections.abc
 from io import StringIO
 import logging
@@ -36,7 +38,7 @@ class DatadirWriter:
     def __enter__(self):
         return self
 
-    def __getitem__(self, key: str) -> 'DatadirWriter':
+    def __getitem__(self, key: str) -> DatadirWriter:
         assert check_argument_types()
         if self.fd is not None:
             raise RuntimeError("This writer points out a file")
