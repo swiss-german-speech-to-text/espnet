@@ -8,8 +8,6 @@
 |ubuntu18/python3.7/pip|[![Github Actions](https://github.com/espnet/espnet/workflows/CI/badge.svg)](https://github.com/espnet/espnet/actions)|[![Github Actions](https://github.com/espnet/espnet/workflows/CI/badge.svg)](https://github.com/espnet/espnet/actions)|[![Github Actions](https://github.com/espnet/espnet/workflows/CI/badge.svg)](https://github.com/espnet/espnet/actions)|[![Github Actions](https://github.com/espnet/espnet/workflows/CI/badge.svg)](https://github.com/espnet/espnet/actions)|[![Github Actions](https://github.com/espnet/espnet/workflows/CI/badge.svg)](https://github.com/espnet/espnet/actions)|[![Github Actions](https://github.com/espnet/espnet/workflows/CI/badge.svg)](https://github.com/espnet/espnet/actions)|[![Github Actions](https://github.com/espnet/espnet/workflows/CI/badge.svg)](https://github.com/espnet/espnet/actions)|[![Github Actions](https://github.com/espnet/espnet/workflows/CI/badge.svg)](https://github.com/espnet/espnet/actions)|
 |ubuntu18/python3.6/conda||||||||[![CircleCI](https://circleci.com/gh/espnet/espnet.svg?style=svg)](https://circleci.com/gh/espnet/espnet)|
 |ubuntu20/python3.6/conda||||||||[![CircleCI](https://circleci.com/gh/espnet/espnet.svg?style=svg)](https://circleci.com/gh/espnet/espnet)|
-|debian9/python3.6/conda||||||||[![CircleCI](https://circleci.com/gh/espnet/espnet.svg?style=svg)](https://circleci.com/gh/espnet/espnet)|
-|centos7/python3.6/conda||||||||[![CircleCI](https://circleci.com/gh/espnet/espnet.svg?style=svg)](https://circleci.com/gh/espnet/espnet)|
 |debian9/python3.6/conda||||||||[![debian9](https://github.com/espnet/espnet/workflows/debian9/badge.svg)](https://github.com/espnet/espnet/actions?query=workflow%3Adebian9)|
 |centos7/python3.6/conda||||||||[![centos7](https://github.com/espnet/espnet/workflows/centos7/badge.svg)](https://github.com/espnet/espnet/actions?query=workflow%3Acentos7)|
 |[docs/coverage] python3.8||||||||[![Build Status](https://travis-ci.org/espnet/espnet.svg?branch=master)](https://travis-ci.org/espnet/espnet)|
@@ -56,7 +54,7 @@ and also follows [Kaldi](http://kaldi-asr.org/) style data processing, feature e
 - Batch GPU decoding
 - **Transducer** based end-to-end ASR
   - Available: RNN-based encoder/decoder and Transformer-based encoder/decoder w/ customizable architecture.
-  - Also support: mixed RNN/Transformer architecture, attention mechanism (RNN decoder), VGG2L (RNN/Transformer encoder), Conformer (Transformer encoder), TDNN (Transformer encoder), Causal Conv1d (Transformer decoder) and various decoding algorithms.
+  - Also support: mixed RNN/Transformer architecture, VGG2L (RNN/Transformer encoder), Conformer (Transformer encoder), TDNN (Transformer encoder), Causal Conv1d (Transformer decoder) and various decoding algorithms.
   > Please refer to the [tutorial page](https://espnet.github.io/espnet/tutorial.html#transducer) for complete documentation.
 - CTC segmentation
 - Non-autoregressive based on Mask CTC
