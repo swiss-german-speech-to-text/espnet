@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Copyright 2019 Tomoki Hayashi
 #  Apache 2.0  (http://www.apache.org/licenses/LICENSE-2.0)
@@ -11,7 +11,7 @@ backend=pytorch
 stage=-1
 stop_stage=100
 ngpu=1       # number of gpu in training
-nj=32        # numebr of parallel jobs
+nj=32        # number of parallel jobs
 dumpdir=dump # directory to dump full features
 verbose=1    # verbose option (if set > 1, get more log)
 seed=1       # random seed number
@@ -112,7 +112,7 @@ if [ ${stage} -le 1 ] && [ ${stop_stage} -ge 1 ]; then
     ### Task dependent. You have to design training and dev name by yourself.
     ### But you can utilize Kaldi recipes in most cases
     echo "stage 1: Feature Generation"
-    # Trim silence parts at the begining and the end of audio
+    # Trim silence parts at the beginning and the end of audio
     if ${do_trimming}; then
         for name in ${org_set} ${eval_set}; do
             trim_silence.sh --cmd "${train_cmd}" \

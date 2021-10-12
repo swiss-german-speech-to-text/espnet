@@ -116,7 +116,9 @@ def get_parser():
         default=0.0,
         help="""Input length ratio to obtain max output length.
                         If maxlenratio=0.0 (default), it uses a end-detect function
-                        to automatically find maximum hypothesis lengths""",
+                        to automatically find maximum hypothesis lengths.
+                        If maxlenratio<0.0, its absolute value is interpreted
+                        as a constant max output length""",
     )
     parser.add_argument(
         "--minlenratio",
@@ -145,11 +147,66 @@ def get_parser():
     )
     # transducer related
     parser.add_argument(
-        "--score-norm-transducer",
+        "--search-type",
+        type=str,
+        default="default",
+        choices=["default", "nsc", "tsd", "alsd", "maes"],
+        help="""Type of beam search implementation to use during inference.
+        Can be either: default beam search ("default"),
+        N-Step Constrained beam search ("nsc"), Time-Synchronous Decoding ("tsd"),
+        Alignment-Length Synchronous Decoding ("alsd") or
+        modified Adaptive Expansion Search ("maes").""",
+    )
+    parser.add_argument(
+        "--nstep",
+        type=int,
+        default=1,
+        help="""Number of expansion steps allowed in NSC beam search or mAES
+        (nstep > 0 for NSC and nstep > 1 for mAES).""",
+    )
+    parser.add_argument(
+        "--prefix-alpha",
+        type=int,
+        default=2,
+        help="Length prefix difference allowed in NSC beam search or mAES.",
+    )
+    parser.add_argument(
+        "--max-sym-exp",
+        type=int,
+        default=2,
+        help="Number of symbol expansions allowed in TSD.",
+    )
+    parser.add_argument(
+        "--u-max",
+        type=int,
+        default=400,
+        help="Length prefix difference allowed in ALSD.",
+    )
+    parser.add_argument(
+        "--expansion-gamma",
+        type=float,
+        default=2.3,
+        help="Allowed logp difference for prune-by-value method in mAES.",
+    )
+    parser.add_argument(
+        "--expansion-beta",
+        type=int,
+        default=2,
+        help="""Number of additional candidates for expanded hypotheses
+                selection in mAES.""",
+    )
+    parser.add_argument(
+        "--score-norm",
         type=strtobool,
         nargs="?",
         default=True,
-        help="Normalize transducer scores by length",
+        help="Normalize final hypotheses' score by length",
+    )
+    parser.add_argument(
+        "--softmax-temperature",
+        type=float,
+        default=1.0,
+        help="Penalization term for softmax function.",
     )
     # rnnlm related
     parser.add_argument(
@@ -169,6 +226,21 @@ def get_parser():
     )
     parser.add_argument("--word-dict", type=str, default=None, help="Word list to read")
     parser.add_argument("--lm-weight", type=float, default=0.1, help="RNNLM weight")
+    # ngram related
+    parser.add_argument(
+        "--ngram-model", type=str, default=None, help="ngram model file to read"
+    )
+    parser.add_argument("--ngram-weight", type=float, default=0.1, help="ngram weight")
+    parser.add_argument(
+        "--ngram-scorer",
+        type=str,
+        default="part",
+        choices=("full", "part"),
+        help="""if the ngram is set as a part scorer, similar with CTC scorer,
+                ngram scorer only scores topK hypethesis.
+                if the ngram is set as full scorer, ngram scorer scores all hypthesis
+                the decoding speed of part scorer is musch faster than full one""",
+    )
     # streaming related
     parser.add_argument(
         "--streaming-mode",
@@ -190,6 +262,42 @@ def get_parser():
     )
     parser.add_argument(
         "--streaming-offset-margin", type=int, default=1, help="Offset margin"
+    )
+    # non-autoregressive related
+    # Mask CTC related. See https://arxiv.org/abs/2005.08700 for the detail.
+    parser.add_argument(
+        "--maskctc-n-iterations",
+        type=int,
+        default=10,
+        help="Number of decoding iterations."
+        "For Mask CTC, set 0 to predict 1 mask/iter.",
+    )
+    parser.add_argument(
+        "--maskctc-probability-threshold",
+        type=float,
+        default=0.999,
+        help="Threshold probability for CTC output",
+    )
+    # quantize model related
+    parser.add_argument(
+        "--quantize-config",
+        nargs="*",
+        help="Quantize config list. E.g.: --quantize-config=[Linear,LSTM,GRU]",
+    )
+    parser.add_argument(
+        "--quantize-dtype", type=str, default="qint8", help="Dtype dynamic quantize"
+    )
+    parser.add_argument(
+        "--quantize-asr-model",
+        type=bool,
+        default=False,
+        help="Quantize asr model",
+    )
+    parser.add_argument(
+        "--quantize-lm-model",
+        type=bool,
+        default=False,
+        help="Quantize lm model",
     )
     return parser
 

@@ -4,9 +4,9 @@
 # Copyright 2018 Kyoto University (Hirofumi Inaguma)
 #  Apache 2.0  (http://www.apache.org/licenses/LICENSE-2.0)
 
-import json
 import argparse
 import codecs
+import json
 import logging
 
 if __name__ == "__main__":
@@ -48,8 +48,8 @@ if __name__ == "__main__":
 
     hyps = {}
     for x in j["utts"]:
-        talkid = x.split("_")[0]
-        start_time = int(x.split("_")[1])
+        talkid = "_".join(x.split("_")[:-2])  # x: userid_start_end
+        start_time = int(x.split("_")[-2])
         if talkid not in hyps.keys():
             hyps[talkid] = {}
 

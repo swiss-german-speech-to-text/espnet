@@ -1,10 +1,11 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Copyright 2018 Nagoya University (Tomoki Hayashi)
 #  Apache 2.0  (http://www.apache.org/licenses/LICENSE-2.0)
 
 # Begin configuration section.
 nj=4
+fs=none
 n_fft=1024
 n_shift=512
 win_length=
@@ -113,6 +114,7 @@ else
 
 ${cmd} JOB=1:${nj} ${logdir}/make_stft_${name}.JOB.log \
     compute-stft-feats.py \
+        --fs ${fs} \
         --win_length ${win_length} \
         --n_fft ${n_fft} \
         --n_shift ${n_shift} \

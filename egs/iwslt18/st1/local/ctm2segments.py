@@ -4,7 +4,6 @@
 # Copyright 2018 Kyoto University (Hirofumi Inaguma)
 #  Apache 2.0  (http://www.apache.org/licenses/LICENSE-2.0)
 
-from __future__ import division
 
 import argparse
 import codecs
@@ -47,7 +46,7 @@ def main():
 
         if start_t is not None and i < num_lines - 1:
             if (float(start_time_w) - end_t >= threshold) and (end_t - start_t > 0.2):
-                # differnece utterance
+                # difference utterance
                 hyps += [(utt_id, start_t, end_t, hyp[1:])]
 
                 # reset

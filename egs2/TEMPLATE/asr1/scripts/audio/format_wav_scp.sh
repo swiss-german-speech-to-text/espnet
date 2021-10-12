@@ -75,7 +75,7 @@ fi
 
 mkdir -p ${logdir}
 
-rm -f ${dir}/wav.scp
+rm -f "${dir}/${out_filename}"
 
 
 opts=
@@ -122,7 +122,7 @@ else
         ${opts} \
         --fs "${fs}" \
         --audio-format "${audio_format}" \
-        "${logdir}/wav.JOB.scp" ${outdir}/format.JOB""
+        "${logdir}/wav.JOB.scp" "${outdir}/format.JOB"
 fi
 
 # Workaround for the NFS problem

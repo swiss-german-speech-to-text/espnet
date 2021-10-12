@@ -42,8 +42,16 @@ def recog_v2(args):
     set_deterministic_pytorch(args)
     model, train_args = load_trained_model(args.model)
     assert isinstance(model, ASRInterface)
-    model.eval()
+    if args.quantize_config is not None:
+        q_config = set([getattr(torch.nn, q) for q in args.quantize_config])
+    else:
+        q_config = {torch.nn.Linear}
 
+    if args.quantize_asr_model:
+        logging.info("Use quantized asr model for decoding")
+        dtype = getattr(torch, args.quantize_dtype)
+        model = torch.quantization.quantize_dynamic(model, q_config, dtype=dtype)
+    model.eval()
     load_inputs_and_targets = LoadInputsAndTargets(
         mode="asr",
         load_output=False,
@@ -61,20 +69,36 @@ def recog_v2(args):
         lm_class = dynamic_import_lm(lm_model_module, lm_args.backend)
         lm = lm_class(len(train_args.char_list), lm_args)
         torch_load(args.rnnlm, lm)
+        if args.quantize_lm_model:
+            logging.info("Use quantized lm model")
+            dtype = getattr(torch, args.quantize_dtype)
+            lm = torch.quantization.quantize_dynamic(lm, q_config, dtype=dtype)
         lm.eval()
     else:
         lm = None
 
+    if args.ngram_model:
+        from espnet.nets.scorers.ngram import NgramFullScorer
+        from espnet.nets.scorers.ngram import NgramPartScorer
+
+        if args.ngram_scorer == "full":
+            ngram = NgramFullScorer(args.ngram_model, train_args.char_list)
+        else:
+            ngram = NgramPartScorer(args.ngram_model, train_args.char_list)
+    else:
+        ngram = None
+
     scorers = model.scorers()
     scorers["lm"] = lm
+    scorers["ngram"] = ngram
     scorers["length_bonus"] = LengthBonus(len(train_args.char_list))
     weights = dict(
         decoder=1.0 - args.ctc_weight,
         ctc=args.ctc_weight,
         lm=args.lm_weight,
+        ngram=args.ngram_weight,
         length_bonus=args.penalty,
     )
-
     beam_search = BeamSearch(
         beam_size=args.beam_size,
         vocab_size=len(train_args.char_list),
@@ -83,7 +107,7 @@ def recog_v2(args):
         sos=model.sos,
         eos=model.eos,
         token_list=train_args.char_list,
-        pre_beam_score_key=None if args.ctc_weight == 1.0 else "decoder",
+        pre_beam_score_key=None if args.ctc_weight == 1.0 else "full",
     )
     # TODO(karita): make all scorers batchfied
     if args.batchsize == 1:

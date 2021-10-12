@@ -4,71 +4,44 @@
 
 set -euo pipefail
 
-$CXX -v
+${CXX:-g++} -v
+
+(
+    set -euo pipefail
+    cd tools
+
+    # To skip error
+    mkdir -p kaldi/egs/wsj/s5/utils && touch kaldi/egs/wsj/s5/utils/parse_options.sh
+    if ${USE_CONDA}; then
+        ./setup_anaconda.sh venv espnet ${ESPNET_PYTHON_VERSION}
+    else
+        ./setup_python.sh "$(command -v python3)" venv
+    fi
+    . ./activate_python.sh
+    make TH_VERSION="${TH_VERSION}"
+
+    make warp-ctc.done warp-transducer.done chainer_ctc.done nkf.done moses.done mwerSegmenter.done pesq pyopenjtalk.done py3mmseg.done s3prl.done transformers.done
+    rm -rf kaldi
+)
+. tools/activate_python.sh
+python3 --version
+
+pip3 install https://github.com/kpu/kenlm/archive/master.zip
 
 if ${USE_CONDA}; then
-    (
-        cd tools
-        make PYTHON_VERSION=${ESPNET_PYTHON_VERSION} venv
-    )
-    . tools/venv/etc/profile.d/conda.sh
-    conda config --set always_yes yes
-    conda activate
-    conda update -y conda
-    if [[ ${TH_VERSION} == nightly ]]; then
-        conda install -q -y pytorch-nightly-cpu -c pytorch
-    else
-        conda install -q -y pytorch="${TH_VERSION}" cpuonly -c pytorch
-    fi
-    conda install -c conda-forge ffmpeg
+  conda install -c k2-fsa -c pytorch k2=${K2_VERSION} cpuonly pytorch=${TH_VERSION}
 else
-    # to suppress errors during doc generation of utils/ when USE_CONDA=false in travis
-    mkdir -p tools/venv/bin
-    touch tools/venv/bin/activate
-    . tools/venv/bin/activate
-
-    if [[ ${TH_VERSION} == nightly ]]; then
-        pip install torch_nightly -f https://download.pytorch.org/whl/nightly/cpu/torch_nightly.html
-    elif [[ ${TH_VERSION} == 1.0.1 ]] || [[ ${TH_VERSION} == 1.1.0 ]]; then
-        pip install --quiet torch=="${TH_VERSION}" -f https://download.pytorch.org/whl/cpu/stable
-    else
-        pip install --quiet torch=="${TH_VERSION}+cpu" -f https://download.pytorch.org/whl/torch_stable.html
-    fi
+  pip3 install k2==${K2_VERSION}.torch${TH_VERSION} -f https://k2-fsa.org/nightly/
 fi
 
-python --version
 
-pip install -U pip wheel
-pip install chainer=="${CHAINER_VERSION}"
+# NOTE(kan-bayashi): Fix the error in black installation.
+#   See: https://github.com/psf/black/issues/1707
+pip3 uninstall -y typing
 
 # install espnet
-pip install -e .
-pip install -e ".[test]"
-pip install -e ".[doc]"
-
-# [FIXME] hacking==1.1.0 requires flake8<2.7.0,>=2.6.0, but that version has a problem around fstring
-pip install -U flake8 flake8-docstrings
-
-# install matplotlib
-pip install matplotlib
-
-# install warp-ctc (use @jnishi patched version)
-git clone https://github.com/jnishi/warp-ctc.git -b pytorch-1.0.0
-cd warp-ctc && mkdir build && cd build && cmake .. && make -j4 && cd ..
-pip install cffi
-cd pytorch_binding && python setup.py install && cd ../..
-
-# install chainer_ctc
-pip install cython
-mkdir -p tools
-cd tools && git clone https://github.com/jheymann85/chainer_ctc.git
-cd chainer_ctc && chmod +x install_warp-ctc.sh && ./install_warp-ctc.sh
-pip install . && cd ../..
-
-# install warp-transducer
-git clone https://github.com/HawkAaron/warp-transducer.git
-cd warp-transducer && mkdir build && cd build && cmake .. && make && cd ..
-cd pytorch_binding && python setup.py install && cd ../..
+pip3 install -e ".[test]"
+pip3 install -e ".[doc]"
 
 # log
-pip freeze
+pip3 freeze

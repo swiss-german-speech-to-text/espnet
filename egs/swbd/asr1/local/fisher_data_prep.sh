@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Copyright 2013  Johns Hopkins University (Author: Daniel Povey)
 # Apache 2.0.
@@ -58,9 +58,9 @@ links=data/local/data_fisher/links
 
 . ./path.sh # Needed for KALDI_ROOT
 
-sph2pipe=$KALDI_ROOT/tools/sph2pipe_v2.5/sph2pipe
+sph2pipe=sph2pipe
 
-if [ ! -x $sph2pipe ]; then
+if ! command -v "${sph2pipe}" &> /dev/null; then
    echo "Could not find (or execute) the sph2pipe program at $sph2pipe";
    exit 1;
 fi
@@ -69,10 +69,10 @@ fi
 
 if [ $stage -le 0 ]; then
 
-  find $links/fe_03_p1_tran/data $links/fe_03_p2_tran/data -iname '*.txt'  > $tmpdir/transcripts.flist
+  find -L $links/fe_03_p1_tran/data $links/fe_03_p2_tran/data -iname '*.txt'  > $tmpdir/transcripts.flist
 
   for dir in fe_03_p{1,2}_sph{1,2,3,4,5,6,7}; do
-    find $links/$dir/ -iname '*.sph'
+    find -L $links/$dir/ -iname '*.sph'
   done > $tmpdir/sph.flist
 
   n=`cat $tmpdir/transcripts.flist | wc -l`

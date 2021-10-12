@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 mindepth=0
 maxdepth=1
 
@@ -28,8 +28,8 @@ cat << EOF
 - date: \`$(LC_ALL=C date)\`
 EOF
 
-python << EOF
-import sys, espnet, chainer, torch
+python3 << EOF
+import sys, espnet, torch
 pyversion = sys.version.replace('\n', ' ')
 
 print(f"""- python version: \`{pyversion}\`
@@ -44,21 +44,27 @@ cat << EOF
 EOF
 
 while IFS= read -r expdir; do
-    if ls "${expdir}"/decode_*/score_wer/result.txt &> /dev/null; then
+    if ls "${expdir}"/*/*/score_*/result.txt &> /dev/null; then
         echo "## $(basename ${expdir})"
         for type in wer cer ter; do
-            if ls "${expdir}"/decode_*/score_${type}/result.txt &> /dev/null; then
-                cat << EOF
+                	cat << EOF
 ### ${type^^}
 
 |dataset|Snt|Wrd|Corr|Sub|Del|Ins|Err|S.Err|
 |---|---|---|---|---|---|---|---|---|
 EOF
-                grep -e Avg "${expdir}"/decode_*/score_${type}/result.txt \
-                    | sed -e "s#${expdir}/\([^/]*\)/score_${type}/result.txt:#|\1#g" \
-                    | sed -e 's#Sum/Avg##g' | tr '|' ' ' | tr -s ' ' '|'
-                echo
-            fi
+		if  [[ $type == "wer" ]] && [[ -n $(ls ${expdir}/*/*/score_wer/scoring/*.filt.sys) ]] ; then
+	    		## If STM used for HUBSCR based scoring, the *.sys files have the WER, not result.txt or result.wrd.txt
+            		grep -H -e Sum/Avg "${expdir}"/*/*/score_wer/scoring/*.filt.sys \
+				| sed -e "s#${expdir}/\([^/]*/[^/]*\)/score_wer/scoring/\([[:graph:]]*\):#|\1/\2#g" \
+			| sed -e 's#Sum/Avg##g' | tr '|' ' ' | tr -s ' ' '|'
+	    		echo 
+	    	elif ls "${expdir}"/*/*/score_${type}/result.txt &> /dev/null; then
+                		grep -H -e Avg "${expdir}"/*/*/score_${type}/result.txt \
+                    		| sed -e "s#${expdir}/\([^/]*/[^/]*\)/score_${type}/result.txt:#|\1#g" \
+                    		| sed -e 's#Sum/Avg##g' | tr '|' ' ' | tr -s ' ' '|'
+                 		echo
+    	        fi
         done
     fi
 

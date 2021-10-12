@@ -1,11 +1,11 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Copyright 2018 Nagoya University (Tomoki Hayashi)
 #  Apache 2.0  (http://www.apache.org/licenses/LICENSE-2.0)
 
 # Begin configuration section.
 nj=4
-fs=22050
+fs=none
 fmax=
 fmin=
 n_mels=80

@@ -1,3 +1,6 @@
+from contextlib import contextmanager
+from distutils.version import LooseVersion
+import logging
 from typing import Dict
 from typing import List
 from typing import Optional
@@ -17,10 +20,20 @@ from espnet2.asr.ctc import CTC
 from espnet2.asr.decoder.abs_decoder import AbsDecoder
 from espnet2.asr.encoder.abs_encoder import AbsEncoder
 from espnet2.asr.frontend.abs_frontend import AbsFrontend
+from espnet2.asr.postencoder.abs_postencoder import AbsPostEncoder
+from espnet2.asr.preencoder.abs_preencoder import AbsPreEncoder
 from espnet2.asr.specaug.abs_specaug import AbsSpecAug
 from espnet2.layers.abs_normalize import AbsNormalize
 from espnet2.torch_utils.device_funcs import force_gatherable
 from espnet2.train.abs_espnet_model import AbsESPnetModel
+
+if LooseVersion(torch.__version__) >= LooseVersion("1.6.0"):
+    from torch.cuda.amp import autocast
+else:
+    # Nothing to do if torch<1.6.0
+    @contextmanager
+    def autocast(enabled=True):
+        yield
 
 
 class ESPnetASRModel(AbsESPnetModel):
@@ -33,7 +46,9 @@ class ESPnetASRModel(AbsESPnetModel):
         frontend: Optional[AbsFrontend],
         specaug: Optional[AbsSpecAug],
         normalize: Optional[AbsNormalize],
+        preencoder: Optional[AbsPreEncoder],
         encoder: AbsEncoder,
+        postencoder: Optional[AbsPostEncoder],
         decoder: AbsDecoder,
         ctc: CTC,
         rnnt_decoder: None,
@@ -45,6 +60,7 @@ class ESPnetASRModel(AbsESPnetModel):
         report_wer: bool = True,
         sym_space: str = "<space>",
         sym_blank: str = "<blank>",
+        extract_feats_in_collect_stats: bool = True,
     ):
         assert check_argument_types()
         assert 0.0 <= ctc_weight <= 1.0, ctc_weight
@@ -62,8 +78,17 @@ class ESPnetASRModel(AbsESPnetModel):
         self.frontend = frontend
         self.specaug = specaug
         self.normalize = normalize
+        self.preencoder = preencoder
+        self.postencoder = postencoder
         self.encoder = encoder
-        self.decoder = decoder
+        # we set self.decoder = None in the CTC mode since
+        # self.decoder parameters were never used and PyTorch complained
+        # and threw an Exception in the multi-GPU experiment.
+        # thanks Jeff Farris for pointing out the issue.
+        if ctc_weight == 1.0:
+            self.decoder = None
+        else:
+            self.decoder = decoder
         if ctc_weight == 0.0:
             self.ctc = None
         else:
@@ -82,6 +107,8 @@ class ESPnetASRModel(AbsESPnetModel):
             )
         else:
             self.error_calculator = None
+
+        self.extract_feats_in_collect_stats = extract_feats_in_collect_stats
 
     def forward(
         self,
@@ -162,7 +189,16 @@ class ESPnetASRModel(AbsESPnetModel):
         text: torch.Tensor,
         text_lengths: torch.Tensor,
     ) -> Dict[str, torch.Tensor]:
-        feats, feats_lengths = self._extract_feats(speech, speech_lengths)
+        if self.extract_feats_in_collect_stats:
+            feats, feats_lengths = self._extract_feats(speech, speech_lengths)
+        else:
+            # Generate dummy stats if extract_feats_in_collect_stats is False
+            logging.warning(
+                "Generating dummy stats for feats and feats_lengths, "
+                "because encoder_conf.extract_feats_in_collect_stats is "
+                f"{self.extract_feats_in_collect_stats}"
+            )
+            feats, feats_lengths = speech, speech_lengths
         return {"feats": feats, "feats_lengths": feats_lengths}
 
     def encode(
@@ -174,21 +210,32 @@ class ESPnetASRModel(AbsESPnetModel):
             speech: (Batch, Length, ...)
             speech_lengths: (Batch, )
         """
-        # 1. Extract feats
-        feats, feats_lengths = self._extract_feats(speech, speech_lengths)
+        with autocast(False):
+            # 1. Extract feats
+            feats, feats_lengths = self._extract_feats(speech, speech_lengths)
 
-        # 2. Data augmentation for spectrogram
-        if self.specaug is not None and self.training:
-            feats, feats_lengths = self.specaug(feats, feats_lengths)
+            # 2. Data augmentation
+            if self.specaug is not None and self.training:
+                feats, feats_lengths = self.specaug(feats, feats_lengths)
 
-        # 3. Normalization for feature: e.g. Global-CMVN, Utterance-CMVN
-        if self.normalize is not None:
-            feats, feats_lengths = self.normalize(feats, feats_lengths)
+            # 3. Normalization for feature: e.g. Global-CMVN, Utterance-CMVN
+            if self.normalize is not None:
+                feats, feats_lengths = self.normalize(feats, feats_lengths)
+
+        # Pre-encoder, e.g. used for raw input data
+        if self.preencoder is not None:
+            feats, feats_lengths = self.preencoder(feats, feats_lengths)
 
         # 4. Forward encoder
         # feats: (Batch, Length, Dim)
         # -> encoder_out: (Batch, Length2, Dim2)
         encoder_out, encoder_out_lens, _ = self.encoder(feats, feats_lengths)
+
+        # Post-encoder, e.g. NLU
+        if self.postencoder is not None:
+            encoder_out, encoder_out_lens = self.postencoder(
+                encoder_out, encoder_out_lens
+            )
 
         assert encoder_out.size(0) == speech.size(0), (
             encoder_out.size(),
