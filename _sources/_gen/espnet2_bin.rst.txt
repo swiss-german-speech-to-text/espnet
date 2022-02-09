@@ -152,8 +152,9 @@ asr_inference.py
                             [--maxlenratio MAXLENRATIO]
                             [--minlenratio MINLENRATIO] [--ctc_weight CTC_WEIGHT]
                             [--lm_weight LM_WEIGHT] [--ngram_weight NGRAM_WEIGHT]
-                            [--streaming STREAMING] [--token_type {char,bpe,None}]
-                            [--bpemodel BPEMODEL]
+                            [--streaming STREAMING]
+                            [--transducer_conf TRANSDUCER_CONF]
+                            [--token_type {char,bpe,None}] [--bpemodel BPEMODEL]
     
     ASR Decoding
     
@@ -217,6 +218,109 @@ asr_inference.py
       --ngram_weight NGRAM_WEIGHT
                             ngram weight (default: 0.9)
       --streaming STREAMING
+      --transducer_conf TRANSDUCER_CONF
+                            The keyword arguments for transducer beam search.
+                            (default: None)
+    
+    Text converter related:
+      --token_type {char,bpe,None}
+                            The token type for ASR model. If not given, refers
+                            from the training args (default: None)
+      --bpemodel BPEMODEL   The model path of sentencepiece. If not given, refers
+                            from the training args (default: None)
+.. _asr_inference_streaming.py:
+
+asr_inference_streaming.py
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: none
+
+    usage: asr_inference_streaming.py [-h] [--config CONFIG]
+                                      [--log_level {CRITICAL,ERROR,WARNING,INFO,DEBUG,NOTSET}]
+                                      --output_dir OUTPUT_DIR [--ngpu NGPU]
+                                      [--seed SEED]
+                                      [--dtype {float16,float32,float64}]
+                                      [--num_workers NUM_WORKERS]
+                                      --data_path_and_name_and_type
+                                      DATA_PATH_AND_NAME_AND_TYPE
+                                      [--key_file KEY_FILE]
+                                      [--allow_variable_data_keys ALLOW_VARIABLE_DATA_KEYS]
+                                      [--sim_chunk_length SIM_CHUNK_LENGTH]
+                                      --asr_train_config ASR_TRAIN_CONFIG
+                                      --asr_model_file ASR_MODEL_FILE
+                                      [--lm_train_config LM_TRAIN_CONFIG]
+                                      [--lm_file LM_FILE]
+                                      [--word_lm_train_config WORD_LM_TRAIN_CONFIG]
+                                      [--word_lm_file WORD_LM_FILE]
+                                      [--batch_size BATCH_SIZE] [--nbest NBEST]
+                                      [--beam_size BEAM_SIZE] [--penalty PENALTY]
+                                      [--maxlenratio MAXLENRATIO]
+                                      [--minlenratio MINLENRATIO]
+                                      [--ctc_weight CTC_WEIGHT]
+                                      [--lm_weight LM_WEIGHT]
+                                      [--disable_repetition_detection DISABLE_REPETITION_DETECTION]
+                                      [--encoded_feat_length_limit ENCODED_FEAT_LENGTH_LIMIT]
+                                      [--decoder_text_length_limit DECODER_TEXT_LENGTH_LIMIT]
+                                      [--token_type {char,bpe,None}]
+                                      [--bpemodel BPEMODEL]
+    
+    ASR Decoding
+    
+    optional arguments:
+      --config CONFIG       Give config file in yaml format (default: None)
+      --log_level {CRITICAL,ERROR,WARNING,INFO,DEBUG,NOTSET}
+                            The verbose level of logging (default: INFO)
+      --output_dir OUTPUT_DIR
+      --ngpu NGPU           The number of gpus. 0 indicates CPU mode (default: 0)
+      --seed SEED           Random seed (default: 0)
+      --dtype {float16,float32,float64}
+                            Data type (default: float32)
+      --num_workers NUM_WORKERS
+                            The number of workers used for DataLoader (default: 1)
+    
+    Input data related:
+      --data_path_and_name_and_type DATA_PATH_AND_NAME_AND_TYPE
+      --key_file KEY_FILE
+      --allow_variable_data_keys ALLOW_VARIABLE_DATA_KEYS
+      --sim_chunk_length SIM_CHUNK_LENGTH
+                            The length of one chunk, to which speech will be
+                            divided for evalution of streaming processing.
+                            (default: 0)
+    
+    The model configuration related:
+      --asr_train_config ASR_TRAIN_CONFIG
+      --asr_model_file ASR_MODEL_FILE
+      --lm_train_config LM_TRAIN_CONFIG
+      --lm_file LM_FILE
+      --word_lm_train_config WORD_LM_TRAIN_CONFIG
+      --word_lm_file WORD_LM_FILE
+    
+    Beam-search related:
+      --batch_size BATCH_SIZE
+                            The batch size for inference (default: 1)
+      --nbest NBEST         Output N-best hypotheses (default: 1)
+      --beam_size BEAM_SIZE
+                            Beam size (default: 20)
+      --penalty PENALTY     Insertion penalty (default: 0.0)
+      --maxlenratio MAXLENRATIO
+                            Input length ratio to obtain max output length. If
+                            maxlenratio=0.0 (default), it uses a end-detect
+                            function to automatically find maximum hypothesis
+                            lengths (default: 0.0)
+      --minlenratio MINLENRATIO
+                            Input length ratio to obtain min output length
+                            (default: 0.0)
+      --ctc_weight CTC_WEIGHT
+                            CTC weight in joint decoding (default: 0.5)
+      --lm_weight LM_WEIGHT
+                            RNNLM weight (default: 1.0)
+      --disable_repetition_detection DISABLE_REPETITION_DETECTION
+      --encoded_feat_length_limit ENCODED_FEAT_LENGTH_LIMIT
+                            Limit the lengths of the encoded featureto input to
+                            the decoder. (default: 0)
+      --decoder_text_length_limit DECODER_TEXT_LENGTH_LIMIT
+                            Limit the lengths of the textto input to the decoder.
+                            (default: 0)
     
     Text converter related:
       --token_type {char,bpe,None}
@@ -257,11 +361,13 @@ asr_train.py
                         [--early_stopping_criterion EARLY_STOPPING_CRITERION EARLY_STOPPING_CRITERION EARLY_STOPPING_CRITERION]
                         [--best_model_criterion BEST_MODEL_CRITERION [BEST_MODEL_CRITERION ...]]
                         [--keep_nbest_models KEEP_NBEST_MODELS [KEEP_NBEST_MODELS ...]]
+                        [--nbest_averaging_interval NBEST_AVERAGING_INTERVAL]
                         [--grad_clip GRAD_CLIP] [--grad_clip_type GRAD_CLIP_TYPE]
                         [--grad_noise GRAD_NOISE] [--accum_grad ACCUM_GRAD]
                         [--no_forward_run NO_FORWARD_RUN] [--resume RESUME]
                         [--train_dtype {float16,float32,float64}]
                         [--use_amp USE_AMP] [--log_interval LOG_INTERVAL]
+                        [--use_matplotlib USE_MATPLOTLIB]
                         [--use_tensorboard USE_TENSORBOARD]
                         [--use_wandb USE_WANDB] [--wandb_project WANDB_PROJECT]
                         [--wandb_id WANDB_ID] [--wandb_entity WANDB_ENTITY]
@@ -294,36 +400,37 @@ asr_train.py
                         [--max_cache_size MAX_CACHE_SIZE]
                         [--max_cache_fd MAX_CACHE_FD]
                         [--valid_max_cache_size VALID_MAX_CACHE_SIZE]
-                        [--optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,radam,sgdw,yogi}]
+                        [--optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}]
                         [--optim_conf OPTIM_CONF]
                         [--scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}]
                         [--scheduler_conf SCHEDULER_CONF]
                         [--token_list TOKEN_LIST]
                         [--init {chainer,xavier_uniform,xavier_normal,kaiming_uniform,kaiming_normal,None}]
                         [--input_size INPUT_SIZE] [--ctc_conf CTC_CONF]
+                        [--joint_net_conf JOINT_NET_CONF]
                         [--model_conf MODEL_CONF]
                         [--use_preprocessor USE_PREPROCESSOR]
                         [--token_type {bpe,char,word,phn}] [--bpemodel BPEMODEL]
                         [--non_linguistic_symbols NON_LINGUISTIC_SYMBOLS]
                         [--cleaner {None,tacotron,jaconv,vietnamese}]
-                        [--g2p {None,g2p_en,g2p_en_no_space,pyopenjtalk,pyopenjtalk_kana,pyopenjtalk_accent,pyopenjtalk_accent_with_pause,pyopenjtalk_prosody,pypinyin_g2p,pypinyin_g2p_phone,espeak_ng_arabic,espeak_ng_german,espeak_ng_french,espeak_ng_spanish,espeak_ng_russian,espeak_ng_greek,espeak_ng_finnish,espeak_ng_hungarian,espeak_ng_dutch,espeak_ng_english_us_vits,espeak_ng_hindi,g2pk,g2pk_no_space}]
+                        [--g2p {None,g2p_en,g2p_en_no_space,pyopenjtalk,pyopenjtalk_kana,pyopenjtalk_accent,pyopenjtalk_accent_with_pause,pyopenjtalk_prosody,pypinyin_g2p,pypinyin_g2p_phone,espeak_ng_arabic,espeak_ng_german,espeak_ng_french,espeak_ng_spanish,espeak_ng_russian,espeak_ng_greek,espeak_ng_finnish,espeak_ng_hungarian,espeak_ng_dutch,espeak_ng_english_us_vits,espeak_ng_hindi,g2pk,g2pk_no_space,korean_jaso,korean_jaso_no_space}]
                         [--speech_volume_normalize SPEECH_VOLUME_NORMALIZE]
                         [--rir_scp RIR_SCP] [--rir_apply_prob RIR_APPLY_PROB]
                         [--noise_scp NOISE_SCP]
                         [--noise_apply_prob NOISE_APPLY_PROB]
                         [--noise_db_range NOISE_DB_RANGE]
-                        [--frontend {default,sliding_window,s3prl}]
+                        [--frontend {default,sliding_window,s3prl,fused}]
                         [--frontend_conf FRONTEND_CONF] [--specaug {specaug,None}]
                         [--specaug_conf SPECAUG_CONF]
                         [--normalize {global_mvn,utterance_mvn,None}]
                         [--normalize_conf NORMALIZE_CONF]
                         [--preencoder {sinc,linear,None}]
                         [--preencoder_conf PREENCODER_CONF]
-                        [--encoder {conformer,transformer,contextual_block_transformer,vgg_rnn,rnn,wav2vec2,hubert,hubert_pretrain}]
+                        [--encoder {conformer,transformer,contextual_block_transformer,contextual_block_conformer,vgg_rnn,rnn,wav2vec2,hubert,hubert_pretrain}]
                         [--encoder_conf ENCODER_CONF]
                         [--postencoder {hugging_face_transformers,None}]
                         [--postencoder_conf POSTENCODER_CONF]
-                        [--decoder {transformer,lightweight_conv,lightweight_conv2d,dynamic_conv,dynamic_conv2d,rnn}]
+                        [--decoder {transformer,lightweight_conv,lightweight_conv2d,dynamic_conv,dynamic_conv2d,rnn,transducer}]
                         [--decoder_conf DECODER_CONF]
     
     base parser
@@ -334,7 +441,7 @@ asr_train.py
                             non_linguistic_symbols file path (default: None)
       --cleaner {None,tacotron,jaconv,vietnamese}
                             Apply text cleaning (default: None)
-      --g2p {None,g2p_en,g2p_en_no_space,pyopenjtalk,pyopenjtalk_kana,pyopenjtalk_accent,pyopenjtalk_accent_with_pause,pyopenjtalk_prosody,pypinyin_g2p,pypinyin_g2p_phone,espeak_ng_arabic,espeak_ng_german,espeak_ng_french,espeak_ng_spanish,espeak_ng_russian,espeak_ng_greek,espeak_ng_finnish,espeak_ng_hungarian,espeak_ng_dutch,espeak_ng_english_us_vits,espeak_ng_hindi,g2pk,g2pk_no_space}
+      --g2p {None,g2p_en,g2p_en_no_space,pyopenjtalk,pyopenjtalk_kana,pyopenjtalk_accent,pyopenjtalk_accent_with_pause,pyopenjtalk_prosody,pypinyin_g2p,pypinyin_g2p_phone,espeak_ng_arabic,espeak_ng_german,espeak_ng_french,espeak_ng_spanish,espeak_ng_russian,espeak_ng_greek,espeak_ng_finnish,espeak_ng_hungarian,espeak_ng_dutch,espeak_ng_english_us_vits,espeak_ng_hindi,g2pk,g2pk_no_space,korean_jaso,korean_jaso_no_space}
                             Specify g2p method if --token_type=phn (default: None)
       --speech_volume_normalize SPEECH_VOLUME_NORMALIZE
                             Scale the maximum amplitude to the given value. (default: None)
@@ -413,6 +520,8 @@ asr_train.py
                             The criterion used for judging of the best model. Give a pair referring the phase, "train" or "valid",the criterion name, and the mode, "min" or "max", e.g. "acc,max". (default: [('train', 'loss', 'min'), ('valid', 'loss', 'min'), ('train', 'acc', 'max'), ('valid', 'acc', 'max')])
       --keep_nbest_models KEEP_NBEST_MODELS [KEEP_NBEST_MODELS ...]
                             Remove previous snapshots excluding the n-best scored epochs (default: [10])
+      --nbest_averaging_interval NBEST_AVERAGING_INTERVAL
+                            The epoch interval to apply model averaging and save nbest models (default: 0)
       --grad_clip GRAD_CLIP
                             Gradient norm threshold to clip (default: 5.0)
       --grad_clip_type GRAD_CLIP_TYPE
@@ -429,6 +538,8 @@ asr_train.py
       --use_amp USE_AMP     Enable Automatic Mixed Precision. This feature requires pytorch>=1.6 (default: False)
       --log_interval LOG_INTERVAL
                             Show the logs every the number iterations in each epochs at the training phase. If None is given, it is decided according the number of training samples automatically . (default: None)
+      --use_matplotlib USE_MATPLOTLIB
+                            Enable matplotlib logging (default: True)
       --use_tensorboard USE_TENSORBOARD
                             Enable tensorboard logging (default: True)
       --use_wandb USE_WANDB
@@ -643,7 +754,7 @@ asr_train.py
                             The maximum cache size for validation data loader. e.g. 10MB, 20GB. If None, the 5 percent size of --max_cache_size (default: None)
     
     Optimizer related:
-      --optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,radam,sgdw,yogi}
+      --optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}
                             The optimizer type (default: adadelta)
       --optim_conf OPTIM_CONF
                             The keyword arguments for optimizer (default: {})
@@ -661,6 +772,8 @@ asr_train.py
       --input_size INPUT_SIZE
                             The number of input dimension of the feature (default: None)
       --ctc_conf CTC_CONF   The keyword arguments for CTC class. (default: {'dropout_rate': 0.0, 'ctc_type': 'builtin', 'reduce': True, 'ignore_nan_grad': True})
+      --joint_net_conf JOINT_NET_CONF
+                            The keyword arguments for joint network class. (default: None)
       --model_conf MODEL_CONF
                             The keyword arguments for model class. (default: {'ctc_weight': 0.5, 'ignore_id': -1, 'lsm_weight': 0.0, 'length_normalized_loss': False, 'report_cer': True, 'report_wer': True, 'sym_space': '<space>', 'sym_blank': '<blank>', 'extract_feats_in_collect_stats': True})
     
@@ -671,7 +784,7 @@ asr_train.py
       --token_type {bpe,char,word,phn}
                             The text will be tokenized in the specified level token (default: bpe)
       --bpemodel BPEMODEL   The model file of sentencepiece (default: None)
-      --frontend {default,sliding_window,s3prl}
+      --frontend {default,sliding_window,s3prl,fused}
                             The frontend type (default: default)
       --frontend_conf FRONTEND_CONF
                             The keyword arguments for frontend (default: {})
@@ -687,7 +800,7 @@ asr_train.py
                             The preencoder type (default: None)
       --preencoder_conf PREENCODER_CONF
                             The keyword arguments for preencoder (default: {})
-      --encoder {conformer,transformer,contextual_block_transformer,vgg_rnn,rnn,wav2vec2,hubert,hubert_pretrain}
+      --encoder {conformer,transformer,contextual_block_transformer,contextual_block_conformer,vgg_rnn,rnn,wav2vec2,hubert,hubert_pretrain}
                             The encoder type (default: rnn)
       --encoder_conf ENCODER_CONF
                             The keyword arguments for encoder (default: {})
@@ -695,7 +808,7 @@ asr_train.py
                             The postencoder type (default: None)
       --postencoder_conf POSTENCODER_CONF
                             The keyword arguments for postencoder (default: {})
-      --decoder {transformer,lightweight_conv,lightweight_conv2d,dynamic_conv,dynamic_conv2d,rnn}
+      --decoder {transformer,lightweight_conv,lightweight_conv2d,dynamic_conv,dynamic_conv2d,rnn,transducer}
                             The decoder type (default: rnn)
       --decoder_conf DECODER_CONF
                             The keyword arguments for decoder (default: {})
@@ -797,11 +910,13 @@ diar_train.py
                          [--early_stopping_criterion EARLY_STOPPING_CRITERION EARLY_STOPPING_CRITERION EARLY_STOPPING_CRITERION]
                          [--best_model_criterion BEST_MODEL_CRITERION [BEST_MODEL_CRITERION ...]]
                          [--keep_nbest_models KEEP_NBEST_MODELS [KEEP_NBEST_MODELS ...]]
+                         [--nbest_averaging_interval NBEST_AVERAGING_INTERVAL]
                          [--grad_clip GRAD_CLIP] [--grad_clip_type GRAD_CLIP_TYPE]
                          [--grad_noise GRAD_NOISE] [--accum_grad ACCUM_GRAD]
                          [--no_forward_run NO_FORWARD_RUN] [--resume RESUME]
                          [--train_dtype {float16,float32,float64}]
                          [--use_amp USE_AMP] [--log_interval LOG_INTERVAL]
+                         [--use_matplotlib USE_MATPLOTLIB]
                          [--use_tensorboard USE_TENSORBOARD]
                          [--use_wandb USE_WANDB] [--wandb_project WANDB_PROJECT]
                          [--wandb_id WANDB_ID] [--wandb_entity WANDB_ENTITY]
@@ -834,7 +949,7 @@ diar_train.py
                          [--max_cache_size MAX_CACHE_SIZE]
                          [--max_cache_fd MAX_CACHE_FD]
                          [--valid_max_cache_size VALID_MAX_CACHE_SIZE]
-                         [--optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,radam,sgdw,yogi}]
+                         [--optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}]
                          [--optim_conf OPTIM_CONF]
                          [--scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}]
                          [--scheduler_conf SCHEDULER_CONF] [--num_spk NUM_SPK]
@@ -843,6 +958,7 @@ diar_train.py
                          [--use_preprocessor USE_PREPROCESSOR]
                          [--frontend {default,sliding_window,s3prl}]
                          [--frontend_conf FRONTEND_CONF]
+                         [--specaug {specaug,None}] [--specaug_conf SPECAUG_CONF]
                          [--normalize {global_mvn,utterance_mvn,None}]
                          [--normalize_conf NORMALIZE_CONF]
                          [--encoder {conformer,transformer,rnn}]
@@ -923,6 +1039,8 @@ diar_train.py
                             The criterion used for judging of the best model. Give a pair referring the phase, "train" or "valid",the criterion name, and the mode, "min" or "max", e.g. "acc,max". (default: [('train', 'loss', 'min'), ('valid', 'loss', 'min'), ('train', 'acc', 'max'), ('valid', 'acc', 'max')])
       --keep_nbest_models KEEP_NBEST_MODELS [KEEP_NBEST_MODELS ...]
                             Remove previous snapshots excluding the n-best scored epochs (default: [10])
+      --nbest_averaging_interval NBEST_AVERAGING_INTERVAL
+                            The epoch interval to apply model averaging and save nbest models (default: 0)
       --grad_clip GRAD_CLIP
                             Gradient norm threshold to clip (default: 5.0)
       --grad_clip_type GRAD_CLIP_TYPE
@@ -939,6 +1057,8 @@ diar_train.py
       --use_amp USE_AMP     Enable Automatic Mixed Precision. This feature requires pytorch>=1.6 (default: False)
       --log_interval LOG_INTERVAL
                             Show the logs every the number iterations in each epochs at the training phase. If None is given, it is decided according the number of training samples automatically . (default: None)
+      --use_matplotlib USE_MATPLOTLIB
+                            Enable matplotlib logging (default: True)
       --use_tensorboard USE_TENSORBOARD
                             Enable tensorboard logging (default: True)
       --use_wandb USE_WANDB
@@ -1153,7 +1273,7 @@ diar_train.py
                             The maximum cache size for validation data loader. e.g. 10MB, 20GB. If None, the 5 percent size of --max_cache_size (default: None)
     
     Optimizer related:
-      --optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,radam,sgdw,yogi}
+      --optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}
                             The optimizer type (default: adadelta)
       --optim_conf OPTIM_CONF
                             The keyword arguments for optimizer (default: {})
@@ -1180,6 +1300,10 @@ diar_train.py
                             The frontend type (default: default)
       --frontend_conf FRONTEND_CONF
                             The keyword arguments for frontend (default: {})
+      --specaug {specaug,None}
+                            The specaug type (default: None)
+      --specaug_conf SPECAUG_CONF
+                            The keyword arguments for specaug (default: {})
       --normalize {global_mvn,utterance_mvn,None}
                             The normalize type (default: utterance_mvn)
       --normalize_conf NORMALIZE_CONF
@@ -1341,11 +1465,13 @@ enh_train.py
                         [--early_stopping_criterion EARLY_STOPPING_CRITERION EARLY_STOPPING_CRITERION EARLY_STOPPING_CRITERION]
                         [--best_model_criterion BEST_MODEL_CRITERION [BEST_MODEL_CRITERION ...]]
                         [--keep_nbest_models KEEP_NBEST_MODELS [KEEP_NBEST_MODELS ...]]
+                        [--nbest_averaging_interval NBEST_AVERAGING_INTERVAL]
                         [--grad_clip GRAD_CLIP] [--grad_clip_type GRAD_CLIP_TYPE]
                         [--grad_noise GRAD_NOISE] [--accum_grad ACCUM_GRAD]
                         [--no_forward_run NO_FORWARD_RUN] [--resume RESUME]
                         [--train_dtype {float16,float32,float64}]
                         [--use_amp USE_AMP] [--log_interval LOG_INTERVAL]
+                        [--use_matplotlib USE_MATPLOTLIB]
                         [--use_tensorboard USE_TENSORBOARD]
                         [--use_wandb USE_WANDB] [--wandb_project WANDB_PROJECT]
                         [--wandb_id WANDB_ID] [--wandb_entity WANDB_ENTITY]
@@ -1378,12 +1504,12 @@ enh_train.py
                         [--max_cache_size MAX_CACHE_SIZE]
                         [--max_cache_fd MAX_CACHE_FD]
                         [--valid_max_cache_size VALID_MAX_CACHE_SIZE]
-                        [--optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,radam,sgdw,yogi}]
+                        [--optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}]
                         [--optim_conf OPTIM_CONF]
                         [--scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}]
                         [--scheduler_conf SCHEDULER_CONF]
                         [--init {chainer,xavier_uniform,xavier_normal,kaiming_uniform,kaiming_normal,None}]
-                        [--model_conf MODEL_CONF]
+                        [--model_conf MODEL_CONF] [--criterions CRITERIONS]
                         [--use_preprocessor USE_PREPROCESSOR]
                         [--encoder {stft,conv,same}] [--encoder_conf ENCODER_CONF]
                         [--separator {rnn,tcn,dprnn,transformer,conformer,wpe_beamformer,asteroid}]
@@ -1460,6 +1586,8 @@ enh_train.py
                             The criterion used for judging of the best model. Give a pair referring the phase, "train" or "valid",the criterion name, and the mode, "min" or "max", e.g. "acc,max". (default: [('train', 'loss', 'min'), ('valid', 'loss', 'min'), ('train', 'acc', 'max'), ('valid', 'acc', 'max')])
       --keep_nbest_models KEEP_NBEST_MODELS [KEEP_NBEST_MODELS ...]
                             Remove previous snapshots excluding the n-best scored epochs (default: [10])
+      --nbest_averaging_interval NBEST_AVERAGING_INTERVAL
+                            The epoch interval to apply model averaging and save nbest models (default: 0)
       --grad_clip GRAD_CLIP
                             Gradient norm threshold to clip (default: 5.0)
       --grad_clip_type GRAD_CLIP_TYPE
@@ -1476,6 +1604,8 @@ enh_train.py
       --use_amp USE_AMP     Enable Automatic Mixed Precision. This feature requires pytorch>=1.6 (default: False)
       --log_interval LOG_INTERVAL
                             Show the logs every the number iterations in each epochs at the training phase. If None is given, it is decided according the number of training samples automatically . (default: None)
+      --use_matplotlib USE_MATPLOTLIB
+                            Enable matplotlib logging (default: True)
       --use_tensorboard USE_TENSORBOARD
                             Enable tensorboard logging (default: True)
       --use_wandb USE_WANDB
@@ -1690,7 +1820,7 @@ enh_train.py
                             The maximum cache size for validation data loader. e.g. 10MB, 20GB. If None, the 5 percent size of --max_cache_size (default: None)
     
     Optimizer related:
-      --optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,radam,sgdw,yogi}
+      --optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}
                             The optimizer type (default: adadelta)
       --optim_conf OPTIM_CONF
                             The keyword arguments for optimizer (default: {})
@@ -1705,6 +1835,8 @@ enh_train.py
                             The initialization method (default: None)
       --model_conf MODEL_CONF
                             The keyword arguments for model class. (default: {'stft_consistency': False, 'loss_type': 'mask_mse', 'mask_type': None})
+      --criterions CRITERIONS
+                            The criterions binded with the loss wrappers. (default: [{'name': 'si_snr', 'conf': {}, 'wrapper': 'fixed_order', 'wrapper_conf': {}}])
     
       Preprocess related
     
@@ -1756,12 +1888,14 @@ gan_tts_train.py
                             [--early_stopping_criterion EARLY_STOPPING_CRITERION EARLY_STOPPING_CRITERION EARLY_STOPPING_CRITERION]
                             [--best_model_criterion BEST_MODEL_CRITERION [BEST_MODEL_CRITERION ...]]
                             [--keep_nbest_models KEEP_NBEST_MODELS [KEEP_NBEST_MODELS ...]]
+                            [--nbest_averaging_interval NBEST_AVERAGING_INTERVAL]
                             [--grad_clip GRAD_CLIP]
                             [--grad_clip_type GRAD_CLIP_TYPE]
                             [--grad_noise GRAD_NOISE] [--accum_grad ACCUM_GRAD]
                             [--no_forward_run NO_FORWARD_RUN] [--resume RESUME]
                             [--train_dtype {float16,float32,float64}]
                             [--use_amp USE_AMP] [--log_interval LOG_INTERVAL]
+                            [--use_matplotlib USE_MATPLOTLIB]
                             [--use_tensorboard USE_TENSORBOARD]
                             [--use_wandb USE_WANDB]
                             [--wandb_project WANDB_PROJECT] [--wandb_id WANDB_ID]
@@ -1795,11 +1929,11 @@ gan_tts_train.py
                             [--max_cache_size MAX_CACHE_SIZE]
                             [--max_cache_fd MAX_CACHE_FD]
                             [--valid_max_cache_size VALID_MAX_CACHE_SIZE]
-                            [--optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,radam,sgdw,yogi}]
+                            [--optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}]
                             [--optim_conf OPTIM_CONF]
                             [--scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}]
                             [--scheduler_conf SCHEDULER_CONF]
-                            [--optim2 {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,radam,sgdw,yogi}]
+                            [--optim2 {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}]
                             [--optim2_conf OPTIM2_CONF]
                             [--scheduler2 {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}]
                             [--scheduler2_conf SCHEDULER2_CONF]
@@ -1810,8 +1944,8 @@ gan_tts_train.py
                             [--token_type {bpe,char,word,phn}]
                             [--bpemodel BPEMODEL]
                             [--non_linguistic_symbols NON_LINGUISTIC_SYMBOLS]
-                            [--cleaner {None,tacotron,jaconv,vietnamese}]
-                            [--g2p {None,g2p_en,g2p_en_no_space,pyopenjtalk,pyopenjtalk_kana,pyopenjtalk_accent,pyopenjtalk_accent_with_pause,pyopenjtalk_prosody,pypinyin_g2p,pypinyin_g2p_phone,espeak_ng_arabic,espeak_ng_german,espeak_ng_french,espeak_ng_spanish,espeak_ng_russian,espeak_ng_greek,espeak_ng_finnish,espeak_ng_hungarian,espeak_ng_dutch,espeak_ng_english_us_vits,espeak_ng_hindi,g2pk,g2pk_no_space}]
+                            [--cleaner {None,tacotron,jaconv,vietnamese,korean_cleaner}]
+                            [--g2p {None,g2p_en,g2p_en_no_space,pyopenjtalk,pyopenjtalk_kana,pyopenjtalk_accent,pyopenjtalk_accent_with_pause,pyopenjtalk_prosody,pypinyin_g2p,pypinyin_g2p_phone,espeak_ng_arabic,espeak_ng_german,espeak_ng_french,espeak_ng_spanish,espeak_ng_russian,espeak_ng_greek,espeak_ng_finnish,espeak_ng_hungarian,espeak_ng_dutch,espeak_ng_english_us_vits,espeak_ng_hindi,g2pk,g2pk_no_space,korean_jaso,korean_jaso_no_space}]
                             [--feats_extract {fbank,log_spectrogram,linear_spectrogram}]
                             [--feats_extract_conf FEATS_EXTRACT_CONF]
                             [--normalize {global_mvn,utterance_mvn,None}]
@@ -1834,9 +1968,9 @@ gan_tts_train.py
                             Whether to update generator first. (default: False)
       --non_linguistic_symbols NON_LINGUISTIC_SYMBOLS
                             non_linguistic_symbols file path (default: None)
-      --cleaner {None,tacotron,jaconv,vietnamese}
+      --cleaner {None,tacotron,jaconv,vietnamese,korean_cleaner}
                             Apply text cleaning (default: None)
-      --g2p {None,g2p_en,g2p_en_no_space,pyopenjtalk,pyopenjtalk_kana,pyopenjtalk_accent,pyopenjtalk_accent_with_pause,pyopenjtalk_prosody,pypinyin_g2p,pypinyin_g2p_phone,espeak_ng_arabic,espeak_ng_german,espeak_ng_french,espeak_ng_spanish,espeak_ng_russian,espeak_ng_greek,espeak_ng_finnish,espeak_ng_hungarian,espeak_ng_dutch,espeak_ng_english_us_vits,espeak_ng_hindi,g2pk,g2pk_no_space}
+      --g2p {None,g2p_en,g2p_en_no_space,pyopenjtalk,pyopenjtalk_kana,pyopenjtalk_accent,pyopenjtalk_accent_with_pause,pyopenjtalk_prosody,pypinyin_g2p,pypinyin_g2p_phone,espeak_ng_arabic,espeak_ng_german,espeak_ng_french,espeak_ng_spanish,espeak_ng_russian,espeak_ng_greek,espeak_ng_finnish,espeak_ng_hungarian,espeak_ng_dutch,espeak_ng_english_us_vits,espeak_ng_hindi,g2pk,g2pk_no_space,korean_jaso,korean_jaso_no_space}
                             Specify g2p method if --token_type=phn (default: None)
     
     Common configuration:
@@ -1904,6 +2038,8 @@ gan_tts_train.py
                             The criterion used for judging of the best model. Give a pair referring the phase, "train" or "valid",the criterion name, and the mode, "min" or "max", e.g. "acc,max". (default: [('train', 'loss', 'min'), ('valid', 'loss', 'min'), ('train', 'acc', 'max'), ('valid', 'acc', 'max')])
       --keep_nbest_models KEEP_NBEST_MODELS [KEEP_NBEST_MODELS ...]
                             Remove previous snapshots excluding the n-best scored epochs (default: [10])
+      --nbest_averaging_interval NBEST_AVERAGING_INTERVAL
+                            The epoch interval to apply model averaging and save nbest models (default: 0)
       --grad_clip GRAD_CLIP
                             Gradient norm threshold to clip (default: 5.0)
       --grad_clip_type GRAD_CLIP_TYPE
@@ -1920,6 +2056,8 @@ gan_tts_train.py
       --use_amp USE_AMP     Enable Automatic Mixed Precision. This feature requires pytorch>=1.6 (default: False)
       --log_interval LOG_INTERVAL
                             Show the logs every the number iterations in each epochs at the training phase. If None is given, it is decided according the number of training samples automatically . (default: None)
+      --use_matplotlib USE_MATPLOTLIB
+                            Enable matplotlib logging (default: True)
       --use_tensorboard USE_TENSORBOARD
                             Enable tensorboard logging (default: True)
       --use_wandb USE_WANDB
@@ -2134,7 +2272,7 @@ gan_tts_train.py
                             The maximum cache size for validation data loader. e.g. 10MB, 20GB. If None, the 5 percent size of --max_cache_size (default: None)
     
     Optimizer related:
-      --optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,radam,sgdw,yogi}
+      --optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}
                             The optimizer type (default: adadelta)
       --optim_conf OPTIM_CONF
                             The keyword arguments for optimizer (default: {})
@@ -2142,7 +2280,7 @@ gan_tts_train.py
                             The lr scheduler type (default: None)
       --scheduler_conf SCHEDULER_CONF
                             The keyword arguments for lr scheduler (default: {})
-      --optim2 {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,radam,sgdw,yogi}
+      --optim2 {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}
                             The optimizer type (default: adadelta)
       --optim2_conf OPTIM2_CONF
                             The keyword arguments for optimizer (default: {})
@@ -2227,12 +2365,14 @@ hubert_train.py
                            [--early_stopping_criterion EARLY_STOPPING_CRITERION EARLY_STOPPING_CRITERION EARLY_STOPPING_CRITERION]
                            [--best_model_criterion BEST_MODEL_CRITERION [BEST_MODEL_CRITERION ...]]
                            [--keep_nbest_models KEEP_NBEST_MODELS [KEEP_NBEST_MODELS ...]]
+                           [--nbest_averaging_interval NBEST_AVERAGING_INTERVAL]
                            [--grad_clip GRAD_CLIP]
                            [--grad_clip_type GRAD_CLIP_TYPE]
                            [--grad_noise GRAD_NOISE] [--accum_grad ACCUM_GRAD]
                            [--no_forward_run NO_FORWARD_RUN] [--resume RESUME]
                            [--train_dtype {float16,float32,float64}]
                            [--use_amp USE_AMP] [--log_interval LOG_INTERVAL]
+                           [--use_matplotlib USE_MATPLOTLIB]
                            [--use_tensorboard USE_TENSORBOARD]
                            [--use_wandb USE_WANDB] [--wandb_project WANDB_PROJECT]
                            [--wandb_id WANDB_ID] [--wandb_entity WANDB_ENTITY]
@@ -2265,7 +2405,7 @@ hubert_train.py
                            [--max_cache_size MAX_CACHE_SIZE]
                            [--max_cache_fd MAX_CACHE_FD]
                            [--valid_max_cache_size VALID_MAX_CACHE_SIZE]
-                           [--optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,radam,sgdw,yogi}]
+                           [--optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}]
                            [--optim_conf OPTIM_CONF]
                            [--scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}]
                            [--scheduler_conf SCHEDULER_CONF]
@@ -2277,7 +2417,7 @@ hubert_train.py
                            [--bpemodel BPEMODEL]
                            [--non_linguistic_symbols NON_LINGUISTIC_SYMBOLS]
                            [--cleaner {None,tacotron,jaconv,vietnamese}]
-                           [--g2p {None,g2p_en,g2p_en_no_space,pyopenjtalk,pyopenjtalk_kana,pyopenjtalk_accent,pyopenjtalk_accent_with_pause,pyopenjtalk_prosody,pypinyin_g2p,pypinyin_g2p_phone,espeak_ng_arabic,espeak_ng_german,espeak_ng_french,espeak_ng_spanish,espeak_ng_russian,espeak_ng_greek,espeak_ng_finnish,espeak_ng_hungarian,espeak_ng_dutch,espeak_ng_english_us_vits,espeak_ng_hindi,g2pk,g2pk_no_space}]
+                           [--g2p {None,g2p_en,g2p_en_no_space,pyopenjtalk,pyopenjtalk_kana,pyopenjtalk_accent,pyopenjtalk_accent_with_pause,pyopenjtalk_prosody,pypinyin_g2p,pypinyin_g2p_phone,espeak_ng_arabic,espeak_ng_german,espeak_ng_french,espeak_ng_spanish,espeak_ng_russian,espeak_ng_greek,espeak_ng_finnish,espeak_ng_hungarian,espeak_ng_dutch,espeak_ng_english_us_vits,espeak_ng_hindi,g2pk,g2pk_no_space,korean_jaso,korean_jaso_no_space}]
                            [--speech_volume_normalize SPEECH_VOLUME_NORMALIZE]
                            [--rir_scp RIR_SCP] [--rir_apply_prob RIR_APPLY_PROB]
                            [--noise_scp NOISE_SCP]
@@ -2306,7 +2446,7 @@ hubert_train.py
                             non_linguistic_symbols file path (default: None)
       --cleaner {None,tacotron,jaconv,vietnamese}
                             Apply text cleaning (default: None)
-      --g2p {None,g2p_en,g2p_en_no_space,pyopenjtalk,pyopenjtalk_kana,pyopenjtalk_accent,pyopenjtalk_accent_with_pause,pyopenjtalk_prosody,pypinyin_g2p,pypinyin_g2p_phone,espeak_ng_arabic,espeak_ng_german,espeak_ng_french,espeak_ng_spanish,espeak_ng_russian,espeak_ng_greek,espeak_ng_finnish,espeak_ng_hungarian,espeak_ng_dutch,espeak_ng_english_us_vits,espeak_ng_hindi,g2pk,g2pk_no_space}
+      --g2p {None,g2p_en,g2p_en_no_space,pyopenjtalk,pyopenjtalk_kana,pyopenjtalk_accent,pyopenjtalk_accent_with_pause,pyopenjtalk_prosody,pypinyin_g2p,pypinyin_g2p_phone,espeak_ng_arabic,espeak_ng_german,espeak_ng_french,espeak_ng_spanish,espeak_ng_russian,espeak_ng_greek,espeak_ng_finnish,espeak_ng_hungarian,espeak_ng_dutch,espeak_ng_english_us_vits,espeak_ng_hindi,g2pk,g2pk_no_space,korean_jaso,korean_jaso_no_space}
                             Specify g2p method if --token_type=phn (default: None)
       --speech_volume_normalize SPEECH_VOLUME_NORMALIZE
                             Scale the maximum amplitude to the given value. (default: None)
@@ -2393,6 +2533,8 @@ hubert_train.py
                             The criterion used for judging of the best model. Give a pair referring the phase, "train" or "valid",the criterion name, and the mode, "min" or "max", e.g. "acc,max". (default: [('train', 'loss', 'min'), ('valid', 'loss', 'min'), ('train', 'acc', 'max'), ('valid', 'acc', 'max')])
       --keep_nbest_models KEEP_NBEST_MODELS [KEEP_NBEST_MODELS ...]
                             Remove previous snapshots excluding the n-best scored epochs (default: [10])
+      --nbest_averaging_interval NBEST_AVERAGING_INTERVAL
+                            The epoch interval to apply model averaging and save nbest models (default: 0)
       --grad_clip GRAD_CLIP
                             Gradient norm threshold to clip (default: 5.0)
       --grad_clip_type GRAD_CLIP_TYPE
@@ -2409,6 +2551,8 @@ hubert_train.py
       --use_amp USE_AMP     Enable Automatic Mixed Precision. This feature requires pytorch>=1.6 (default: False)
       --log_interval LOG_INTERVAL
                             Show the logs every the number iterations in each epochs at the training phase. If None is given, it is decided according the number of training samples automatically . (default: None)
+      --use_matplotlib USE_MATPLOTLIB
+                            Enable matplotlib logging (default: True)
       --use_tensorboard USE_TENSORBOARD
                             Enable tensorboard logging (default: True)
       --use_wandb USE_WANDB
@@ -2623,7 +2767,7 @@ hubert_train.py
                             The maximum cache size for validation data loader. e.g. 10MB, 20GB. If None, the 5 percent size of --max_cache_size (default: None)
     
     Optimizer related:
-      --optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,radam,sgdw,yogi}
+      --optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}
                             The optimizer type (default: adadelta)
       --optim_conf OPTIM_CONF
                             The keyword arguments for optimizer (default: {})
@@ -2670,99 +2814,6 @@ hubert_train.py
                             The encoder type (default: hubert_pretrain)
       --encoder_conf ENCODER_CONF
                             The keyword arguments for encoder (default: {})
-.. _k2_asr_inference.py:
-
-k2_asr_inference.py
-~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: none
-
-    usage: k2_asr_inference.py [-h] [--config CONFIG]
-                               [--log_level {CRITICAL,ERROR,WARNING,INFO,DEBUG,NOTSET}]
-                               --output_dir OUTPUT_DIR [--ngpu NGPU] [--seed SEED]
-                               [--dtype {float16,float32,float64}]
-                               [--num_workers NUM_WORKERS]
-                               --data_path_and_name_and_type
-                               DATA_PATH_AND_NAME_AND_TYPE [--key_file KEY_FILE]
-                               [--allow_variable_data_keys ALLOW_VARIABLE_DATA_KEYS]
-                               [--asr_train_config ASR_TRAIN_CONFIG]
-                               [--asr_model_file ASR_MODEL_FILE]
-                               [--lm_train_config LM_TRAIN_CONFIG]
-                               [--lm_file LM_FILE]
-                               [--word_lm_train_config WORD_LM_TRAIN_CONFIG]
-                               [--word_lm_file WORD_LM_FILE]
-                               [--model_tag MODEL_TAG] [--batch_size BATCH_SIZE]
-                               [--nbest NBEST] [--beam_size BEAM_SIZE]
-                               [--penalty PENALTY] [--maxlenratio MAXLENRATIO]
-                               [--minlenratio MINLENRATIO]
-                               [--ctc_weight CTC_WEIGHT] [--lm_weight LM_WEIGHT]
-                               [--streaming STREAMING]
-                               [--token_type {char,bpe,None}]
-                               [--bpemodel BPEMODEL]
-    
-    ASR Decoding
-    
-    optional arguments:
-      --config CONFIG       Give config file in yaml format (default: None)
-      --log_level {CRITICAL,ERROR,WARNING,INFO,DEBUG,NOTSET}
-                            The verbose level of logging (default: INFO)
-      --output_dir OUTPUT_DIR
-      --ngpu NGPU           The number of gpus. 0 indicates CPU mode (default: 0)
-      --seed SEED           Random seed (default: 0)
-      --dtype {float16,float32,float64}
-                            Data type (default: float32)
-      --num_workers NUM_WORKERS
-                            The number of workers used for DataLoader (default: 1)
-    
-    Input data related:
-      --data_path_and_name_and_type DATA_PATH_AND_NAME_AND_TYPE
-      --key_file KEY_FILE
-      --allow_variable_data_keys ALLOW_VARIABLE_DATA_KEYS
-    
-    The model configuration related:
-      --asr_train_config ASR_TRAIN_CONFIG
-                            ASR training configuration (default: None)
-      --asr_model_file ASR_MODEL_FILE
-                            ASR model parameter file (default: None)
-      --lm_train_config LM_TRAIN_CONFIG
-                            LM training configuration (default: None)
-      --lm_file LM_FILE     LM parameter file (default: None)
-      --word_lm_train_config WORD_LM_TRAIN_CONFIG
-                            Word LM training configuration (default: None)
-      --word_lm_file WORD_LM_FILE
-                            Word LM parameter file (default: None)
-      --model_tag MODEL_TAG
-                            Pretrained model tag. If specify this option,
-                            *_train_config and *_file will be overwritten
-                            (default: None)
-    
-    Beam-search related:
-      --batch_size BATCH_SIZE
-                            The batch size for inference (default: 1)
-      --nbest NBEST         Output N-best hypotheses (default: 1)
-      --beam_size BEAM_SIZE
-                            Beam size (default: 20)
-      --penalty PENALTY     Insertion penalty (default: 0.0)
-      --maxlenratio MAXLENRATIO
-                            Input length ratio to obtain max output length. If
-                            maxlenratio=0.0 (default), it uses a end-detect
-                            function to automatically find maximum hypothesis
-                            lengths (default: 0.0)
-      --minlenratio MINLENRATIO
-                            Input length ratio to obtain min output length
-                            (default: 0.0)
-      --ctc_weight CTC_WEIGHT
-                            CTC weight in joint decoding (default: 0.5)
-      --lm_weight LM_WEIGHT
-                            RNNLM weight (default: 1.0)
-      --streaming STREAMING
-    
-    Text converter related:
-      --token_type {char,bpe,None}
-                            The token type for ASR model. If not given, refers
-                            from the training args (default: None)
-      --bpemodel BPEMODEL   The model path of sentencepiece. If not given, refers
-                            from the training args (default: None)
 .. _launch.py:
 
 launch.py
@@ -2894,11 +2945,13 @@ lm_train.py
                        [--early_stopping_criterion EARLY_STOPPING_CRITERION EARLY_STOPPING_CRITERION EARLY_STOPPING_CRITERION]
                        [--best_model_criterion BEST_MODEL_CRITERION [BEST_MODEL_CRITERION ...]]
                        [--keep_nbest_models KEEP_NBEST_MODELS [KEEP_NBEST_MODELS ...]]
+                       [--nbest_averaging_interval NBEST_AVERAGING_INTERVAL]
                        [--grad_clip GRAD_CLIP] [--grad_clip_type GRAD_CLIP_TYPE]
                        [--grad_noise GRAD_NOISE] [--accum_grad ACCUM_GRAD]
                        [--no_forward_run NO_FORWARD_RUN] [--resume RESUME]
                        [--train_dtype {float16,float32,float64}]
                        [--use_amp USE_AMP] [--log_interval LOG_INTERVAL]
+                       [--use_matplotlib USE_MATPLOTLIB]
                        [--use_tensorboard USE_TENSORBOARD] [--use_wandb USE_WANDB]
                        [--wandb_project WANDB_PROJECT] [--wandb_id WANDB_ID]
                        [--wandb_entity WANDB_ENTITY] [--wandb_name WANDB_NAME]
@@ -2930,7 +2983,7 @@ lm_train.py
                        [--max_cache_size MAX_CACHE_SIZE]
                        [--max_cache_fd MAX_CACHE_FD]
                        [--valid_max_cache_size VALID_MAX_CACHE_SIZE]
-                       [--optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,radam,sgdw,yogi}]
+                       [--optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}]
                        [--optim_conf OPTIM_CONF]
                        [--scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}]
                        [--scheduler_conf SCHEDULER_CONF] [--token_list TOKEN_LIST]
@@ -2940,7 +2993,7 @@ lm_train.py
                        [--token_type {bpe,char,word}] [--bpemodel BPEMODEL]
                        [--non_linguistic_symbols NON_LINGUISTIC_SYMBOLS]
                        [--cleaner {None,tacotron,jaconv,vietnamese}]
-                       [--g2p {None,g2p_en,g2p_en_no_space,pyopenjtalk,pyopenjtalk_kana,pyopenjtalk_accent,pyopenjtalk_accent_with_pause,pyopenjtalk_prosody,pypinyin_g2p,pypinyin_g2p_phone,espeak_ng_arabic,espeak_ng_german,espeak_ng_french,espeak_ng_spanish,espeak_ng_russian,espeak_ng_greek,espeak_ng_finnish,espeak_ng_hungarian,espeak_ng_dutch,espeak_ng_english_us_vits,espeak_ng_hindi,g2pk,g2pk_no_space}]
+                       [--g2p {None,g2p_en,g2p_en_no_space,pyopenjtalk,pyopenjtalk_kana,pyopenjtalk_accent,pyopenjtalk_accent_with_pause,pyopenjtalk_prosody,pypinyin_g2p,pypinyin_g2p_phone,espeak_ng_arabic,espeak_ng_german,espeak_ng_french,espeak_ng_spanish,espeak_ng_russian,espeak_ng_greek,espeak_ng_finnish,espeak_ng_hungarian,espeak_ng_dutch,espeak_ng_english_us_vits,espeak_ng_hindi,g2pk,g2pk_no_space,korean_jaso,korean_jaso_no_space}]
                        [--lm {seq_rnn,transformer}] [--lm_conf LM_CONF]
     
     base parser
@@ -2951,7 +3004,7 @@ lm_train.py
                             non_linguistic_symbols file path (default: None)
       --cleaner {None,tacotron,jaconv,vietnamese}
                             Apply text cleaning (default: None)
-      --g2p {None,g2p_en,g2p_en_no_space,pyopenjtalk,pyopenjtalk_kana,pyopenjtalk_accent,pyopenjtalk_accent_with_pause,pyopenjtalk_prosody,pypinyin_g2p,pypinyin_g2p_phone,espeak_ng_arabic,espeak_ng_german,espeak_ng_french,espeak_ng_spanish,espeak_ng_russian,espeak_ng_greek,espeak_ng_finnish,espeak_ng_hungarian,espeak_ng_dutch,espeak_ng_english_us_vits,espeak_ng_hindi,g2pk,g2pk_no_space}
+      --g2p {None,g2p_en,g2p_en_no_space,pyopenjtalk,pyopenjtalk_kana,pyopenjtalk_accent,pyopenjtalk_accent_with_pause,pyopenjtalk_prosody,pypinyin_g2p,pypinyin_g2p_phone,espeak_ng_arabic,espeak_ng_german,espeak_ng_french,espeak_ng_spanish,espeak_ng_russian,espeak_ng_greek,espeak_ng_finnish,espeak_ng_hungarian,espeak_ng_dutch,espeak_ng_english_us_vits,espeak_ng_hindi,g2pk,g2pk_no_space,korean_jaso,korean_jaso_no_space}
                             Specify g2p method if --token_type=phn (default: None)
     
     Common configuration:
@@ -3019,6 +3072,8 @@ lm_train.py
                             The criterion used for judging of the best model. Give a pair referring the phase, "train" or "valid",the criterion name, and the mode, "min" or "max", e.g. "acc,max". (default: [('train', 'loss', 'min'), ('valid', 'loss', 'min'), ('train', 'acc', 'max'), ('valid', 'acc', 'max')])
       --keep_nbest_models KEEP_NBEST_MODELS [KEEP_NBEST_MODELS ...]
                             Remove previous snapshots excluding the n-best scored epochs (default: [10])
+      --nbest_averaging_interval NBEST_AVERAGING_INTERVAL
+                            The epoch interval to apply model averaging and save nbest models (default: 0)
       --grad_clip GRAD_CLIP
                             Gradient norm threshold to clip (default: 5.0)
       --grad_clip_type GRAD_CLIP_TYPE
@@ -3035,6 +3090,8 @@ lm_train.py
       --use_amp USE_AMP     Enable Automatic Mixed Precision. This feature requires pytorch>=1.6 (default: False)
       --log_interval LOG_INTERVAL
                             Show the logs every the number iterations in each epochs at the training phase. If None is given, it is decided according the number of training samples automatically . (default: None)
+      --use_matplotlib USE_MATPLOTLIB
+                            Enable matplotlib logging (default: True)
       --use_tensorboard USE_TENSORBOARD
                             Enable tensorboard logging (default: True)
       --use_wandb USE_WANDB
@@ -3249,7 +3306,7 @@ lm_train.py
                             The maximum cache size for validation data loader. e.g. 10MB, 20GB. If None, the 5 percent size of --max_cache_size (default: None)
     
     Optimizer related:
-      --optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,radam,sgdw,yogi}
+      --optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}
                             The optimizer type (default: adadelta)
       --optim_conf OPTIM_CONF
                             The keyword arguments for optimizer (default: {})
@@ -3283,12 +3340,12 @@ pack.py
 
 .. code-block:: none
 
-    usage: pack.py [-h] {asr,tts,enh,diar} ...
+    usage: pack.py [-h] {asr,st,tts,enh,diar} ...
     
     Pack input files to archive format
     
     positional arguments:
-      {asr,tts,enh,diar}
+      {asr,st,tts,enh,diar}
     
     optional arguments:
 .. _split_scps.py:
@@ -3331,8 +3388,8 @@ tokenize_text.py
                             [--bpemodel BPEMODEL]
                             [--non_linguistic_symbols NON_LINGUISTIC_SYMBOLS]
                             [--remove_non_linguistic_symbols REMOVE_NON_LINGUISTIC_SYMBOLS]
-                            [--cleaner {None,tacotron,jaconv,vietnamese}]
-                            [--g2p {None,g2p_en,g2p_en_no_space,pyopenjtalk,pyopenjtalk_kana,pyopenjtalk_accent,pyopenjtalk_accent_with_pause,pyopenjtalk_prosody,pypinyin_g2p,pypinyin_g2p_phone,espeak_ng_arabic,espeak_ng_german,espeak_ng_french,espeak_ng_spanish,espeak_ng_russian,espeak_ng_greek,espeak_ng_finnish,espeak_ng_hungarian,espeak_ng_dutch,espeak_ng_english_us_vits,espeak_ng_hindi,g2pk,g2pk_no_space}]
+                            [--cleaner {None,tacotron,jaconv,vietnamese,korean_cleaner}]
+                            [--g2p {None,g2p_en,g2p_en_no_space,pyopenjtalk,pyopenjtalk_kana,pyopenjtalk_accent,pyopenjtalk_accent_with_pause,pyopenjtalk_prosody,pypinyin_g2p,pypinyin_g2p_phone,espeak_ng_arabic,espeak_ng_german,espeak_ng_french,espeak_ng_spanish,espeak_ng_russian,espeak_ng_greek,espeak_ng_finnish,espeak_ng_hungarian,espeak_ng_dutch,espeak_ng_english_us_vits,espeak_ng_hindi,g2pk,g2pk_no_space,korean_jaso,korean_jaso_no_space}]
                             [--write_vocabulary WRITE_VOCABULARY]
                             [--vocabulary_size VOCABULARY_SIZE] [--cutoff CUTOFF]
                             [--add_symbol ADD_SYMBOL]
@@ -3361,9 +3418,9 @@ tokenize_text.py
       --remove_non_linguistic_symbols REMOVE_NON_LINGUISTIC_SYMBOLS
                             Remove non-language-symbols from tokens (default:
                             False)
-      --cleaner {None,tacotron,jaconv,vietnamese}
+      --cleaner {None,tacotron,jaconv,vietnamese,korean_cleaner}
                             Apply text cleaning (default: None)
-      --g2p {None,g2p_en,g2p_en_no_space,pyopenjtalk,pyopenjtalk_kana,pyopenjtalk_accent,pyopenjtalk_accent_with_pause,pyopenjtalk_prosody,pypinyin_g2p,pypinyin_g2p_phone,espeak_ng_arabic,espeak_ng_german,espeak_ng_french,espeak_ng_spanish,espeak_ng_russian,espeak_ng_greek,espeak_ng_finnish,espeak_ng_hungarian,espeak_ng_dutch,espeak_ng_english_us_vits,espeak_ng_hindi,g2pk,g2pk_no_space}
+      --g2p {None,g2p_en,g2p_en_no_space,pyopenjtalk,pyopenjtalk_kana,pyopenjtalk_accent,pyopenjtalk_accent_with_pause,pyopenjtalk_prosody,pypinyin_g2p,pypinyin_g2p_phone,espeak_ng_arabic,espeak_ng_german,espeak_ng_french,espeak_ng_spanish,espeak_ng_russian,espeak_ng_greek,espeak_ng_finnish,espeak_ng_hungarian,espeak_ng_dutch,espeak_ng_english_us_vits,espeak_ng_hindi,g2pk,g2pk_no_space,korean_jaso,korean_jaso_no_space}
                             Specify g2p method if --token_type=phn (default: None)
     
     write_vocabulary mode related:
@@ -3511,11 +3568,13 @@ tts_train.py
                         [--early_stopping_criterion EARLY_STOPPING_CRITERION EARLY_STOPPING_CRITERION EARLY_STOPPING_CRITERION]
                         [--best_model_criterion BEST_MODEL_CRITERION [BEST_MODEL_CRITERION ...]]
                         [--keep_nbest_models KEEP_NBEST_MODELS [KEEP_NBEST_MODELS ...]]
+                        [--nbest_averaging_interval NBEST_AVERAGING_INTERVAL]
                         [--grad_clip GRAD_CLIP] [--grad_clip_type GRAD_CLIP_TYPE]
                         [--grad_noise GRAD_NOISE] [--accum_grad ACCUM_GRAD]
                         [--no_forward_run NO_FORWARD_RUN] [--resume RESUME]
                         [--train_dtype {float16,float32,float64}]
                         [--use_amp USE_AMP] [--log_interval LOG_INTERVAL]
+                        [--use_matplotlib USE_MATPLOTLIB]
                         [--use_tensorboard USE_TENSORBOARD]
                         [--use_wandb USE_WANDB] [--wandb_project WANDB_PROJECT]
                         [--wandb_id WANDB_ID] [--wandb_entity WANDB_ENTITY]
@@ -3548,7 +3607,7 @@ tts_train.py
                         [--max_cache_size MAX_CACHE_SIZE]
                         [--max_cache_fd MAX_CACHE_FD]
                         [--valid_max_cache_size VALID_MAX_CACHE_SIZE]
-                        [--optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,radam,sgdw,yogi}]
+                        [--optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}]
                         [--optim_conf OPTIM_CONF]
                         [--scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}]
                         [--scheduler_conf SCHEDULER_CONF]
@@ -3557,8 +3616,8 @@ tts_train.py
                         [--use_preprocessor USE_PREPROCESSOR]
                         [--token_type {bpe,char,word,phn}] [--bpemodel BPEMODEL]
                         [--non_linguistic_symbols NON_LINGUISTIC_SYMBOLS]
-                        [--cleaner {None,tacotron,jaconv,vietnamese}]
-                        [--g2p {None,g2p_en,g2p_en_no_space,pyopenjtalk,pyopenjtalk_kana,pyopenjtalk_accent,pyopenjtalk_accent_with_pause,pyopenjtalk_prosody,pypinyin_g2p,pypinyin_g2p_phone,espeak_ng_arabic,espeak_ng_german,espeak_ng_french,espeak_ng_spanish,espeak_ng_russian,espeak_ng_greek,espeak_ng_finnish,espeak_ng_hungarian,espeak_ng_dutch,espeak_ng_english_us_vits,espeak_ng_hindi,g2pk,g2pk_no_space}]
+                        [--cleaner {None,tacotron,jaconv,vietnamese,korean_cleaner}]
+                        [--g2p {None,g2p_en,g2p_en_no_space,pyopenjtalk,pyopenjtalk_kana,pyopenjtalk_accent,pyopenjtalk_accent_with_pause,pyopenjtalk_prosody,pypinyin_g2p,pypinyin_g2p_phone,espeak_ng_arabic,espeak_ng_german,espeak_ng_french,espeak_ng_spanish,espeak_ng_russian,espeak_ng_greek,espeak_ng_finnish,espeak_ng_hungarian,espeak_ng_dutch,espeak_ng_english_us_vits,espeak_ng_hindi,g2pk,g2pk_no_space,korean_jaso,korean_jaso_no_space}]
                         [--feats_extract {fbank,spectrogram,linear_spectrogram}]
                         [--feats_extract_conf FEATS_EXTRACT_CONF]
                         [--normalize {global_mvn,None}]
@@ -3579,9 +3638,9 @@ tts_train.py
       --config CONFIG       Give config file in yaml format (default: None)
       --non_linguistic_symbols NON_LINGUISTIC_SYMBOLS
                             non_linguistic_symbols file path (default: None)
-      --cleaner {None,tacotron,jaconv,vietnamese}
+      --cleaner {None,tacotron,jaconv,vietnamese,korean_cleaner}
                             Apply text cleaning (default: None)
-      --g2p {None,g2p_en,g2p_en_no_space,pyopenjtalk,pyopenjtalk_kana,pyopenjtalk_accent,pyopenjtalk_accent_with_pause,pyopenjtalk_prosody,pypinyin_g2p,pypinyin_g2p_phone,espeak_ng_arabic,espeak_ng_german,espeak_ng_french,espeak_ng_spanish,espeak_ng_russian,espeak_ng_greek,espeak_ng_finnish,espeak_ng_hungarian,espeak_ng_dutch,espeak_ng_english_us_vits,espeak_ng_hindi,g2pk,g2pk_no_space}
+      --g2p {None,g2p_en,g2p_en_no_space,pyopenjtalk,pyopenjtalk_kana,pyopenjtalk_accent,pyopenjtalk_accent_with_pause,pyopenjtalk_prosody,pypinyin_g2p,pypinyin_g2p_phone,espeak_ng_arabic,espeak_ng_german,espeak_ng_french,espeak_ng_spanish,espeak_ng_russian,espeak_ng_greek,espeak_ng_finnish,espeak_ng_hungarian,espeak_ng_dutch,espeak_ng_english_us_vits,espeak_ng_hindi,g2pk,g2pk_no_space,korean_jaso,korean_jaso_no_space}
                             Specify g2p method if --token_type=phn (default: None)
     
     Common configuration:
@@ -3649,6 +3708,8 @@ tts_train.py
                             The criterion used for judging of the best model. Give a pair referring the phase, "train" or "valid",the criterion name, and the mode, "min" or "max", e.g. "acc,max". (default: [('train', 'loss', 'min'), ('valid', 'loss', 'min'), ('train', 'acc', 'max'), ('valid', 'acc', 'max')])
       --keep_nbest_models KEEP_NBEST_MODELS [KEEP_NBEST_MODELS ...]
                             Remove previous snapshots excluding the n-best scored epochs (default: [10])
+      --nbest_averaging_interval NBEST_AVERAGING_INTERVAL
+                            The epoch interval to apply model averaging and save nbest models (default: 0)
       --grad_clip GRAD_CLIP
                             Gradient norm threshold to clip (default: 5.0)
       --grad_clip_type GRAD_CLIP_TYPE
@@ -3665,6 +3726,8 @@ tts_train.py
       --use_amp USE_AMP     Enable Automatic Mixed Precision. This feature requires pytorch>=1.6 (default: False)
       --log_interval LOG_INTERVAL
                             Show the logs every the number iterations in each epochs at the training phase. If None is given, it is decided according the number of training samples automatically . (default: None)
+      --use_matplotlib USE_MATPLOTLIB
+                            Enable matplotlib logging (default: True)
       --use_tensorboard USE_TENSORBOARD
                             Enable tensorboard logging (default: True)
       --use_wandb USE_WANDB
@@ -3879,7 +3942,7 @@ tts_train.py
                             The maximum cache size for validation data loader. e.g. 10MB, 20GB. If None, the 5 percent size of --max_cache_size (default: None)
     
     Optimizer related:
-      --optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,radam,sgdw,yogi}
+      --optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}
                             The optimizer type (default: adadelta)
       --optim_conf OPTIM_CONF
                             The keyword arguments for optimizer (default: {})
