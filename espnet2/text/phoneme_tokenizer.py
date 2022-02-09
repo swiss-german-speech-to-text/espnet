@@ -1,3 +1,4 @@
+import logging
 from pathlib import Path
 import re
 from typing import Iterable
@@ -7,6 +8,7 @@ from typing import Union
 import warnings
 
 import g2p_en
+import jamo
 from typeguard import check_argument_types
 
 from espnet2.text.abs_tokenizer import AbsTokenizer
@@ -36,6 +38,8 @@ g2p_choices = [
     "espeak_ng_hindi",
     "g2pk",
     "g2pk_no_space",
+    "korean_jaso",
+    "korean_jaso_no_space",
 ]
 
 
@@ -157,7 +161,7 @@ def pyopenjtalk_g2p_prosody(text: str, drop_unvoiced_vowels: bool = True) -> Lis
 
         a2_next = _numeric_feature_by_regex(r"\+(\d+)\+", labels[n + 1])
         # accent phrase border
-        if a3 == 1 and a2_next == 1:
+        if a3 == 1 and a2_next == 1 and p3 in "aeiouAEIOUNcl":
             phones.append("#")
         # pitch falling
         elif a1 == 0 and a2_next == a2 + 1 and a2 != f1:
@@ -264,6 +268,39 @@ class G2pk:
         return phones
 
 
+class Jaso:
+    PUNC = "!'(),-.:;?"
+    SPACE = " "
+
+    JAMO_LEADS = "".join([chr(_) for _ in range(0x1100, 0x1113)])
+    JAMO_VOWELS = "".join([chr(_) for _ in range(0x1161, 0x1176)])
+    JAMO_TAILS = "".join([chr(_) for _ in range(0x11A8, 0x11C3)])
+
+    VALID_CHARS = JAMO_LEADS + JAMO_VOWELS + JAMO_TAILS + PUNC + SPACE
+
+    def __init__(self, space_symbol=" ", no_space=False):
+        self.space_symbol = space_symbol
+        self.no_space = no_space
+
+    def _text_to_jaso(self, line: str) -> List[str]:
+        jasos = list(jamo.hangul_to_jamo(line))
+        return jasos
+
+    def _remove_non_korean_characters(self, tokens):
+        new_tokens = [token for token in tokens if token in self.VALID_CHARS]
+        return new_tokens
+
+    def __call__(self, text) -> List[str]:
+        graphemes = [x for x in self._text_to_jaso(text)]
+        graphemes = self._remove_non_korean_characters(graphemes)
+
+        if self.no_space:
+            graphemes = list(filter(lambda s: s != " ", graphemes))
+        else:
+            graphemes = [x if x != " " else self.space_symbol for x in graphemes]
+        return graphemes
+
+
 class Phonemizer:
     """Phonemizer module for various languages.
 
@@ -277,31 +314,41 @@ class Phonemizer:
 
     def __init__(
         self,
+        backend,
         word_separator: Optional[str] = None,
         syllable_separator: Optional[str] = None,
         phone_separator: Optional[str] = " ",
+        strip=False,
         split_by_single_token: bool = False,
-        **phonemize_kwargs,
+        **phonemizer_kwargs,
     ):
         # delayed import
-        from phonemizer import phonemize
+        from phonemizer.backend import BACKENDS
         from phonemizer.separator import Separator
 
-        self.phonemize = phonemize
         self.separator = Separator(
             word=word_separator,
             syllable=syllable_separator,
             phone=phone_separator,
         )
+
+        # define logger to suppress the warning in phonemizer
+        logger = logging.getLogger("phonemizer")
+        logger.setLevel(logging.ERROR)
+        self.phonemizer = BACKENDS[backend](
+            **phonemizer_kwargs,
+            logger=logger,
+        )
+        self.strip = strip
         self.split_by_single_token = split_by_single_token
-        self.phonemize_kwargs = phonemize_kwargs
 
     def __call__(self, text) -> List[str]:
-        tokens = self.phonemize(
-            text,
+        tokens = self.phonemizer.phonemize(
+            [text],
             separator=self.separator,
-            **self.phonemize_kwargs,
-        )
+            strip=self.strip,
+            njobs=1,
+        )[0]
         if not self.split_by_single_token:
             return tokens.split()
         else:
@@ -426,6 +473,10 @@ class PhonemeTokenizer(AbsTokenizer):
                 phone_separator="",
                 split_by_single_token=True,
             )
+        elif g2p_type == "korean_jaso":
+            self.g2p = Jaso(space_symbol=space_symbol, no_space=False)
+        elif g2p_type == "korean_jaso_no_space":
+            self.g2p = Jaso(no_space=True)
         else:
             raise NotImplementedError(f"Not supported: g2p_type={g2p_type}")
 
@@ -451,7 +502,7 @@ class PhonemeTokenizer(AbsTokenizer):
             f'g2p_type="{self.g2p_type}", '
             f'space_symbol="{self.space_symbol}", '
             f'non_linguistic_symbols="{self.non_linguistic_symbols}"'
-            f")"
+            ")"
         )
 
     def text2tokens(self, line: str) -> List[str]:
