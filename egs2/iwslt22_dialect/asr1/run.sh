@@ -9,14 +9,14 @@ train_set=train
 train_dev=dev
 test_set=test1
 
-asr_config=conf/tuning/train_asr_conformer.yaml
+asr_config=conf/train_asr_conformer.yaml
 inference_config=conf/decode_asr.yaml
 
 nbpe=1000
 
 ./asr.sh \
     --ngpu 1 \
-    --stage 11 \
+    --stage 1 \
     --stop_stage 13 \
     --audio_format "flac.ark" \
     --local_data_opts "--stage 0" \
