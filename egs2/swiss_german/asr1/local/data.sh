@@ -42,7 +42,23 @@ if [ ${stage} -le 1 ] && [ ${stop_stage} -ge 1 ]; then
     local/data_prep.pl downloads/spc "train_all" data/spc/train_all
     local/data_prep.pl downloads/spc "test" data/spc/test
 
+    # /scicore/home/graber0001/GROUP/stt/data_nobackup/Swiss_Parliaments_Corpus
+    # /scicore/home/graber0001/GROUP/stt/data_nobackup/stadt_bern_stadtrat (automatically aligned)
+
+    # /scicore/home/graber0001/GROUP/stt/data_nobackup/kanton_ow_kantonsrat/v1
+    # /scicore/home/graber0001/GROUP/stt/data_nobackup/kanton_ar_kantonsrat/v1
+
+    # /scicore/home/graber0001/GROUP/stt/data_nobackup/Clickworker_Test_Set
+    # /scicore/home/graber0001/GROUP/stt/data_nobackup/dialektsammlung
+    # /scicore/home/graber0001/GROUP/stt/data_nobackup/snf/testset/v0.1
+
+    # /scicore/home/graber0001/GROUP/stt/swissgerman_wav2vec_nobackup/data/corpus/lm/combined_text/2021-11-08_12-23-49
+
     # TODO prepare bern_stadtrat as well as dev sets
+
+    # TODO Innosuise testset, dialektsammlung testset, clickworker testseet
+
+    # TODO kanton_ar, kanton_ow
 
     # TODO merge with bern_stadtrat
     utils/combine_data.sh --extra_files utt2num_frames data/train data/spc/train_09 data/spc/train_09
