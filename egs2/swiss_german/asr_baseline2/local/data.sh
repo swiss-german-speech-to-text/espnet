@@ -38,13 +38,13 @@ if [ ${stage} -le 1 ] && [ ${stop_stage} -ge 1 ]; then
     ### Task dependent. You have to make data the following preparation part by yourself.
     mkdir -p data/spc
 
-    local/data_prep.pl downloads/stt/spc "train" data/spc/train
-    local/data_prep.pl downloads/stt/spc "valid" data/spc/valid
-    local/data_prep.pl downloads/stt/spc "test" data/spc/test
+    local/data_prep.pl downloads/spc "train" data/spc/train
+    local/data_prep.pl downloads/spc "valid" data/spc/valid
+    local/data_prep.pl downloads/spc "test" data/spc/test
 
-    local/data_prep.pl downloads/stt/clickworker_test_set "all" data/clickworker/test
-    local/data_prep.pl downloads/stt/dialektsammlung "test" data/dialektsammlung/test
-    local/data_prep.pl downloads/stt/snf/testset/v0.1 "export_v0.1" data/snf/test
+    local/data_prep.pl downloads/clickworker "test" data/clickworker/test
+    local/data_prep.pl downloads/dialektsammlung "test" data/dialektsammlung/test
+    local/data_prep.pl downloads/snf "test" data/snf/test
 
     utils/combine_data.sh --extra_files utt2num_frames data/train data/spc/train data/spc/train
     utils/combine_data.sh --extra_files utt2num_frames data/dev data/spc/valid data/spc/valid

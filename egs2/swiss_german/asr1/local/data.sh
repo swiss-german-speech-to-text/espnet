@@ -37,10 +37,10 @@ if [ ${stage} -le 1 ] && [ ${stop_stage} -ge 1 ]; then
     log "stage2: Preparing data"
     ### Task dependent. You have to make data the following preparation part by yourself.
     mkdir -p data/spc
-    local/data_prep.pl downloads/spc "train_0.9" data/spc/train_09
-    local/data_prep.pl downloads/spc "train_0.7" data/spc/train_07
-    local/data_prep.pl downloads/spc "train_all" data/spc/train_all
-    local/data_prep.pl downloads/spc "test" data/spc/test
+    local/data_prep.pl downloads/stt/spc "train_0.9" data/spc/train_09
+    local/data_prep.pl downloads/stt/spc "train_0.7" data/spc/train_07
+    local/data_prep.pl downloads/stt/spc "train_all" data/spc/train_all
+    local/data_prep.pl downloads/stt/spc "test" data/spc/test
 
     # /scicore/home/graber0001/GROUP/stt/data_nobackup/Swiss_Parliaments_Corpus
     # /scicore/home/graber0001/GROUP/stt/data_nobackup/stadt_bern_stadtrat (automatically aligned)
