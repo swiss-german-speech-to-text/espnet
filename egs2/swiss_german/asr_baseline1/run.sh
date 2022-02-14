@@ -20,7 +20,6 @@ nbpe=5000
 ./asr.sh \
     --ngpu 4 \
     --use_lm true \
-    --use_wandb true \
     --lm_config "${lm_config}" \
     --token_type bpe \
     --nbpe $nbpe \
