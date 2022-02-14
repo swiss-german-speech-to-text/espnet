@@ -37,8 +37,8 @@ if [ ${stage} -le 1 ] && [ ${stop_stage} -ge 1 ]; then
     log "stage2: Preparing data"
     ### Task dependent. You have to make data the following preparation part by yourself.
     python3 local/prepare_database.py downloads/stt/spc/train.tsv downloads/stt/spc/train_kaldi.tsv
-    python3 local/prepare_database.py downloads/stt/spc/valid_kaldi.tsv
-    python3 local/prepare_database.py downloads/stt/spc/test_kaldi.tsv
+    python3 local/prepare_database.py downloads/stt/spc/valid.tsv downloads/stt/spc/valid_kaldi.tsv
+    python3 local/prepare_database.py downloads/stt/spc/test.tsv downloads/stt/spc/test_kaldi.tsv
     local/data_prep.pl downloads/stt/spc "train_kaldi" data/spc/train
     local/data_prep.pl downloads/stt/spc "valid_kaldi" data/spc/valid
     local/data_prep.pl downloads/stt/spc "test_kaldi" data/spc/test
