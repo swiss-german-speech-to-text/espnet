@@ -11,4 +11,4 @@ def main(source_text: str, target_dir: str):
 
 
 if __name__ == '__main__':
-    main(sys.argv[0], sys.argv[1])
+    main(sys.argv[1], sys.argv[2])

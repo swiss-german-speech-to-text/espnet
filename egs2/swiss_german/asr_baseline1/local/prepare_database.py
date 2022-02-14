@@ -16,4 +16,4 @@ def main(source_csv: str, target: str):
 
 
 if __name__ == '__main__':
-    main(sys.argv[0], sys.argv[1])
+    main(sys.argv[1], sys.argv[2])
