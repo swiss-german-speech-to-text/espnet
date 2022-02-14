@@ -36,27 +36,27 @@ fi
 if [ ${stage} -le 1 ] && [ ${stop_stage} -ge 1 ]; then
     log "stage2: Preparing data"
     ### Task dependent. You have to make data the following preparation part by yourself.
-    local/prepare_database.py downloads/stt/spc/train.tsv downloads/stt/spc/train_kaldi.tsv
-    local/prepare_database.py downloads/stt/spc/valid_kaldi.tsv
-    local/prepare_database.py downloads/stt/spc/test_kaldi.tsv
+    python3 local/prepare_database.py downloads/stt/spc/train.tsv downloads/stt/spc/train_kaldi.tsv
+    python3 local/prepare_database.py downloads/stt/spc/valid_kaldi.tsv
+    python3 local/prepare_database.py downloads/stt/spc/test_kaldi.tsv
     local/data_prep.pl downloads/stt/spc "train_kaldi" data/spc/train
     local/data_prep.pl downloads/stt/spc "valid_kaldi" data/spc/valid
     local/data_prep.pl downloads/stt/spc "test_kaldi" data/spc/test
 
-    local/prepare_database.py downloads/stt/clickworker_test_set/all.tsv downloads/stt/clickworker/all_kaldi.tsv
+    python3 local/prepare_database.py downloads/stt/clickworker_test_set/all.tsv downloads/stt/clickworker/all_kaldi.tsv
     local/data_prep.pl downloads/stt/clickworker_test_set "all_kaldi" data/clickworker/test
 
-    local/prepare_database.py downloads/stt/dialektsammlung/test.tsv downloads/stt/dialektsammlung/test_kaldi.tsv
+    python3 local/prepare_database.py downloads/stt/dialektsammlung/test.tsv downloads/stt/dialektsammlung/test_kaldi.tsv
     local/data_prep.pl downloads/stt/dialektsammlung "test_kaldi" data/dialektsammlung/test
 
-     local/prepare_database.py downloads/stt/snf/testset/v0.1/export_v0.1.tsv downloads/stt/snf/testset/v0.1/export_v0.1_kaldi.tsv
+    python3 local/prepare_database.py downloads/stt/snf/testset/v0.1/export_v0.1.tsv downloads/stt/snf/testset/v0.1/export_v0.1_kaldi.tsv
     local/data_prep.pl downloads/stt/snf/testset/v0.1 "export_v0.1_kaldi" data/snf/test
 
     utils/combine_data.sh --extra_files utt2num_frames data/train data/spc/train data/spc/train
     utils/combine_data.sh --extra_files utt2num_frames data/dev data/spc/valid data/spc/valid
 
-    local/prepare_lm.py downloads/lm/train data/lm/train
-    local/prepare_lm.py downloads/lm/valid data/lm/valid
+    python3 local/prepare_lm.py downloads/lm/train data/lm/train
+    python3 local/prepare_lm.py downloads/lm/valid data/lm/valid
 fi
 
 log "Successfully finished. [elapsed=${SECONDS}s]"
