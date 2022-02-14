@@ -22,7 +22,7 @@ if (length(`which ffmpeg`) == 0) {
 mkdir data unless -d data;
 mkdir $out_dir unless -d $out_dir;
 
-open(CSV, "<", "$db_base/$dataset.tsv");
+#open(CSV, "<", "$db_base/$dataset.tsv");
 
 open(CSV, "<", "$db_base/$dataset.tsv") or die "cannot open dataset CSV file";
 open(SPKR,">", "$out_dir/utt2spk") or die "Could not open the output file $out_dir/utt2spk";

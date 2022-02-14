@@ -36,11 +36,12 @@ fi
 if [ ${stage} -le 1 ] && [ ${stop_stage} -ge 1 ]; then
     log "stage2: Preparing data"
     ### Task dependent. You have to make data the following preparation part by yourself.
-    mkdir -p data/spc
-
-    local/data_prep.pl downloads/stt/spc "train" data/spc/train
-    local/data_prep.pl downloads/stt/spc "valid" data/spc/valid
-    local/data_prep.pl downloads/stt/spc "test" data/spc/test
+    local/prepare_database.py downloads/stt/spc/train.tsv downloads/stt/spc/train_kaldi.tsv
+    local/prepare_database.py downloads/stt/spc/valid_kaldi.tsv
+    local/prepare_database.py downloads/stt/spc/test_kaldi.tsv
+    local/data_prep.pl downloads/stt/spc "train_kaldi" data/spc/train
+    local/data_prep.pl downloads/stt/spc "valid_kaldi" data/spc/valid
+    local/data_prep.pl downloads/stt/spc "test_kaldi" data/spc/test
 
     local/data_prep.pl downloads/stt/clickworker_test_set "all" data/clickworker/test
     local/data_prep.pl downloads/stt/dialektsammlung "test" data/dialektsammlung/test
@@ -48,6 +49,9 @@ if [ ${stage} -le 1 ] && [ ${stop_stage} -ge 1 ]; then
 
     utils/combine_data.sh --extra_files utt2num_frames data/train data/spc/train data/spc/train
     utils/combine_data.sh --extra_files utt2num_frames data/dev data/spc/valid data/spc/valid
+
+    local/prepare_lm.py downloads/lm/train data/lm/train
+    local/prepare_lm.py downloads/lm/valid data/lm/valid
 fi
 
 log "Successfully finished. [elapsed=${SECONDS}s]"
