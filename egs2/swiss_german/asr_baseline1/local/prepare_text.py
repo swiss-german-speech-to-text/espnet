@@ -42,6 +42,7 @@ def normalize_text(text: str, char_vocab: Set[str], char_lookup: Dict[str, str])
         text = text.replace(q, r)
 
     text = WHITESPACE_REGEX.sub(' ', text)
+    text = ' '.join(text.split())
     text = ''.join([char for char in text if char in char_vocab])
     text = WHITESPACE_REGEX.sub(' ', text)
     text = text.strip()
