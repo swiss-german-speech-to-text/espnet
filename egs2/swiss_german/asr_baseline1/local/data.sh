@@ -36,11 +36,11 @@ fi
 if [ ${stage} -le 1 ] && [ ${stop_stage} -ge 1 ]; then
     log "stage2: Preparing data"
     ### Task dependent. You have to make data the following preparation part by yourself.
-    local/data_prep.pl downloads/stt/spc "train_kaldi" data/spc/train
+    local/data_prep.pl downloads/stt/spc "train" data/spc/train
     python3 local/process_text.py data/spc/train/text
-    local/data_prep.pl downloads/stt/spc "valid_kaldi" data/spc/valid
+    local/data_prep.pl downloads/stt/spc "valid" data/spc/valid
     python3 local/process_text.py data/spc/valid/text
-    local/data_prep.pl downloads/stt/spc "test_kaldi" data/spc/test
+    local/data_prep.pl downloads/stt/spc "test" data/spc/test
     python3 local/process_text.py data/spc/test/text
 
     local/data_prep.pl downloads/stt/clickworker_test_set "all" data/clickworker/test
