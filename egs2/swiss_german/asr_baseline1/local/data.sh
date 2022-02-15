@@ -36,6 +36,7 @@ fi
 if [ ${stage} -le 1 ] && [ ${stop_stage} -ge 1 ]; then
     log "stage2: Preparing data"
     ### Task dependent. You have to make data the following preparation part by yourself.
+    mkdir "data/spc"
     local/data_prep.pl downloads/stt/spc "train" data/spc/train
     python3 local/process_text.py data/spc/train/text
     local/data_prep.pl downloads/stt/spc "valid" data/spc/valid
@@ -43,18 +44,22 @@ if [ ${stage} -le 1 ] && [ ${stop_stage} -ge 1 ]; then
     local/data_prep.pl downloads/stt/spc "test" data/spc/test
     python3 local/process_text.py data/spc/test/text
 
+    mkdir "data/clickworker"
     local/data_prep.pl downloads/stt/clickworker_test_set "all" data/clickworker/test
     python3 local/process_text.py data/clickworker/test/text
 
+    mkdir "data/dialektsammlung"
     local/data_prep.pl downloads/stt/dialektsammlung "test" data/dialektsammlung/test
     python3 local/process_text.py data/dialektsammlung/test/text
 
+    mkdir "data/snf"
     local/data_prep.pl downloads/stt/snf/testset/v0.1 "export_v0.1" data/snf/test
     python3 local/process_text.py data/snf/test/text
 
     utils/combine_data.sh --extra_files utt2num_frames data/train data/spc/train data/spc/train
     utils/combine_data.sh --extra_files utt2num_frames data/dev data/spc/valid data/spc/valid
 
+    mkdir "data/lm"
     python3 local/prepare_lm.py downloads/lm/train data/lm/train
     python3 local/prepare_lm.py downloads/lm/valid data/lm/valid
 fi
