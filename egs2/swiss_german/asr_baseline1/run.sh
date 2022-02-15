@@ -7,7 +7,7 @@ set -o pipefail
 
 train_set="train"
 train_dev="dev"
-test_set="data/spc/test data/spc/valid data/clickworker/test data/dialektsammlung/test data/snf/test"
+test_set="spc/test spc/valid clickworker/test dialektsammlung/test snf/test"
 lm_train_set="lm/train"
 lm_val_set="lm/valid"
 
