@@ -69,8 +69,8 @@ if (system(
 }
 system("env LC_COLLATE=C utils/fix_data_dir.sh $out_dir");
 
-if (system("local/preprocess_text.py $out_dir/text") != 0) {
-  die "Error text could not be preprocessed";
+if (system("python3 local/preprocess_text.py $out_dir/text") != 0) {
+  die "Error text at $out_dir/text could not be preprocessed";
 }
 
 if (system("env LC_COLLATE=C utils/validate_data_dir.sh --non-print --no-feats $out_dir") != 0) {
