@@ -11,7 +11,14 @@ def main(source_file: str):
     with open(source_file, mode='r', encoding='utf-8') as f:
         texts = f.readlines()
 
-    texts = [normalize_text(text, SG_CHAR_VOCAB, SG_CHAR_LOOKUP) + "\n" for text in texts]
+    def aux(text: str):
+        split = text.split(' ')
+        utterance_id = split[0]
+        text = ' '.join(split[1:])
+        normalize_text(text, SG_CHAR_VOCAB, SG_CHAR_LOOKUP) + "\n"
+        return utterance_id + ' ' + text
+
+    texts = [aux(text) for text in texts]
 
     with open(source_file, mode='w', encoding='utf-8') as f:
         f.writelines(texts)
