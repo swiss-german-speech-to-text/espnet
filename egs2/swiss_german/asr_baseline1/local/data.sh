@@ -54,8 +54,8 @@ if [ ${stage} -le 1 ] && [ ${stop_stage} -ge 1 ]; then
     utils/combine_data.sh --extra_files utt2num_frames data/dev data/spc/valid data/spc/valid
 
     mkdir "data/lm"
-    python3 local/prepare_lm.py downloads/lm/train data/lm/train
-    python3 local/prepare_lm.py downloads/lm/valid data/lm/valid
+    python3 local/prepare_lm.py downloads/lm/combined/train.txt data/lm/train
+    python3 local/prepare_lm.py downloads/lm/combined/valid.txt data/lm/valid
 fi
 
 log "Successfully finished. [elapsed=${SECONDS}s]"

@@ -1,9 +1,11 @@
+import os
 import sys
 
 from prepare_text import normalize_text, SG_CHAR_VOCAB, SG_CHAR_LOOKUP
 
 
 def main(source_text: str, target_dir: str):
+    os.mkdir(target_dir)
     with open(source_text, 'r', encoding='utf-8') as input:
         with open(f'{target_dir}/text', encoding='utf-8') as output:
             text = normalize_text(input.readline(), SG_CHAR_VOCAB, SG_CHAR_LOOKUP)
