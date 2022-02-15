@@ -68,6 +68,11 @@ if (system(
   die "Error creating spk2utt file in directory $out_dir";
 }
 system("env LC_COLLATE=C utils/fix_data_dir.sh $out_dir");
+
+if (system("local/preprocess_text.py $out_dir/text") != 0) {
+  die "Error text could not be preprocessed";
+}
+
 if (system("env LC_COLLATE=C utils/validate_data_dir.sh --non-print --no-feats $out_dir") != 0) {
   die "Error validating directory $out_dir";
 }
