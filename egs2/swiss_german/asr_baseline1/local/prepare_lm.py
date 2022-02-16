@@ -10,7 +10,8 @@ def main(source_text: str, target_dir: str):
         with open(f'{target_dir}/text', mode='w', encoding='utf-8') as output:
             for sentence in input:
                 text = normalize_text(sentence, SG_CHAR_VOCAB, SG_CHAR_LOOKUP)
-                output.write(f"{text}\n")
+                if len(text.rstrip().split(maxsplit=1)) == 2:
+                    output.write(f"{text}\n")
 
 
 if __name__ == '__main__':
