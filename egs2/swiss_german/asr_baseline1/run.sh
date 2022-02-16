@@ -18,7 +18,7 @@ inference_config=conf/decode_asr.yaml
 nbpe=5000
 
 ./asr.sh \
-    --stage 5 \
+    --stage 0 \
     --ngpu 4 \
     --use_lm true \
     --lang de \

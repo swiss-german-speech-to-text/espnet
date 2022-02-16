@@ -36,7 +36,7 @@ SG_CHAR_LOOKUP = {
 }
 
 
-def normalize_text(text: str, char_vocab: Set[str], char_lookup: Dict[str, str]):
+def normalize_text(text: str, char_vocab: Set[str], char_lookup: Dict[str, str]) -> str:
     text = text.lower()
     for q, r in char_lookup.items():
         text = text.replace(q, r)
