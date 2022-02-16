@@ -8,8 +8,8 @@ set -o pipefail
 train_set="train"
 train_dev="dev"
 test_set="spc/test spc/valid clickworker/test dialektsammlung/test snf/test"
-lm_train_set="lm/train"
-lm_val_set="lm/valid"
+lm_train_set="lm/train/text"
+lm_val_set="lm/valid/text"
 
 asr_config=conf/tuning/train_asr_conformer5.yaml
 lm_config=conf/train_lm.yaml
