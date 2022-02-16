@@ -21,6 +21,7 @@ nbpe=5000
     --stage 5 \
     --ngpu 4 \
     --use_lm true \
+    --lang de \
     --lm_config "${lm_config}" \
     --token_type bpe \
     --nbpe $nbpe \
@@ -33,6 +34,6 @@ nbpe=5000
     --valid_set "${train_dev}" \
     --test_sets "${test_set}" \
     --bpe_train_text "data/${lm_train_set}" \
-    --bpe_input_sentence_size=1000000 \
+    --bpe_input_sentence_size 10000000 \
     --lm_train_text "data/${lm_train_set}" \
     --lm_dev_text "data/${lm_val_set}" "$@"
