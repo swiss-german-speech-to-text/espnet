@@ -652,6 +652,8 @@ if ! "${skip_data_prep}"; then
                 --model_prefix="${bpeprefix}" \
                 --character_coverage=${bpe_char_cover} \
                 --input_sentence_size="${bpe_input_sentence_size}" \
+                --shuffle_input_sentence=true \
+                --train_extremely_large_corpus=true \
                 ${_opts_spm}
 
             {

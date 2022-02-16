@@ -3,7 +3,7 @@
 #SBATCH --time=7-00:00:00
 #SBATCH --cpus-per-task=16
 #SBATCH --ntasks=1
-#SBATCH --mem=64G
+#SBATCH --mem=128G
 #SBATCH --qos=1week
 #SBATCH --partition=a100
 #SBATCH -o scicore_out/%A_%a.out
