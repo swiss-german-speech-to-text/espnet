@@ -36,5 +36,4 @@ nbpe=5000
     --bpe_train_text "data/${lm_train_set}" \
     --bpe_input_sentence_size 10000000 \
     --lm_train_text "data/${lm_train_set}" \
-    --lm_args "--use_wandb" \
     --lm_dev_text "data/${lm_val_set}" "$@"
