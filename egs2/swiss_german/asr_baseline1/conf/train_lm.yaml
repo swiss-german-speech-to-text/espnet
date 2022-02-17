@@ -6,7 +6,9 @@ batch_type: folded
 batch_size: 64   # batch size in LM training
 max_epoch: 20      # if the data size is large, we can reduce this
 patience: 3
-
+wandb_project: 'asr_swissgerman'
+wandb_entity: 'yanick'
+wandb_name: 'baseline1'
 best_model_criterion:
 -   - valid
     - loss

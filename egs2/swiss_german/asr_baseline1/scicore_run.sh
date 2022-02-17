@@ -21,5 +21,7 @@ source /scicore/home/graber0001/schran0000/espnet/tools/venv/bin/activate
 export PATH=/scicore/home/graber0001/schran0000/opt/bin:$PATH
 export LD_LIBRARY_PATH=/scicore/home/graber0001/schran0000/opt/lib:$LD_LIBRARY_PATH
 export PKG_CONFIG_PATH=/scicore/home/graber0001/schran0000/opt/lib/pkgconfig:$PKG_CONFIG_PATH
+export WANDB_DIR=/scicore/home/graber0001/schran0000/wandb
+export TMPDIR=/scicore/home/graber0001/schran0000/wandb
 
 ./run.sh
