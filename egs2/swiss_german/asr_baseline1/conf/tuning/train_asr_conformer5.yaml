@@ -76,3 +76,8 @@ specaug_conf:
     - 0
     - 40
     num_time_mask: 2
+
+use_wandb: "True"
+wandb_project: 'asr_swissgerman'
+wandb_entity: 'yanick'
+wandb_name: 'baseline1_nolm'
