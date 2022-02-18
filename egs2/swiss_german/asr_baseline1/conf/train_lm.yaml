@@ -9,7 +9,7 @@ patience: 3
 use_wandb: "True"
 wandb_project: 'asr_swissgerman'
 wandb_entity: 'yanick'
-wandb_name: 'baseline1'
+wandb_name: 'lm'
 best_model_criterion:
 -   - valid
     - loss
