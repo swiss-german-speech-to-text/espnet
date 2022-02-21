@@ -7,7 +7,7 @@ set -o pipefail
 
 train_set="train"
 train_dev="dev"
-test_set="spc/test spc/valid clickworker/test dialektsammlung/test snf/test"
+test_set="spc/test spc/valid clickworker/valid clickworker/test dialektsammlung/valid dialektsammlung/test snf/test"
 lm_train_set="lm/train/text"
 lm_val_set="lm/valid/text"
 
@@ -17,9 +17,24 @@ inference_config=conf/decode_asr.yaml
 
 nbpe=5000
 
+ml CMake/3.15.3-GCCcore-8.3.0
+ml SoX/14.4.2-GCCcore-8.3.0
+ml libsndfile/1.0.28-GCCcore-8.3.0
+ml FFmpeg/.4.2.1-GCCcore-8.3.0
+ml FLAC/1.3.3-GCCcore-8.3.0
+ml cuDNN/8.1.0.77-CUDA-11.2.1
+ml Python/3.7.4-GCCcore-8.3.0
+
+source /scicore/home/graber0001/schran0000/espnet/tools/venv/bin/activate
+export PATH=/scicore/home/graber0001/schran0000/opt/bin:$PATH
+export LD_LIBRARY_PATH=/scicore/home/graber0001/schran0000/opt/lib:$LD_LIBRARY_PATH
+export PKG_CONFIG_PATH=/scicore/home/graber0001/schran0000/opt/lib/pkgconfig:$PKG_CONFIG_PATH
+export WANDB_DIR=/scicore/home/graber0001/schran0000/wandb
+export TMPDIR=/scicore/home/graber0001/schran0000/wandb
+
 ./asr.sh \
-    --stage 6 \
-    --stop_stage 8 \
+    --stage 0 \
+    --stop_stage 1000 \
     --ngpu 4 \
     --use_lm true \
     --lang de \

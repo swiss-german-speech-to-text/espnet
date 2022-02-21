@@ -42,13 +42,17 @@ if [ ${stage} -le 1 ] && [ ${stop_stage} -ge 1 ]; then
     local/data_prep.pl downloads/stt/spc "test" data/spc/test
 
     mkdir "data/clickworker"
-    local/data_prep.pl downloads/stt/clickworker_test_set "all" data/clickworker/test
+    local/data_prep.pl downloads/stt/clickworker_test_set "private" data/clickworker/test
+    local/data_prep.pl downloads/stt/clickworker_test_set "public" data/clickworker/valid
 
     mkdir "data/dialektsammlung"
     local/data_prep.pl downloads/stt/dialektsammlung "test" data/dialektsammlung/test
+    local/data_prep.pl downloads/stt/dialektsammlung "train" data/dialektsammlung/train
+    local/data_prep.pl downloads/stt/dialektsammlung "valid" data/dialektsammlung/valid
 
     mkdir "data/snf"
     local/data_prep.pl downloads/stt/snf/testset/v0.1 "export_v0.1" data/snf/test
+    # TODO test / valid split
 
     utils/combine_data.sh --extra_files utt2num_frames data/train data/spc/train data/spc/train
     utils/combine_data.sh --extra_files utt2num_frames data/dev data/spc/valid data/spc/valid
