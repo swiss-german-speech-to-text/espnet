@@ -1,14 +1,13 @@
 #!/bin/bash
 #SBATCH --job-name=espnet_egs2_swiss_german
 #SBATCH --time=7-00:00:00
-#SBATCH --cpus-per-task=16
+#SBATCH --cpus-per-task=4
 #SBATCH --ntasks=1
-#SBATCH --mem=800G
+#SBATCH --mem=10G
 #SBATCH --qos=1week
-#SBATCH --partition=a100
+#SBATCH --partition=scicore
 #SBATCH -o scicore_out/%A_%a.out
 #SBATCH -e scicore_out/%A_%a.err
-#SBATCH --gres=gpu:4
 ml CMake/3.15.3-GCCcore-8.3.0
 ml SoX/14.4.2-GCCcore-8.3.0
 ml libsndfile/1.0.28-GCCcore-8.3.0
