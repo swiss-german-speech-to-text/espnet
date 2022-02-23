@@ -4,7 +4,10 @@ import sys
 from prepare_text import normalize_text, SG_CHAR_VOCAB, SG_CHAR_LOOKUP
 from nltk.tokenize import sent_tokenize
 
+
 def main(source_text: str, target_dir: str):
+    if os.path.exists(target_dir):
+        print("Assuming LM already preprocessed, exiting without any changes.")
     os.mkdir(target_dir)
     counter = 0
     with open(source_text, 'r', encoding='utf-8') as input:

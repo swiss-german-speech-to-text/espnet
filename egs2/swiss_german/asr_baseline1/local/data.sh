@@ -36,28 +36,49 @@ fi
 if [ ${stage} -le 1 ] && [ ${stop_stage} -ge 1 ]; then
     log "stage2: Preparing data"
     ### Task dependent. You have to make data the following preparation part by yourself.
-    mkdir "data/spc"
-    local/data_prep.pl downloads/stt/spc "train" data/spc/train
-    local/data_prep.pl downloads/stt/spc "valid" data/spc/valid
-    local/data_prep.pl downloads/stt/spc "test" data/spc/test
+    DIR="data/spc"
+    if [ -d "$DIR" ]; then
+     log "Preprocessing already done, skipping spc"
+    else
+      mkdir $DIR
+      local/data_prep.pl downloads/stt/spc "train" data/spc/train
+      local/data_prep.pl downloads/stt/spc "valid" data/spc/valid
+      local/data_prep.pl downloads/stt/spc "test" data/spc/test
 
-    mkdir "data/clickworker"
-    local/data_prep.pl downloads/stt/clickworker_test_set "private" data/clickworker/test
-    local/data_prep.pl downloads/stt/clickworker_test_set "public" data/clickworker/valid
+      utils/combine_data.sh --extra_files utt2num_frames data/train data/spc/train data/spc/train
+      utils/combine_data.sh --extra_files utt2num_frames data/dev data/spc/valid data/spc/valid
+    fi
 
-    mkdir "data/dialektsammlung"
-    local/data_prep.pl downloads/stt/dialektsammlung "test" data/dialektsammlung/test
-    local/data_prep.pl downloads/stt/dialektsammlung "train" data/dialektsammlung/train
-    local/data_prep.pl downloads/stt/dialektsammlung "valid" data/dialektsammlung/valid
 
-    mkdir "data/snf"
-    local/data_prep.pl downloads/stt/snf/testset/v0.1 "export_v0.1" data/snf/test
-    # TODO test / valid split
+    DIR="data/clickworker"
+    if [ -d "$DIR" ]; then
+      log "Preprocessing already done, skipping clickworker"
+    else
+      mkdir $DIR
+      local/data_prep.pl downloads/stt/clickworker_test_set "private" data/clickworker/test
+      local/data_prep.pl downloads/stt/clickworker_test_set "public" data/clickworker/valid
+    fi
 
-    utils/combine_data.sh --extra_files utt2num_frames data/train data/spc/train data/spc/train
-    utils/combine_data.sh --extra_files utt2num_frames data/dev data/spc/valid data/spc/valid
+    DIR="data/dialektsammlung"
+    if [ -d "$DIR" ]; then
+      log "Preprocessing already done, skipping dialektsammlung"
+    else
+      mkdir $DIR
+      local/data_prep.pl downloads/stt/dialektsammlung "test" data/dialektsammlung/test
+      local/data_prep.pl downloads/stt/dialektsammlung "train" data/dialektsammlung/train
+      local/data_prep.pl downloads/stt/dialektsammlung "valid" data/dialektsammlung/valid
+    fi
 
-    mkdir "data/lm"
+    DIR="data/snf"
+    if [ -d "$DIR" ]; then
+      log "Preprocessing already done, skipping snf"
+    else
+      mkdir $DIR
+      local/data_prep.pl downloads/stt/snf/testset/v0.1 "export_v0.1" data/snf/test
+      # TODO test / valid split
+    fi
+
+    mkdir -p "data/lm"
     python3 local/prepare_lm.py downloads/lm/combined/train.txt data/lm/train
     python3 local/prepare_lm.py downloads/lm/combined/valid.txt data/lm/valid
 fi
