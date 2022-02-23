@@ -36,7 +36,7 @@ export TMPDIR=/scicore/home/graber0001/schran0000/wandb
     --stage 0 \
     --stop_stage 1000 \
     --ngpu 4 \
-    --use_lm true \
+    --use_lm false \
     --lang de \
     --lm_config "${lm_config}" \
     --token_type bpe \

@@ -80,4 +80,4 @@ specaug_conf:
 use_wandb: "True"
 wandb_project: 'asr_swissgerman'
 wandb_entity: 'yanick'
-wandb_name: 'baseline1_nolm'
+wandb_name: 'baseline1_conformer_nolm'

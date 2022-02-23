@@ -1,11 +1,11 @@
 #!/bin/bash
-#SBATCH --job-name=espnet_egs2_swiss_german
-#SBATCH --time=14-00:00:00
+#SBATCH --job-name=espnet_egs2_swiss_german_baseline2
+#SBATCH --time=7-00:00:00
 #SBATCH --cpus-per-task=40
 #SBATCH --ntasks=1
-#SBATCH --mem=100G
-#SBATCH --qos=2weeks
-#SBATCH --partition=scicore
+#SBATCH --mem=800G
+#SBATCH --qos=1week
+#SBATCH --partition=a100
 #SBATCH -o scicore_out/%A_%a.out
 #SBATCH -e scicore_out/%A_%a.err
 ml CMake/3.15.3-GCCcore-8.3.0
