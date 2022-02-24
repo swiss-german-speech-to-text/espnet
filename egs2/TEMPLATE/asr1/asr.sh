@@ -756,7 +756,7 @@ if ! "${skip_train}"; then
             #       but it's used only for deciding the sample ids.
             # shellcheck disable=SC2086
             ${train_cmd} JOB=1:"${_nj}" "${_logdir}"/stats.JOB.log \
-                {python} -m espnet2.bin.lm_train \
+                ${python} -m espnet2.bin.lm_train \
                     --collect_stats true \
                     --use_preprocessor true \
                     --bpemodel "${bpemodel}" \

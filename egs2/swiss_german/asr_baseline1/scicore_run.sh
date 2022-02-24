@@ -1,9 +1,9 @@
 #!/bin/bash
 #SBATCH --job-name=espnet_egs2_swiss_german
 #SBATCH --time=7-00:00:00
-#SBATCH --cpus-per-task=4
+#SBATCH --cpus-per-task=8
 #SBATCH --ntasks=1
-#SBATCH --mem=10G
+#SBATCH --mem=100G
 #SBATCH --qos=1week
 #SBATCH --partition=scicore
 #SBATCH -o scicore_out/%A_%a.out
