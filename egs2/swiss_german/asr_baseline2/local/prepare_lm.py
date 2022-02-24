@@ -8,6 +8,7 @@ from nltk.tokenize import sent_tokenize
 def main(source_text: str, target_dir: str):
     if os.path.exists(target_dir):
         print("Assuming LM already preprocessed, exiting without any changes.")
+        return
     os.mkdir(target_dir)
     counter = 0
     with open(source_text, 'r', encoding='utf-8') as input:
