@@ -7,7 +7,7 @@ set -o pipefail
 
 train_set="train"
 train_dev="dev"
-test_set="spc/test spc/valid clickworker/valid clickworker/test dialektsammlung/valid dialektsammlung/test snf/test"
+test_set="spc/test spc/valid clickworker/valid clickworker/test dialektsammlung/valid dialektsammlung/test snf/test stadt_bern_stadtrat_alligned/valid"
 lm_train_set="lm/train/text"
 lm_val_set="lm/valid/text"
 
