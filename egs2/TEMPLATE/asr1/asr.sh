@@ -22,9 +22,6 @@ min() {
 }
 SECONDS=0
 
-SLURM_SETTINGS="ml purge & ml CMake/3.15.3-GCCcore-8.3.0 & ml SoX/14.4.2-GCCcore-8.3.0 & ml libsndfile/1.0.28-GCCcore-8.3.0 & ml FFmpeg/.4.2.1-GCCcore-8.3.0 & ml FLAC/1.3.3-GCCcore-8.3.0 & ml cuDNN/8.1.0.77-CUDA-11.2.1 & ml Python/3.7.4-GCC core-8.3.0"
-
-
 # General configuration
 stage=1              # Processes starts from the specified stage.
 stop_stage=10000     # Processes is stopped at the specified stage.
@@ -759,7 +756,7 @@ if ! "${skip_train}"; then
             #       but it's used only for deciding the sample ids.
             # shellcheck disable=SC2086
             ${train_cmd} JOB=1:"${_nj}" "${_logdir}"/stats.JOB.log \
-                ${SLURM_SETTINGS} & ${python} -m espnet2.bin.lm_train \
+                {python} -m espnet2.bin.lm_train \
                     --collect_stats true \
                     --use_preprocessor true \
                     --bpemodel "${bpemodel}" \
@@ -971,7 +968,7 @@ if ! "${skip_train}"; then
 
         # shellcheck disable=SC2086
         ${train_cmd} JOB=1:"${_nj}" "${_logdir}"/stats.JOB.log \
-            ${SLURM_SETTINGS} & ${python} -m espnet2.bin.asr_train \
+            ${python} -m espnet2.bin.asr_train \
                 --collect_stats true \
                 --use_preprocessor true \
                 --bpemodel "${bpemodel}" \
