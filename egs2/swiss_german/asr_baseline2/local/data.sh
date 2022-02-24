@@ -54,8 +54,8 @@ if [ ${stage} -le 1 ] && [ ${stop_stage} -ge 1 ]; then
       local/data_prep.pl downloads/stt/stadt_bern_stadtrat_alligned "train" data/stadt_bern_stadtrat_alligned/train
       local/data_prep.pl downloads/stt/stadt_bern_stadtrat_alligned "valid" data/stadt_bern_stadtrat_alligned/valid
 
-      utils/combine_data.sh --extra_files utt2num_frames data/train data/spc/train data/spc/train data/stadt_bern_stadtrat/alligned/train data/stadt_bern_stadtrat/alligned/train
-      utils/combine_data.sh --extra_files utt2num_frames data/dev data/spc/valid data/spc/valid data/stadt_bern_stadtrat/alligned/valid data/stadt_bern_stadtrat/alligned/valid
+      utils/combine_data.sh --extra_files utt2num_frames data/train data/spc/train data/spc/train data/stadt_bern_stadtrat_alligned/train data/stadt_bern_stadtrat_alligned/train
+      utils/combine_data.sh --extra_files utt2num_frames data/dev data/spc/valid data/spc/valid data/stadt_bern_stadtrat_alligned/valid data/stadt_bern_stadtrat_alligned/valid
     fi
 
     DIR="data/clickworker"
