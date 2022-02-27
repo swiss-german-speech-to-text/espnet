@@ -4,7 +4,7 @@ wandb_entity: 'yanick'
 wandb_name: 'lm_transformer'
 
 use_amp: true
-train_dtype: "float16"
+#train_dtype: "float16"
 
 lm: transformer
 lm_conf:
