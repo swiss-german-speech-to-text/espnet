@@ -8,9 +8,9 @@ optim_conf:
 scheduler: warmuplr
 scheduler_conf:
    warmup_steps: 25000
-batch_type: folded
-batch_size: 64   # batch size in LM training
-max_epoch: 15      # if the data size is large, we can reduce this
+grad_clip: 5.0
+batch_type: numel
+batch_bins: 20000000
 patience: 1
 use_wandb: "True"
 wandb_project: 'asr_swissgerman'
