@@ -74,7 +74,7 @@ if [ ${stage} -le 1 ] && [ ${stop_stage} -ge 1 ]; then
       log "Preprocessing already done, skipping snf"
     else
       mkdir $DIR
-      local/data_prep.pl downloads/stt/snf/testset/v0.1 "export_v0.1" data/snf/test
+      local/data_prep.pl downloads/stt/snf/testset/v0.2 "export_v0.2" data/snf/test
       # TODO test / valid split
     fi
 
