@@ -1,16 +1,12 @@
 lm_conf:
-    nlayers: 2
-    unit: 650
-    dropout_rate: 0.1
+    nlayers: 4
+    unit: 2048
 optim: adam
 optim_conf:
-   lr: 0.005
-scheduler: warmuplr
-scheduler_conf:
-   warmup_steps: 25000
+    lr: 0.001
 grad_clip: 5.0
 batch_type: folded
-batch_size: 400   # batch size in LM training
+batch_size: 1024   # batch size in LM training
 max_epoch: 20     # if the data size is large, we can reduce this
 patience: 1
 use_wandb: "True"
