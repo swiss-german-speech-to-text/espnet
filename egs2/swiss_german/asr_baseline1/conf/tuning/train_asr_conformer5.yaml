@@ -53,7 +53,7 @@ scheduler_conf:
 
 # minibatch related
 batch_type: numel
-batch_bins: 1000000000
+batch_bins: 10000000
 
 best_model_criterion:
 -   - valid
@@ -80,4 +80,4 @@ specaug_conf:
 use_wandb: "True"
 wandb_project: 'asr_swissgerman'
 wandb_entity: 'yanick'
-wandb_name: 'baseline1_conformer_nolm'
+wandb_name: 'baseline1_conformer'
