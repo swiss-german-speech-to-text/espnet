@@ -1,0 +1,247 @@
+2022-03-02T17:20:37 (asr.sh:249:main) ./asr.sh --stage 0 --stop_stage 1000 --ngpu 4 --use_lm false --lang de --lm_config conf/train_lm.yaml --token_type bpe --nbpe 5000 --feats_type raw --max_wav_duration 12 --speed_perturb_factors 0.9 1.0 1.1 --asr_config conf/tuning/train_asr_conformer5.yaml --inference_config conf/decode_asr.yaml --train_set train --valid_set dev --test_sets spc/test spc/valid clickworker/valid clickworker/test dialektsammlung/valid dialektsammlung/test snf/test stadt_bern_stadtrat_alligned/valid --bpe_train_text data/lm/train/text --bpe_input_sentence_size 10000000 --lm_train_text data/lm/train/text --lm_dev_text data/lm/valid/text
+2022-03-02T17:20:39 (asr.sh:440:main) Stage 1: Data preparation for data/train, data/dev, etc.
+2022-03-02T17:20:39 (data.sh:28:main) data preparation started
+2022-03-02T17:20:39 (data.sh:37:main) stage2: Preparing data
+utils/fix_data_dir.sh: file data/spc/train/utt2spk is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/spc/train/spk2utt is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/spc/train/text is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/spc/train/wav.scp is not in sorted order or not unique, sorting it
+fix_data_dir.sh: kept all 141919 utterances.
+fix_data_dir.sh: old files are kept in data/spc/train/.backup
+utils/validate_data_dir.sh: Successfully validated data-directory data/spc/train
+utils/fix_data_dir.sh: file data/spc/valid/utt2spk is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/spc/valid/spk2utt is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/spc/valid/text is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/spc/valid/wav.scp is not in sorted order or not unique, sorting it
+fix_data_dir.sh: kept all 3388 utterances.
+fix_data_dir.sh: old files are kept in data/spc/valid/.backup
+utils/validate_data_dir.sh: Successfully validated data-directory data/spc/valid
+utils/fix_data_dir.sh: file data/spc/test/utt2spk is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/spc/test/spk2utt is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/spc/test/text is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/spc/test/wav.scp is not in sorted order or not unique, sorting it
+fix_data_dir.sh: kept all 3332 utterances.
+fix_data_dir.sh: old files are kept in data/spc/test/.backup
+utils/validate_data_dir.sh: Successfully validated data-directory data/spc/test
+utils/fix_data_dir.sh: file data/kanton_ar_kantonsrat_alligned/train/utt2spk is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/kanton_ar_kantonsrat_alligned/train/spk2utt is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/kanton_ar_kantonsrat_alligned/train/text is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/kanton_ar_kantonsrat_alligned/train/wav.scp is not in sorted order or not unique, sorting it
+fix_data_dir.sh: kept all 52173 utterances.
+fix_data_dir.sh: old files are kept in data/kanton_ar_kantonsrat_alligned/train/.backup
+utils/validate_data_dir.sh: Successfully validated data-directory data/kanton_ar_kantonsrat_alligned/train
+utils/fix_data_dir.sh: file data/kanton_ar_kantonsrat_alligned/valid/utt2spk is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/kanton_ar_kantonsrat_alligned/valid/spk2utt is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/kanton_ar_kantonsrat_alligned/valid/text is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/kanton_ar_kantonsrat_alligned/valid/wav.scp is not in sorted order or not unique, sorting it
+fix_data_dir.sh: kept all 2994 utterances.
+fix_data_dir.sh: old files are kept in data/kanton_ar_kantonsrat_alligned/valid/.backup
+utils/validate_data_dir.sh: Successfully validated data-directory data/kanton_ar_kantonsrat_alligned/valid
+utils/fix_data_dir.sh: file data/kanton_ow_kantonsrat_alligned/train/utt2spk is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/kanton_ow_kantonsrat_alligned/train/spk2utt is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/kanton_ow_kantonsrat_alligned/train/text is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/kanton_ow_kantonsrat_alligned/train/wav.scp is not in sorted order or not unique, sorting it
+fix_data_dir.sh: kept all 130947 utterances.
+fix_data_dir.sh: old files are kept in data/kanton_ow_kantonsrat_alligned/train/.backup
+utils/validate_data_dir.sh: Successfully validated data-directory data/kanton_ow_kantonsrat_alligned/train
+utils/fix_data_dir.sh: file data/kanton_ow_kantonsrat_alligned/valid/utt2spk is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/kanton_ow_kantonsrat_alligned/valid/spk2utt is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/kanton_ow_kantonsrat_alligned/valid/text is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/kanton_ow_kantonsrat_alligned/valid/wav.scp is not in sorted order or not unique, sorting it
+fix_data_dir.sh: kept all 3123 utterances.
+fix_data_dir.sh: old files are kept in data/kanton_ow_kantonsrat_alligned/valid/.backup
+utils/validate_data_dir.sh: Successfully validated data-directory data/kanton_ow_kantonsrat_alligned/valid
+utils/fix_data_dir.sh: file data/stadt_bern_stadtrat_alligned/train/utt2spk is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/stadt_bern_stadtrat_alligned/train/spk2utt is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/stadt_bern_stadtrat_alligned/train/text is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/stadt_bern_stadtrat_alligned/train/wav.scp is not in sorted order or not unique, sorting it
+fix_data_dir.sh: kept all 269214 utterances.
+fix_data_dir.sh: old files are kept in data/stadt_bern_stadtrat_alligned/train/.backup
+utils/validate_data_dir.sh: Successfully validated data-directory data/stadt_bern_stadtrat_alligned/train
+utils/fix_data_dir.sh: file data/stadt_bern_stadtrat_alligned/valid/utt2spk is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/stadt_bern_stadtrat_alligned/valid/spk2utt is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/stadt_bern_stadtrat_alligned/valid/text is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/stadt_bern_stadtrat_alligned/valid/wav.scp is not in sorted order or not unique, sorting it
+fix_data_dir.sh: kept all 3096 utterances.
+fix_data_dir.sh: old files are kept in data/stadt_bern_stadtrat_alligned/valid/.backup
+utils/validate_data_dir.sh: Successfully validated data-directory data/stadt_bern_stadtrat_alligned/valid
+utils/combine_data.sh --extra_files utt2num_frames data/train data/spc/train data/spc/train data/stadt_bern_stadtrat_alligned/train data/stadt_bern_stadtrat_alligned/train data/kanton_ow_kantonsrat_alligned/train data/kanton_ow_kantonsrat_alligned/train data/kanton_ar_kantonsrat_alligned/train data/kanton_ar_kantonsrat_alligned/train
+utils/combine_data.sh [info]: not combining utt2uniq as it does not exist
+utils/combine_data.sh [info]: not combining segments as it does not exist
+utils/combine_data.sh: combined utt2spk
+utils/combine_data.sh [info]: not combining utt2lang as it does not exist
+utils/combine_data.sh [info]: not combining utt2dur as it does not exist
+utils/combine_data.sh [info]: not combining utt2num_frames as it does not exist
+utils/combine_data.sh [info]: not combining reco2dur as it does not exist
+utils/combine_data.sh [info]: not combining feats.scp as it does not exist
+utils/combine_data.sh: combined text
+utils/combine_data.sh [info]: not combining cmvn.scp as it does not exist
+utils/combine_data.sh [info]: not combining vad.scp as it does not exist
+utils/combine_data.sh [info]: not combining reco2file_and_channel as it does not exist
+utils/combine_data.sh: combined wav.scp
+utils/combine_data.sh [info]: not combining spk2gender as it does not exist
+utils/combine_data.sh [info]: not combining utt2num_frames as it does not exist
+utils/fix_data_dir.sh: file data/train/utt2spk is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/train/text is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/train/wav.scp is not in sorted order or not unique, sorting it
+fix_data_dir.sh: kept all 594253 utterances.
+fix_data_dir.sh: old files are kept in data/train/.backup
+utils/combine_data.sh --extra_files utt2num_frames data/dev data/spc/valid data/spc/valid data/stadt_bern_stadtrat_alligned/valid data/stadt_bern_stadtrat_alligned/valid data/kanton_ow_kantonsrat_alligned/valid data/kanton_ow_kantonsrat_alligned/valid data/kanton_ar_kantonsrat_alligned/valid data/kanton_ar_kantonsrat_alligned/valid
+utils/combine_data.sh [info]: not combining utt2uniq as it does not exist
+utils/combine_data.sh [info]: not combining segments as it does not exist
+utils/combine_data.sh: combined utt2spk
+utils/combine_data.sh [info]: not combining utt2lang as it does not exist
+utils/combine_data.sh [info]: not combining utt2dur as it does not exist
+utils/combine_data.sh [info]: not combining utt2num_frames as it does not exist
+utils/combine_data.sh [info]: not combining reco2dur as it does not exist
+utils/combine_data.sh [info]: not combining feats.scp as it does not exist
+utils/combine_data.sh: combined text
+utils/combine_data.sh [info]: not combining cmvn.scp as it does not exist
+utils/combine_data.sh [info]: not combining vad.scp as it does not exist
+utils/combine_data.sh [info]: not combining reco2file_and_channel as it does not exist
+utils/combine_data.sh: combined wav.scp
+utils/combine_data.sh [info]: not combining spk2gender as it does not exist
+utils/combine_data.sh [info]: not combining utt2num_frames as it does not exist
+utils/fix_data_dir.sh: file data/dev/utt2spk is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/dev/text is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/dev/wav.scp is not in sorted order or not unique, sorting it
+fix_data_dir.sh: kept all 12601 utterances.
+fix_data_dir.sh: old files are kept in data/dev/.backup
+utils/fix_data_dir.sh: file data/clickworker/test/utt2spk is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/clickworker/test/spk2utt is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/clickworker/test/text is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/clickworker/test/wav.scp is not in sorted order or not unique, sorting it
+fix_data_dir.sh: kept all 2875 utterances.
+fix_data_dir.sh: old files are kept in data/clickworker/test/.backup
+utils/validate_data_dir.sh: Successfully validated data-directory data/clickworker/test
+utils/fix_data_dir.sh: file data/clickworker/valid/utt2spk is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/clickworker/valid/spk2utt is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/clickworker/valid/text is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/clickworker/valid/wav.scp is not in sorted order or not unique, sorting it
+fix_data_dir.sh: kept all 2875 utterances.
+fix_data_dir.sh: old files are kept in data/clickworker/valid/.backup
+utils/validate_data_dir.sh: Successfully validated data-directory data/clickworker/valid
+utils/fix_data_dir.sh: file data/dialektsammlung/test/utt2spk is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/dialektsammlung/test/spk2utt is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/dialektsammlung/test/text is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/dialektsammlung/test/wav.scp is not in sorted order or not unique, sorting it
+fix_data_dir.sh: kept all 3636 utterances.
+fix_data_dir.sh: old files are kept in data/dialektsammlung/test/.backup
+utils/validate_data_dir.sh: Successfully validated data-directory data/dialektsammlung/test
+utils/fix_data_dir.sh: file data/dialektsammlung/train/utt2spk is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/dialektsammlung/train/spk2utt is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/dialektsammlung/train/text is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/dialektsammlung/train/wav.scp is not in sorted order or not unique, sorting it
+fix_data_dir.sh: kept all 135271 utterances.
+fix_data_dir.sh: old files are kept in data/dialektsammlung/train/.backup
+utils/validate_data_dir.sh: Successfully validated data-directory data/dialektsammlung/train
+utils/fix_data_dir.sh: file data/dialektsammlung/valid/utt2spk is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/dialektsammlung/valid/spk2utt is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/dialektsammlung/valid/text is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/dialektsammlung/valid/wav.scp is not in sorted order or not unique, sorting it
+fix_data_dir.sh: kept all 3638 utterances.
+fix_data_dir.sh: old files are kept in data/dialektsammlung/valid/.backup
+utils/validate_data_dir.sh: Successfully validated data-directory data/dialektsammlung/valid
+utils/fix_data_dir.sh: file data/snf/test/utt2spk is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/snf/test/spk2utt is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/snf/test/text is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/snf/test/wav.scp is not in sorted order or not unique, sorting it
+fix_data_dir.sh: kept all 26121 utterances.
+fix_data_dir.sh: old files are kept in data/snf/test/.backup
+utils/validate_data_dir.sh: Successfully validated data-directory data/snf/test
+2022-03-02T18:49:33 (data.sh:112:main) Successfully finished. [elapsed=5334s]
+2022-03-02T18:49:33 (asr.sh:447:main) Stage 2: Speed perturbation: data/train -> data/train_sp
+text
+utt2lang
+scripts/utils/perturb_data_dir_speed.sh: generated speed-perturbed version of data in data/train, in data/train_sp0.9
+utils/validate_data_dir.sh: Successfully validated data-directory data/train_sp0.9
+text
+utt2lang
+scripts/utils/perturb_data_dir_speed.sh: generated speed-perturbed version of data in data/train, in data/train_sp1.1
+utils/validate_data_dir.sh: Successfully validated data-directory data/train_sp1.1
+utils/combine_data.sh data/train_sp data/train_sp0.9 data/train data/train_sp1.1
+utils/combine_data.sh: combined utt2uniq
+utils/combine_data.sh [info]: not combining segments as it does not exist
+utils/combine_data.sh: combined utt2spk
+utils/combine_data.sh [info]: not combining utt2lang as it does not exist
+utils/combine_data.sh [info]: not combining utt2dur as it does not exist
+utils/combine_data.sh [info]: not combining utt2num_frames as it does not exist
+utils/combine_data.sh [info]: not combining reco2dur as it does not exist
+utils/combine_data.sh [info]: not combining feats.scp as it does not exist
+utils/combine_data.sh: combined text
+utils/combine_data.sh [info]: not combining cmvn.scp as it does not exist
+utils/combine_data.sh [info]: not combining vad.scp as it does not exist
+utils/combine_data.sh [info]: not combining reco2file_and_channel as it does not exist
+utils/combine_data.sh: combined wav.scp
+utils/combine_data.sh [info]: not combining spk2gender as it does not exist
+fix_data_dir.sh: kept all 1782759 utterances.
+fix_data_dir.sh: old files are kept in data/train_sp/.backup
+2022-03-02T18:52:00 (asr.sh:469:main) Stage 3: Format wav.scp: data/ -> dump/raw
+utils/copy_data_dir.sh: copied data from data/train_sp to dump/raw/org/train_sp
+utils/validate_data_dir.sh: Successfully validated data-directory dump/raw/org/train_sp
+2022-03-02T18:53:38 (format_wav_scp.sh:42:main) scripts/audio/format_wav_scp.sh --nj 32 --cmd run.pl --audio-format flac --fs 16k data/train_sp/wav.scp dump/raw/org/train_sp
+2022-03-02T18:53:38 (format_wav_scp.sh:110:main) [info]: without segments
+2022-03-02T22:36:53 (format_wav_scp.sh:142:main) Successfully finished. [elapsed=13395s]
+utils/copy_data_dir.sh: copied data from data/dev to dump/raw/org/dev
+utils/validate_data_dir.sh: Successfully validated data-directory dump/raw/org/dev
+2022-03-02T22:36:54 (format_wav_scp.sh:42:main) scripts/audio/format_wav_scp.sh --nj 32 --cmd run.pl --audio-format flac --fs 16k data/dev/wav.scp dump/raw/org/dev
+2022-03-02T22:36:54 (format_wav_scp.sh:110:main) [info]: without segments
+2022-03-02T22:38:17 (format_wav_scp.sh:142:main) Successfully finished. [elapsed=83s]
+utils/copy_data_dir.sh: copied data from data/spc/test to dump/raw/spc/test
+utils/validate_data_dir.sh: Successfully validated data-directory dump/raw/spc/test
+2022-03-02T22:38:18 (format_wav_scp.sh:42:main) scripts/audio/format_wav_scp.sh --nj 32 --cmd run.pl --audio-format flac --fs 16k data/spc/test/wav.scp dump/raw/spc/test
+2022-03-02T22:38:18 (format_wav_scp.sh:110:main) [info]: without segments
+2022-03-02T22:39:00 (format_wav_scp.sh:142:main) Successfully finished. [elapsed=42s]
+utils/copy_data_dir.sh: copied data from data/spc/valid to dump/raw/spc/valid
+utils/validate_data_dir.sh: Successfully validated data-directory dump/raw/spc/valid
+2022-03-02T22:39:00 (format_wav_scp.sh:42:main) scripts/audio/format_wav_scp.sh --nj 32 --cmd run.pl --audio-format flac --fs 16k data/spc/valid/wav.scp dump/raw/spc/valid
+2022-03-02T22:39:01 (format_wav_scp.sh:110:main) [info]: without segments
+2022-03-02T22:39:25 (format_wav_scp.sh:142:main) Successfully finished. [elapsed=25s]
+utils/copy_data_dir.sh: copied data from data/clickworker/valid to dump/raw/clickworker/valid
+utils/validate_data_dir.sh: Successfully validated data-directory dump/raw/clickworker/valid
+2022-03-02T22:39:26 (format_wav_scp.sh:42:main) scripts/audio/format_wav_scp.sh --nj 32 --cmd run.pl --audio-format flac --fs 16k data/clickworker/valid/wav.scp dump/raw/clickworker/valid
+2022-03-02T22:39:26 (format_wav_scp.sh:110:main) [info]: without segments
+2022-03-02T22:39:50 (format_wav_scp.sh:142:main) Successfully finished. [elapsed=24s]
+utils/copy_data_dir.sh: copied data from data/clickworker/test to dump/raw/clickworker/test
+utils/validate_data_dir.sh: Successfully validated data-directory dump/raw/clickworker/test
+2022-03-02T22:39:50 (format_wav_scp.sh:42:main) scripts/audio/format_wav_scp.sh --nj 32 --cmd run.pl --audio-format flac --fs 16k data/clickworker/test/wav.scp dump/raw/clickworker/test
+2022-03-02T22:39:50 (format_wav_scp.sh:110:main) [info]: without segments
+2022-03-02T22:40:17 (format_wav_scp.sh:142:main) Successfully finished. [elapsed=27s]
+utils/copy_data_dir.sh: copied data from data/dialektsammlung/valid to dump/raw/dialektsammlung/valid
+utils/validate_data_dir.sh: Successfully validated data-directory dump/raw/dialektsammlung/valid
+2022-03-02T22:40:17 (format_wav_scp.sh:42:main) scripts/audio/format_wav_scp.sh --nj 32 --cmd run.pl --audio-format flac --fs 16k data/dialektsammlung/valid/wav.scp dump/raw/dialektsammlung/valid
+2022-03-02T22:40:17 (format_wav_scp.sh:110:main) [info]: without segments
+2022-03-02T22:40:40 (format_wav_scp.sh:142:main) Successfully finished. [elapsed=23s]
+utils/copy_data_dir.sh: copied data from data/dialektsammlung/test to dump/raw/dialektsammlung/test
+utils/validate_data_dir.sh: Successfully validated data-directory dump/raw/dialektsammlung/test
+2022-03-02T22:40:41 (format_wav_scp.sh:42:main) scripts/audio/format_wav_scp.sh --nj 32 --cmd run.pl --audio-format flac --fs 16k data/dialektsammlung/test/wav.scp dump/raw/dialektsammlung/test
+2022-03-02T22:40:41 (format_wav_scp.sh:110:main) [info]: without segments
+2022-03-02T22:41:03 (format_wav_scp.sh:142:main) Successfully finished. [elapsed=22s]
+utils/copy_data_dir.sh: copied data from data/snf/test to dump/raw/snf/test
+utils/validate_data_dir.sh: Successfully validated data-directory dump/raw/snf/test
+2022-03-02T22:41:05 (format_wav_scp.sh:42:main) scripts/audio/format_wav_scp.sh --nj 32 --cmd run.pl --audio-format flac --fs 16k data/snf/test/wav.scp dump/raw/snf/test
+2022-03-02T22:41:05 (format_wav_scp.sh:110:main) [info]: without segments
+2022-03-02T22:42:33 (format_wav_scp.sh:142:main) Successfully finished. [elapsed=88s]
+utils/copy_data_dir.sh: copied data from data/stadt_bern_stadtrat_alligned/valid to dump/raw/stadt_bern_stadtrat_alligned/valid
+utils/validate_data_dir.sh: Successfully validated data-directory dump/raw/stadt_bern_stadtrat_alligned/valid
+2022-03-02T22:42:34 (format_wav_scp.sh:42:main) scripts/audio/format_wav_scp.sh --nj 32 --cmd run.pl --audio-format flac --fs 16k data/stadt_bern_stadtrat_alligned/valid/wav.scp dump/raw/stadt_bern_stadtrat_alligned/valid
+2022-03-02T22:42:34 (format_wav_scp.sh:110:main) [info]: without segments
+2022-03-02T22:43:03 (format_wav_scp.sh:142:main) Successfully finished. [elapsed=29s]
+2022-03-02T22:43:03 (asr.sh:571:main) Stage 4: Remove long/short data: dump/raw/org -> dump/raw
+utils/copy_data_dir.sh: copied data from dump/raw/org/train_sp to dump/raw/train_sp
+utils/validate_data_dir.sh: Successfully validated data-directory dump/raw/train_sp
+fix_data_dir.sh: kept 1435753 utterances out of 1782759
+fix_data_dir.sh: old files are kept in dump/raw/train_sp/.backup
+utils/copy_data_dir.sh: copied data from dump/raw/org/dev to dump/raw/dev
+utils/validate_data_dir.sh: Successfully validated data-directory dump/raw/dev
+fix_data_dir.sh: kept 11574 utterances out of 12601
+fix_data_dir.sh: old files are kept in dump/raw/dev/.backup
+2022-03-02T22:48:13 (asr.sh:636:main) Stage 5: Generate token_list from data/lm/train/text using BPE
+2022-03-02T23:05:54 (asr.sh:889:main) Stage 6-8: Skip lm-related stages: use_lm=false
+2022-03-02T23:05:54 (asr.sh:902:main) Stage 9: Skip ngram stages: use_ngram=false
+2022-03-02T23:05:54 (asr.sh:910:main) Stage 10: ASR collect stats: train_set=dump/raw/train_sp, valid_set=dump/raw/dev
+2022-03-02T23:05:58 (asr.sh:960:main) Generate 'exp/asr_stats_raw_de_bpe5000_sp/run.sh'. You can resume the process from stage 10 using this script
+2022-03-02T23:05:58 (asr.sh:964:main) ASR collect-stats started... log: 'exp/asr_stats_raw_de_bpe5000_sp/logdir/stats.*.log'
+2022-03-02T23:43:59 (asr.sh:1011:main) Stage 11: ASR Training: train_set=dump/raw/train_sp, valid_set=dump/raw/dev
+2022-03-02T23:43:59 (asr.sh:1078:main) Generate 'exp/asr_train_asr_conformer5_raw_de_bpe5000_sp/run.sh'. You can resume the process from stage 11 using this script
+2022-03-02T23:43:59 (asr.sh:1082:main) ASR training started... log: 'exp/asr_train_asr_conformer5_raw_de_bpe5000_sp/train.log'

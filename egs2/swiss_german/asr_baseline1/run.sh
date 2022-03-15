@@ -33,9 +33,9 @@ export WANDB_DIR=/scicore/home/graber0001/schran0000/wandb
 export TMPDIR=/scicore/home/graber0001/schran0000/wandb
 
 ./asr.sh \
-    --stage 0 \
+    --stage 8 \
     --stop_stage 1000 \
-    --ngpu 4 \
+    --ngpu 2 \
     --use_lm true \
     --lang de \
     --lm_config "${lm_config}" \

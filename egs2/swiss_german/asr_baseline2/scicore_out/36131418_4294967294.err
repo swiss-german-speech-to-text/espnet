@@ -1,0 +1,1 @@
+run.pl: 32 / 32 failed, log is in exp/asr_train_asr_conformer5_raw_de_bpe5000_sp/decode_asr_asr_model_valid.acc.ave/spc/test/logdir/asr_inference.*.log

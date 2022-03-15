@@ -1,0 +1,174 @@
+sentencepiece_trainer.cc(177) LOG(INFO) Running command: --input=data/de_token_list/bpe_unigram5000/train.txt --vocab_size=5000 --model_type=unigram --model_prefix=data/de_token_list/bpe_unigram5000/bpe --character_coverage=1.0 --input_sentence_size=10000000 --shuffle_input_sentence=true --train_extremely_large_corpus=true
+sentencepiece_trainer.cc(77) LOG(INFO) Starts training with : 
+trainer_spec {
+  input: data/de_token_list/bpe_unigram5000/train.txt
+  input_format: 
+  model_prefix: data/de_token_list/bpe_unigram5000/bpe
+  model_type: UNIGRAM
+  vocab_size: 5000
+  self_test_sample_size: 0
+  character_coverage: 1
+  input_sentence_size: 10000000
+  shuffle_input_sentence: 1
+  seed_sentencepiece_size: 1000000
+  shrinking_factor: 0.75
+  max_sentence_length: 4192
+  num_threads: 16
+  num_sub_iterations: 2
+  max_sentencepiece_length: 16
+  split_by_unicode_script: 1
+  split_by_number: 1
+  split_by_whitespace: 1
+  split_digits: 0
+  treat_whitespace_as_suffix: 0
+  allow_whitespace_only_pieces: 0
+  required_chars: 
+  byte_fallback: 0
+  vocabulary_output_piece_score: 1
+  train_extremely_large_corpus: 1
+  hard_vocab_limit: 1
+  use_all_vocab: 0
+  unk_id: 0
+  bos_id: 1
+  eos_id: 2
+  pad_id: -1
+  unk_piece: <unk>
+  bos_piece: <s>
+  eos_piece: </s>
+  pad_piece: <pad>
+  unk_surface:  ⁇ 
+}
+normalizer_spec {
+  name: nmt_nfkc
+  add_dummy_prefix: 1
+  remove_extra_whitespaces: 1
+  escape_whitespaces: 1
+  normalization_rule_tsv: 
+}
+denormalizer_spec {}
+trainer_interface.cc(329) LOG(INFO) SentenceIterator is not specified. Using MultiFileSentenceIterator.
+trainer_interface.cc(178) LOG(INFO) Loading corpus: data/de_token_list/bpe_unigram5000/train.txt
+trainer_interface.cc(140) LOG(INFO) Loaded 1000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 2000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 3000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 4000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 5000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 6000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 7000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 8000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 9000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 10000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 11000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 12000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 13000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 14000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 15000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 16000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 17000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 18000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 19000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 20000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 21000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 22000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 23000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 24000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 25000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 26000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 27000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 28000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 29000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 30000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 31000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 32000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 33000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 34000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 35000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 36000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 37000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 38000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 39000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 40000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 41000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 42000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 43000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 44000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 45000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 46000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 47000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 48000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 49000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 50000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 51000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 52000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 53000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 54000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 55000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 56000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 57000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 58000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 59000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 60000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 61000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 62000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 63000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 64000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 65000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 66000000 lines
+trainer_interface.cc(140) LOG(INFO) Loaded 67000000 lines
+trainer_interface.cc(117) LOG(WARNING) Too many sentences are loaded! (10000000), which may slow down training.
+trainer_interface.cc(119) LOG(WARNING) Consider using --input_sentence_size=<size> and --shuffle_input_sentence=true.
+trainer_interface.cc(122) LOG(WARNING) They allow to randomly sample <size> sentences from the entire corpus.
+trainer_interface.cc(387) LOG(INFO) Sampled 10000000 sentences from 67930038 sentences.
+trainer_interface.cc(400) LOG(INFO) Adding meta_piece: <unk>
+trainer_interface.cc(400) LOG(INFO) Adding meta_piece: <s>
+trainer_interface.cc(400) LOG(INFO) Adding meta_piece: </s>
+trainer_interface.cc(405) LOG(INFO) Normalizing sentences...
+trainer_interface.cc(466) LOG(INFO) all chars count=1541893509
+trainer_interface.cc(487) LOG(INFO) Alphabet size=40
+trainer_interface.cc(488) LOG(INFO) Final character coverage=1
+trainer_interface.cc(520) LOG(INFO) Done! preprocessed 10000000 sentences.
+unigram_model_trainer.cc(139) LOG(INFO) Making suffix array...
+unigram_model_trainer.cc(143) LOG(INFO) Extracting frequent sub strings...
+unigram_model_trainer.cc(194) LOG(INFO) Initialized 1000000 seed sentencepieces
+trainer_interface.cc(526) LOG(INFO) Tokenizing input sentences with whitespace: 10000000
+trainer_interface.cc(537) LOG(INFO) Done! 2290900
+unigram_model_trainer.cc(489) LOG(INFO) Using 2290900 sentences for EM training
+unigram_model_trainer.cc(505) LOG(INFO) EM sub_iter=0 size=537882 obj=11.118 num_tokens=5051996 num_tokens/piece=9.39239
+unigram_model_trainer.cc(505) LOG(INFO) EM sub_iter=1 size=345099 obj=8.80244 num_tokens=5013034 num_tokens/piece=14.5264
+unigram_model_trainer.cc(505) LOG(INFO) EM sub_iter=0 size=258606 obj=8.75929 num_tokens=5027425 num_tokens/piece=19.4405
+unigram_model_trainer.cc(505) LOG(INFO) EM sub_iter=1 size=257236 obj=8.75401 num_tokens=5028136 num_tokens/piece=19.5468
+unigram_model_trainer.cc(505) LOG(INFO) EM sub_iter=0 size=192927 obj=8.75671 num_tokens=5122304 num_tokens/piece=26.5505
+unigram_model_trainer.cc(505) LOG(INFO) EM sub_iter=1 size=192920 obj=8.75547 num_tokens=5123700 num_tokens/piece=26.5587
+unigram_model_trainer.cc(505) LOG(INFO) EM sub_iter=0 size=144689 obj=8.76998 num_tokens=5348128 num_tokens/piece=36.9629
+unigram_model_trainer.cc(505) LOG(INFO) EM sub_iter=1 size=144686 obj=8.7652 num_tokens=5347666 num_tokens/piece=36.9605
+unigram_model_trainer.cc(505) LOG(INFO) EM sub_iter=0 size=108513 obj=8.81361 num_tokens=5678289 num_tokens/piece=52.3282
+unigram_model_trainer.cc(505) LOG(INFO) EM sub_iter=1 size=108508 obj=8.79947 num_tokens=5679005 num_tokens/piece=52.3372
+unigram_model_trainer.cc(505) LOG(INFO) EM sub_iter=0 size=81380 obj=8.88432 num_tokens=5974188 num_tokens/piece=73.411
+unigram_model_trainer.cc(505) LOG(INFO) EM sub_iter=1 size=81378 obj=8.86345 num_tokens=5975410 num_tokens/piece=73.4278
+unigram_model_trainer.cc(505) LOG(INFO) EM sub_iter=0 size=61033 obj=8.97577 num_tokens=6276618 num_tokens/piece=102.84
+unigram_model_trainer.cc(505) LOG(INFO) EM sub_iter=1 size=61032 obj=8.95052 num_tokens=6277238 num_tokens/piece=102.852
+unigram_model_trainer.cc(505) LOG(INFO) EM sub_iter=0 size=45774 obj=9.0896 num_tokens=6577340 num_tokens/piece=143.692
+unigram_model_trainer.cc(505) LOG(INFO) EM sub_iter=1 size=45774 obj=9.06083 num_tokens=6578128 num_tokens/piece=143.709
+unigram_model_trainer.cc(505) LOG(INFO) EM sub_iter=0 size=34330 obj=9.22856 num_tokens=6900343 num_tokens/piece=201
+unigram_model_trainer.cc(505) LOG(INFO) EM sub_iter=1 size=34330 obj=9.19449 num_tokens=6901713 num_tokens/piece=201.04
+unigram_model_trainer.cc(505) LOG(INFO) EM sub_iter=0 size=25747 obj=9.39413 num_tokens=7244830 num_tokens/piece=281.385
+unigram_model_trainer.cc(505) LOG(INFO) EM sub_iter=1 size=25747 obj=9.35448 num_tokens=7245445 num_tokens/piece=281.409
+unigram_model_trainer.cc(505) LOG(INFO) EM sub_iter=0 size=19310 obj=9.58847 num_tokens=7624519 num_tokens/piece=394.848
+unigram_model_trainer.cc(505) LOG(INFO) EM sub_iter=1 size=19310 obj=9.54194 num_tokens=7634026 num_tokens/piece=395.341
+unigram_model_trainer.cc(505) LOG(INFO) EM sub_iter=0 size=14482 obj=9.81024 num_tokens=8065024 num_tokens/piece=556.9
+unigram_model_trainer.cc(505) LOG(INFO) EM sub_iter=1 size=14482 obj=9.75484 num_tokens=8066141 num_tokens/piece=556.977
+unigram_model_trainer.cc(505) LOG(INFO) EM sub_iter=0 size=10861 obj=10.064 num_tokens=8511194 num_tokens/piece=783.647
+unigram_model_trainer.cc(505) LOG(INFO) EM sub_iter=1 size=10861 obj=9.99974 num_tokens=8517600 num_tokens/piece=784.237
+unigram_model_trainer.cc(505) LOG(INFO) EM sub_iter=0 size=8145 obj=10.3427 num_tokens=8994008 num_tokens/piece=1104.24
+unigram_model_trainer.cc(505) LOG(INFO) EM sub_iter=1 size=8145 obj=10.2714 num_tokens=8995250 num_tokens/piece=1104.39
+unigram_model_trainer.cc(505) LOG(INFO) EM sub_iter=0 size=6108 obj=10.6602 num_tokens=9552782 num_tokens/piece=1563.98
+unigram_model_trainer.cc(505) LOG(INFO) EM sub_iter=1 size=6108 obj=10.5782 num_tokens=9554889 num_tokens/piece=1564.32
+unigram_model_trainer.cc(505) LOG(INFO) EM sub_iter=0 size=5500 obj=10.7196 num_tokens=9750985 num_tokens/piece=1772.91
+unigram_model_trainer.cc(505) LOG(INFO) EM sub_iter=1 size=5500 obj=10.6889 num_tokens=9754115 num_tokens/piece=1773.48
+trainer_interface.cc(615) LOG(INFO) Saving model: data/de_token_list/bpe_unigram5000/bpe.model
+trainer_interface.cc(626) LOG(INFO) Saving vocabs: data/de_token_list/bpe_unigram5000/bpe.vocab
+/scicore/home/graber0001/schran0000/espnet/tools/venv/bin/python3 /scicore/home/graber0001/schran0000/espnet/espnet2/bin/aggregate_stats_dirs.py --input_dir exp/asr_stats_raw_de_bpe5000_sp/logdir/stats.1 --input_dir exp/asr_stats_raw_de_bpe5000_sp/logdir/stats.2 --input_dir exp/asr_stats_raw_de_bpe5000_sp/logdir/stats.3 --input_dir exp/asr_stats_raw_de_bpe5000_sp/logdir/stats.4 --input_dir exp/asr_stats_raw_de_bpe5000_sp/logdir/stats.5 --input_dir exp/asr_stats_raw_de_bpe5000_sp/logdir/stats.6 --input_dir exp/asr_stats_raw_de_bpe5000_sp/logdir/stats.7 --input_dir exp/asr_stats_raw_de_bpe5000_sp/logdir/stats.8 --input_dir exp/asr_stats_raw_de_bpe5000_sp/logdir/stats.9 --input_dir exp/asr_stats_raw_de_bpe5000_sp/logdir/stats.10 --input_dir exp/asr_stats_raw_de_bpe5000_sp/logdir/stats.11 --input_dir exp/asr_stats_raw_de_bpe5000_sp/logdir/stats.12 --input_dir exp/asr_stats_raw_de_bpe5000_sp/logdir/stats.13 --input_dir exp/asr_stats_raw_de_bpe5000_sp/logdir/stats.14 --input_dir exp/asr_stats_raw_de_bpe5000_sp/logdir/stats.15 --input_dir exp/asr_stats_raw_de_bpe5000_sp/logdir/stats.16 --input_dir exp/asr_stats_raw_de_bpe5000_sp/logdir/stats.17 --input_dir exp/asr_stats_raw_de_bpe5000_sp/logdir/stats.18 --input_dir exp/asr_stats_raw_de_bpe5000_sp/logdir/stats.19 --input_dir exp/asr_stats_raw_de_bpe5000_sp/logdir/stats.20 --input_dir exp/asr_stats_raw_de_bpe5000_sp/logdir/stats.21 --input_dir exp/asr_stats_raw_de_bpe5000_sp/logdir/stats.22 --input_dir exp/asr_stats_raw_de_bpe5000_sp/logdir/stats.23 --input_dir exp/asr_stats_raw_de_bpe5000_sp/logdir/stats.24 --input_dir exp/asr_stats_raw_de_bpe5000_sp/logdir/stats.25 --input_dir exp/asr_stats_raw_de_bpe5000_sp/logdir/stats.26 --input_dir exp/asr_stats_raw_de_bpe5000_sp/logdir/stats.27 --input_dir exp/asr_stats_raw_de_bpe5000_sp/logdir/stats.28 --input_dir exp/asr_stats_raw_de_bpe5000_sp/logdir/stats.29 --input_dir exp/asr_stats_raw_de_bpe5000_sp/logdir/stats.30 --input_dir exp/asr_stats_raw_de_bpe5000_sp/logdir/stats.31 --input_dir exp/asr_stats_raw_de_bpe5000_sp/logdir/stats.32 --output_dir exp/asr_stats_raw_de_bpe5000_sp
+2022-03-11 10:58:51,177 (launch:95) INFO: /scicore/home/graber0001/schran0000/espnet/tools/venv/bin/python3 /scicore/home/graber0001/schran0000/espnet/espnet2/bin/launch.py --cmd 'run.pl --name exp2/train.log' --log exp2/train.log --ngpu 4 --num_nodes 1 --init_file_prefix exp2/.dist_init_ --multiprocessing_distributed true -- python3 -m espnet2.bin.asr_train --use_preprocessor true --bpemodel data/de_token_list/bpe_unigram5000/bpe.model --token_type bpe --token_list data/de_token_list/bpe_unigram5000/tokens.txt --non_linguistic_symbols none --cleaner none --g2p none --valid_data_path_and_name_and_type dump/raw/dev/wav.scp,speech,sound --valid_data_path_and_name_and_type dump/raw/dev/text,text,text --valid_shape_file exp/asr_stats_raw_de_bpe5000_sp/valid/speech_shape --valid_shape_file exp/asr_stats_raw_de_bpe5000_sp/valid/text_shape.bpe --resume true --init_param --ignore_init_mismatch false --fold_length 80000 --fold_length 150 --output_dir exp2 --config conf/tuning/train_asr_conformer5.yaml --frontend_conf fs=16k --normalize=global_mvn --normalize_conf stats_file=exp/asr_stats_raw_de_bpe5000_sp/train/feats_stats.npz --train_data_path_and_name_and_type dump/raw/train_sp/wav.scp,speech,sound --train_data_path_and_name_and_type dump/raw/train_sp/text,text,text --train_shape_file exp/asr_stats_raw_de_bpe5000_sp/train/speech_shape --train_shape_file exp/asr_stats_raw_de_bpe5000_sp/train/text_shape.bpe
+2022-03-11 10:58:51,258 (launch:238) INFO: single-node with 4gpu on distributed mode
+2022-03-11 10:58:51,272 (launch:349) INFO: log file: exp2/train.log
+slurmstepd: error: *** JOB 36852218 ON sgi61 CANCELLED AT 2022-03-12T06:50:02 DUE TO TIME LIMIT ***

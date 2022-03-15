@@ -1,13 +1,14 @@
 #!/bin/bash
 #SBATCH --job-name=espnet_egs2_swiss_german_baseline2
-#SBATCH --time=7-00:00:00
-#SBATCH --cpus-per-task=40
+#SBATCH --time=1-00:00:00
+#SBATCH --cpus-per-task=16
 #SBATCH --ntasks=1
-#SBATCH --mem=800G
-#SBATCH --qos=1week
+#SBATCH --mem=200G
+#SBATCH --qos=1day
 #SBATCH --partition=a100
 #SBATCH -o scicore_out/%A_%a.out
 #SBATCH -e scicore_out/%A_%a.err
+#SBATCH --gres=gpu:1
 ml CMake/3.15.3-GCCcore-8.3.0
 ml SoX/14.4.2-GCCcore-8.3.0
 ml libsndfile/1.0.28-GCCcore-8.3.0
@@ -23,4 +24,5 @@ export PKG_CONFIG_PATH=/scicore/home/graber0001/schran0000/opt/lib/pkgconfig:$PK
 export WANDB_DIR=/scicore/home/graber0001/schran0000/wandb
 export TMPDIR=/scicore/home/graber0001/schran0000/wandb
 
+#./exp/asr_train_asr_conformer5_raw_de_bpe5000_sp/run.sh
 ./run.sh

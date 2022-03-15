@@ -1,0 +1,998 @@
+2022-03-09 14:40:02,526 (launch:95) INFO: /scicore/home/graber0001/schran0000/espnet/tools/venv/bin/python3 /scicore/home/graber0001/schran0000/espnet/espnet2/bin/launch.py --cmd 'run.pl --name exp/asr_train_asr_conformer5_raw_de_bpe5000_sp/train.log' --log exp/asr_train_asr_conformer5_raw_de_bpe5000_sp/train.log --ngpu 4 --num_nodes 1 --init_file_prefix exp/asr_train_asr_conformer5_raw_de_bpe5000_sp/.dist_init_ --multiprocessing_distributed true -- python3 -m espnet2.bin.asr_train --use_preprocessor true --bpemodel data/de_token_list/bpe_unigram5000/bpe.model --token_type bpe --token_list data/de_token_list/bpe_unigram5000/tokens.txt --non_linguistic_symbols none --cleaner none --g2p none --valid_data_path_and_name_and_type dump/raw/dev/wav.scp,speech,sound --valid_data_path_and_name_and_type dump/raw/dev/text,text,text --valid_shape_file exp/asr_stats_raw_de_bpe5000_sp/valid/speech_shape --valid_shape_file exp/asr_stats_raw_de_bpe5000_sp/valid/text_shape.bpe --resume true --init_param --ignore_init_mismatch false --fold_length 80000 --fold_length 150 --output_dir exp/asr_train_asr_conformer5_raw_de_bpe5000_sp --config conf/tuning/train_asr_conformer5.yaml --frontend_conf fs=16k --normalize=global_mvn --normalize_conf stats_file=exp/asr_stats_raw_de_bpe5000_sp/train/feats_stats.npz --train_data_path_and_name_and_type dump/raw/train_sp/wav.scp,speech,sound --train_data_path_and_name_and_type dump/raw/train_sp/text,text,text --train_shape_file exp/asr_stats_raw_de_bpe5000_sp/train/speech_shape --train_shape_file exp/asr_stats_raw_de_bpe5000_sp/train/text_shape.bpe
+2022-03-09 14:40:02,646 (launch:238) INFO: single-node with 4gpu on distributed mode
+2022-03-09 14:40:02,660 (launch:349) INFO: log file: exp/asr_train_asr_conformer5_raw_de_bpe5000_sp/train.log
+run.pl: job failed, log is in exp/asr_train_asr_conformer5_raw_de_bpe5000_sp/train.log
+Command '['run.pl', '--name', 'exp/asr_train_asr_conformer5_raw_de_bpe5000_sp/train.log', '--gpu', '4', 'exp/asr_train_asr_conformer5_raw_de_bpe5000_sp/train.log', 'python3', '-m', 'espnet2.bin.asr_train', '--use_preprocessor', 'true', '--bpemodel', 'data/de_token_list/bpe_unigram5000/bpe.model', '--token_type', 'bpe', '--token_list', 'data/de_token_list/bpe_unigram5000/tokens.txt', '--non_linguistic_symbols', 'none', '--cleaner', 'none', '--g2p', 'none', '--valid_data_path_and_name_and_type', 'dump/raw/dev/wav.scp,speech,sound', '--valid_data_path_and_name_and_type', 'dump/raw/dev/text,text,text', '--valid_shape_file', 'exp/asr_stats_raw_de_bpe5000_sp/valid/speech_shape', '--valid_shape_file', 'exp/asr_stats_raw_de_bpe5000_sp/valid/text_shape.bpe', '--resume', 'true', '--init_param', '--ignore_init_mismatch', 'false', '--fold_length', '80000', '--fold_length', '150', '--output_dir', 'exp/asr_train_asr_conformer5_raw_de_bpe5000_sp', '--config', 'conf/tuning/train_asr_conformer5.yaml', '--frontend_conf', 'fs=16k', '--normalize=global_mvn', '--normalize_conf', 'stats_file=exp/asr_stats_raw_de_bpe5000_sp/train/feats_stats.npz', '--train_data_path_and_name_and_type', 'dump/raw/train_sp/wav.scp,speech,sound', '--train_data_path_and_name_and_type', 'dump/raw/train_sp/text,text,text', '--train_shape_file', 'exp/asr_stats_raw_de_bpe5000_sp/train/speech_shape', '--train_shape_file', 'exp/asr_stats_raw_de_bpe5000_sp/train/text_shape.bpe', '--ngpu', '4', '--multiprocessing_distributed', 'True']' returned non-zero exit status 1.
+Traceback (most recent call last):
+  File "/scicore/soft/apps/Python/3.7.4-GCCcore-8.3.0/lib/python3.7/runpy.py", line 193, in _run_module_as_main
+    "__main__", mod_spec)
+  File "/scicore/soft/apps/Python/3.7.4-GCCcore-8.3.0/lib/python3.7/runpy.py", line 85, in _run_code
+    exec(code, run_globals)
+  File "/scicore/home/graber0001/schran0000/espnet/espnet2/bin/launch.py", line 385, in <module>
+    main()
+  File "/scicore/home/graber0001/schran0000/espnet/espnet2/bin/launch.py", line 378, in main
+    f"###################\n" + "".join(lines[-1000:])
+RuntimeError: 
+################### The last 1000 lines of exp/asr_train_asr_conformer5_raw_de_bpe5000_sp/train.log ###################
+# python3 -m espnet2.bin.asr_train --use_preprocessor true --bpemodel data/de_token_list/bpe_unigram5000/bpe.model --token_type bpe --token_list data/de_token_list/bpe_unigram5000/tokens.txt --non_linguistic_symbols none --cleaner none --g2p none --valid_data_path_and_name_and_type dump/raw/dev/wav.scp,speech,sound --valid_data_path_and_name_and_type dump/raw/dev/text,text,text --valid_shape_file exp/asr_stats_raw_de_bpe5000_sp/valid/speech_shape --valid_shape_file exp/asr_stats_raw_de_bpe5000_sp/valid/text_shape.bpe --resume true --init_param --ignore_init_mismatch false --fold_length 80000 --fold_length 150 --output_dir exp/asr_train_asr_conformer5_raw_de_bpe5000_sp --config conf/tuning/train_asr_conformer5.yaml --frontend_conf fs=16k --normalize=global_mvn --normalize_conf stats_file=exp/asr_stats_raw_de_bpe5000_sp/train/feats_stats.npz --train_data_path_and_name_and_type dump/raw/train_sp/wav.scp,speech,sound --train_data_path_and_name_and_type dump/raw/train_sp/text,text,text --train_shape_file exp/asr_stats_raw_de_bpe5000_sp/train/speech_shape --train_shape_file exp/asr_stats_raw_de_bpe5000_sp/train/text_shape.bpe --ngpu 4 --multiprocessing_distributed True 
+# Started at Wed Mar  9 14:40:02 CET 2022
+#
+/scicore/home/graber0001/schran0000/espnet/tools/venv/bin/python3 /scicore/home/graber0001/schran0000/espnet/espnet2/bin/asr_train.py --use_preprocessor true --bpemodel data/de_token_list/bpe_unigram5000/bpe.model --token_type bpe --token_list data/de_token_list/bpe_unigram5000/tokens.txt --non_linguistic_symbols none --cleaner none --g2p none --valid_data_path_and_name_and_type dump/raw/dev/wav.scp,speech,sound --valid_data_path_and_name_and_type dump/raw/dev/text,text,text --valid_shape_file exp/asr_stats_raw_de_bpe5000_sp/valid/speech_shape --valid_shape_file exp/asr_stats_raw_de_bpe5000_sp/valid/text_shape.bpe --resume true --init_param --ignore_init_mismatch false --fold_length 80000 --fold_length 150 --output_dir exp/asr_train_asr_conformer5_raw_de_bpe5000_sp --config conf/tuning/train_asr_conformer5.yaml --frontend_conf fs=16k --normalize=global_mvn --normalize_conf stats_file=exp/asr_stats_raw_de_bpe5000_sp/train/feats_stats.npz --train_data_path_and_name_and_type dump/raw/train_sp/wav.scp,speech,sound --train_data_path_and_name_and_type dump/raw/train_sp/text,text,text --train_shape_file exp/asr_stats_raw_de_bpe5000_sp/train/speech_shape --train_shape_file exp/asr_stats_raw_de_bpe5000_sp/train/text_shape.bpe --ngpu 4 --multiprocessing_distributed True
+[sgi61:0/4] 2022-03-09 14:40:34,341 (distributed_c10d:194) INFO: Added key: store_based_barrier_key:1 to store for rank: 0
+[sgi61:0/4] 2022-03-09 14:40:34,372 (distributed_c10d:225) INFO: Rank 0: Completed store-based barrier for 4 nodes.
+[sgi61:0/4] 2022-03-09 14:40:34,475 (asr:399) INFO: Vocabulary size: 5000
+[sgi61:0/4] 2022-03-09 14:40:34,577 (conformer_encoder:132) WARNING: Using legacy_rel_pos and it will be deprecated in the future.
+[sgi61:0/4] 2022-03-09 14:40:34,630 (conformer_encoder:232) WARNING: Using legacy_rel_selfattn and it will be deprecated in the future.
+[sgi61:0/4] 2022-03-09 14:40:39,368 (abs_task:1157) INFO: pytorch.version=1.9.0+cu111, cuda.available=True, cudnn.version=8005, cudnn.benchmark=False, cudnn.deterministic=True
+[sgi61:0/4] 2022-03-09 14:40:39,377 (abs_task:1158) INFO: Model structure:
+ESPnetASRModel(
+  (frontend): DefaultFrontend(
+    (stft): Stft(n_fft=512, win_length=512, hop_length=128, center=True, normalized=False, onesided=True)
+    (frontend): Frontend()
+    (logmel): LogMel(sr=16000, n_fft=512, n_mels=80, fmin=0, fmax=8000.0, htk=False)
+  )
+  (specaug): SpecAug(
+    (time_warp): TimeWarp(window=5, mode=bicubic)
+    (freq_mask): MaskAlongAxis(mask_width_range=[0, 30], num_mask=2, axis=freq)
+    (time_mask): MaskAlongAxis(mask_width_range=[0, 40], num_mask=2, axis=time)
+  )
+  (normalize): GlobalMVN(stats_file=exp/asr_stats_raw_de_bpe5000_sp/train/feats_stats.npz, norm_means=True, norm_vars=True)
+  (encoder): ConformerEncoder(
+    (embed): Conv2dSubsampling(
+      (conv): Sequential(
+        (0): Conv2d(1, 512, kernel_size=(3, 3), stride=(2, 2))
+        (1): ReLU()
+        (2): Conv2d(512, 512, kernel_size=(3, 3), stride=(2, 2))
+        (3): ReLU()
+      )
+      (out): Sequential(
+        (0): Linear(in_features=9728, out_features=512, bias=True)
+        (1): LegacyRelPositionalEncoding(
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+      )
+    )
+    (encoders): MultiSequential(
+      (0): EncoderLayer(
+        (self_attn): LegacyRelPositionMultiHeadedAttention(
+          (linear_q): Linear(in_features=512, out_features=512, bias=True)
+          (linear_k): Linear(in_features=512, out_features=512, bias=True)
+          (linear_v): Linear(in_features=512, out_features=512, bias=True)
+          (linear_out): Linear(in_features=512, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (linear_pos): Linear(in_features=512, out_features=512, bias=False)
+        )
+        (feed_forward): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): Swish()
+        )
+        (feed_forward_macaron): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): Swish()
+        )
+        (conv_module): ConvolutionModule(
+          (pointwise_conv1): Conv1d(512, 1024, kernel_size=(1,), stride=(1,))
+          (depthwise_conv): Conv1d(512, 512, kernel_size=(31,), stride=(1,), padding=(15,), groups=512)
+          (norm): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (pointwise_conv2): Conv1d(512, 512, kernel_size=(1,), stride=(1,))
+          (activation): Swish()
+        )
+        (norm_ff): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_mha): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_ff_macaron): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_conv): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_final): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (dropout): Dropout(p=0.1, inplace=False)
+      )
+      (1): EncoderLayer(
+        (self_attn): LegacyRelPositionMultiHeadedAttention(
+          (linear_q): Linear(in_features=512, out_features=512, bias=True)
+          (linear_k): Linear(in_features=512, out_features=512, bias=True)
+          (linear_v): Linear(in_features=512, out_features=512, bias=True)
+          (linear_out): Linear(in_features=512, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (linear_pos): Linear(in_features=512, out_features=512, bias=False)
+        )
+        (feed_forward): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): Swish()
+        )
+        (feed_forward_macaron): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): Swish()
+        )
+        (conv_module): ConvolutionModule(
+          (pointwise_conv1): Conv1d(512, 1024, kernel_size=(1,), stride=(1,))
+          (depthwise_conv): Conv1d(512, 512, kernel_size=(31,), stride=(1,), padding=(15,), groups=512)
+          (norm): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (pointwise_conv2): Conv1d(512, 512, kernel_size=(1,), stride=(1,))
+          (activation): Swish()
+        )
+        (norm_ff): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_mha): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_ff_macaron): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_conv): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_final): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (dropout): Dropout(p=0.1, inplace=False)
+      )
+      (2): EncoderLayer(
+        (self_attn): LegacyRelPositionMultiHeadedAttention(
+          (linear_q): Linear(in_features=512, out_features=512, bias=True)
+          (linear_k): Linear(in_features=512, out_features=512, bias=True)
+          (linear_v): Linear(in_features=512, out_features=512, bias=True)
+          (linear_out): Linear(in_features=512, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (linear_pos): Linear(in_features=512, out_features=512, bias=False)
+        )
+        (feed_forward): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): Swish()
+        )
+        (feed_forward_macaron): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): Swish()
+        )
+        (conv_module): ConvolutionModule(
+          (pointwise_conv1): Conv1d(512, 1024, kernel_size=(1,), stride=(1,))
+          (depthwise_conv): Conv1d(512, 512, kernel_size=(31,), stride=(1,), padding=(15,), groups=512)
+          (norm): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (pointwise_conv2): Conv1d(512, 512, kernel_size=(1,), stride=(1,))
+          (activation): Swish()
+        )
+        (norm_ff): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_mha): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_ff_macaron): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_conv): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_final): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (dropout): Dropout(p=0.1, inplace=False)
+      )
+      (3): EncoderLayer(
+        (self_attn): LegacyRelPositionMultiHeadedAttention(
+          (linear_q): Linear(in_features=512, out_features=512, bias=True)
+          (linear_k): Linear(in_features=512, out_features=512, bias=True)
+          (linear_v): Linear(in_features=512, out_features=512, bias=True)
+          (linear_out): Linear(in_features=512, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (linear_pos): Linear(in_features=512, out_features=512, bias=False)
+        )
+        (feed_forward): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): Swish()
+        )
+        (feed_forward_macaron): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): Swish()
+        )
+        (conv_module): ConvolutionModule(
+          (pointwise_conv1): Conv1d(512, 1024, kernel_size=(1,), stride=(1,))
+          (depthwise_conv): Conv1d(512, 512, kernel_size=(31,), stride=(1,), padding=(15,), groups=512)
+          (norm): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (pointwise_conv2): Conv1d(512, 512, kernel_size=(1,), stride=(1,))
+          (activation): Swish()
+        )
+        (norm_ff): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_mha): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_ff_macaron): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_conv): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_final): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (dropout): Dropout(p=0.1, inplace=False)
+      )
+      (4): EncoderLayer(
+        (self_attn): LegacyRelPositionMultiHeadedAttention(
+          (linear_q): Linear(in_features=512, out_features=512, bias=True)
+          (linear_k): Linear(in_features=512, out_features=512, bias=True)
+          (linear_v): Linear(in_features=512, out_features=512, bias=True)
+          (linear_out): Linear(in_features=512, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (linear_pos): Linear(in_features=512, out_features=512, bias=False)
+        )
+        (feed_forward): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): Swish()
+        )
+        (feed_forward_macaron): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): Swish()
+        )
+        (conv_module): ConvolutionModule(
+          (pointwise_conv1): Conv1d(512, 1024, kernel_size=(1,), stride=(1,))
+          (depthwise_conv): Conv1d(512, 512, kernel_size=(31,), stride=(1,), padding=(15,), groups=512)
+          (norm): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (pointwise_conv2): Conv1d(512, 512, kernel_size=(1,), stride=(1,))
+          (activation): Swish()
+        )
+        (norm_ff): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_mha): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_ff_macaron): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_conv): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_final): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (dropout): Dropout(p=0.1, inplace=False)
+      )
+      (5): EncoderLayer(
+        (self_attn): LegacyRelPositionMultiHeadedAttention(
+          (linear_q): Linear(in_features=512, out_features=512, bias=True)
+          (linear_k): Linear(in_features=512, out_features=512, bias=True)
+          (linear_v): Linear(in_features=512, out_features=512, bias=True)
+          (linear_out): Linear(in_features=512, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (linear_pos): Linear(in_features=512, out_features=512, bias=False)
+        )
+        (feed_forward): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): Swish()
+        )
+        (feed_forward_macaron): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): Swish()
+        )
+        (conv_module): ConvolutionModule(
+          (pointwise_conv1): Conv1d(512, 1024, kernel_size=(1,), stride=(1,))
+          (depthwise_conv): Conv1d(512, 512, kernel_size=(31,), stride=(1,), padding=(15,), groups=512)
+          (norm): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (pointwise_conv2): Conv1d(512, 512, kernel_size=(1,), stride=(1,))
+          (activation): Swish()
+        )
+        (norm_ff): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_mha): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_ff_macaron): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_conv): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_final): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (dropout): Dropout(p=0.1, inplace=False)
+      )
+      (6): EncoderLayer(
+        (self_attn): LegacyRelPositionMultiHeadedAttention(
+          (linear_q): Linear(in_features=512, out_features=512, bias=True)
+          (linear_k): Linear(in_features=512, out_features=512, bias=True)
+          (linear_v): Linear(in_features=512, out_features=512, bias=True)
+          (linear_out): Linear(in_features=512, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (linear_pos): Linear(in_features=512, out_features=512, bias=False)
+        )
+        (feed_forward): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): Swish()
+        )
+        (feed_forward_macaron): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): Swish()
+        )
+        (conv_module): ConvolutionModule(
+          (pointwise_conv1): Conv1d(512, 1024, kernel_size=(1,), stride=(1,))
+          (depthwise_conv): Conv1d(512, 512, kernel_size=(31,), stride=(1,), padding=(15,), groups=512)
+          (norm): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (pointwise_conv2): Conv1d(512, 512, kernel_size=(1,), stride=(1,))
+          (activation): Swish()
+        )
+        (norm_ff): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_mha): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_ff_macaron): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_conv): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_final): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (dropout): Dropout(p=0.1, inplace=False)
+      )
+      (7): EncoderLayer(
+        (self_attn): LegacyRelPositionMultiHeadedAttention(
+          (linear_q): Linear(in_features=512, out_features=512, bias=True)
+          (linear_k): Linear(in_features=512, out_features=512, bias=True)
+          (linear_v): Linear(in_features=512, out_features=512, bias=True)
+          (linear_out): Linear(in_features=512, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (linear_pos): Linear(in_features=512, out_features=512, bias=False)
+        )
+        (feed_forward): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): Swish()
+        )
+        (feed_forward_macaron): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): Swish()
+        )
+        (conv_module): ConvolutionModule(
+          (pointwise_conv1): Conv1d(512, 1024, kernel_size=(1,), stride=(1,))
+          (depthwise_conv): Conv1d(512, 512, kernel_size=(31,), stride=(1,), padding=(15,), groups=512)
+          (norm): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (pointwise_conv2): Conv1d(512, 512, kernel_size=(1,), stride=(1,))
+          (activation): Swish()
+        )
+        (norm_ff): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_mha): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_ff_macaron): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_conv): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_final): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (dropout): Dropout(p=0.1, inplace=False)
+      )
+      (8): EncoderLayer(
+        (self_attn): LegacyRelPositionMultiHeadedAttention(
+          (linear_q): Linear(in_features=512, out_features=512, bias=True)
+          (linear_k): Linear(in_features=512, out_features=512, bias=True)
+          (linear_v): Linear(in_features=512, out_features=512, bias=True)
+          (linear_out): Linear(in_features=512, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (linear_pos): Linear(in_features=512, out_features=512, bias=False)
+        )
+        (feed_forward): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): Swish()
+        )
+        (feed_forward_macaron): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): Swish()
+        )
+        (conv_module): ConvolutionModule(
+          (pointwise_conv1): Conv1d(512, 1024, kernel_size=(1,), stride=(1,))
+          (depthwise_conv): Conv1d(512, 512, kernel_size=(31,), stride=(1,), padding=(15,), groups=512)
+          (norm): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (pointwise_conv2): Conv1d(512, 512, kernel_size=(1,), stride=(1,))
+          (activation): Swish()
+        )
+        (norm_ff): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_mha): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_ff_macaron): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_conv): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_final): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (dropout): Dropout(p=0.1, inplace=False)
+      )
+      (9): EncoderLayer(
+        (self_attn): LegacyRelPositionMultiHeadedAttention(
+          (linear_q): Linear(in_features=512, out_features=512, bias=True)
+          (linear_k): Linear(in_features=512, out_features=512, bias=True)
+          (linear_v): Linear(in_features=512, out_features=512, bias=True)
+          (linear_out): Linear(in_features=512, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (linear_pos): Linear(in_features=512, out_features=512, bias=False)
+        )
+        (feed_forward): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): Swish()
+        )
+        (feed_forward_macaron): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): Swish()
+        )
+        (conv_module): ConvolutionModule(
+          (pointwise_conv1): Conv1d(512, 1024, kernel_size=(1,), stride=(1,))
+          (depthwise_conv): Conv1d(512, 512, kernel_size=(31,), stride=(1,), padding=(15,), groups=512)
+          (norm): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (pointwise_conv2): Conv1d(512, 512, kernel_size=(1,), stride=(1,))
+          (activation): Swish()
+        )
+        (norm_ff): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_mha): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_ff_macaron): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_conv): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_final): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (dropout): Dropout(p=0.1, inplace=False)
+      )
+      (10): EncoderLayer(
+        (self_attn): LegacyRelPositionMultiHeadedAttention(
+          (linear_q): Linear(in_features=512, out_features=512, bias=True)
+          (linear_k): Linear(in_features=512, out_features=512, bias=True)
+          (linear_v): Linear(in_features=512, out_features=512, bias=True)
+          (linear_out): Linear(in_features=512, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (linear_pos): Linear(in_features=512, out_features=512, bias=False)
+        )
+        (feed_forward): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): Swish()
+        )
+        (feed_forward_macaron): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): Swish()
+        )
+        (conv_module): ConvolutionModule(
+          (pointwise_conv1): Conv1d(512, 1024, kernel_size=(1,), stride=(1,))
+          (depthwise_conv): Conv1d(512, 512, kernel_size=(31,), stride=(1,), padding=(15,), groups=512)
+          (norm): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (pointwise_conv2): Conv1d(512, 512, kernel_size=(1,), stride=(1,))
+          (activation): Swish()
+        )
+        (norm_ff): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_mha): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_ff_macaron): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_conv): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_final): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (dropout): Dropout(p=0.1, inplace=False)
+      )
+      (11): EncoderLayer(
+        (self_attn): LegacyRelPositionMultiHeadedAttention(
+          (linear_q): Linear(in_features=512, out_features=512, bias=True)
+          (linear_k): Linear(in_features=512, out_features=512, bias=True)
+          (linear_v): Linear(in_features=512, out_features=512, bias=True)
+          (linear_out): Linear(in_features=512, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (linear_pos): Linear(in_features=512, out_features=512, bias=False)
+        )
+        (feed_forward): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): Swish()
+        )
+        (feed_forward_macaron): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): Swish()
+        )
+        (conv_module): ConvolutionModule(
+          (pointwise_conv1): Conv1d(512, 1024, kernel_size=(1,), stride=(1,))
+          (depthwise_conv): Conv1d(512, 512, kernel_size=(31,), stride=(1,), padding=(15,), groups=512)
+          (norm): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (pointwise_conv2): Conv1d(512, 512, kernel_size=(1,), stride=(1,))
+          (activation): Swish()
+        )
+        (norm_ff): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_mha): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_ff_macaron): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_conv): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_final): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (dropout): Dropout(p=0.1, inplace=False)
+      )
+    )
+    (after_norm): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+  )
+  (decoder): TransformerDecoder(
+    (embed): Sequential(
+      (0): Embedding(5000, 512)
+      (1): PositionalEncoding(
+        (dropout): Dropout(p=0.1, inplace=False)
+      )
+    )
+    (after_norm): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+    (output_layer): Linear(in_features=512, out_features=5000, bias=True)
+    (decoders): MultiSequential(
+      (0): DecoderLayer(
+        (self_attn): MultiHeadedAttention(
+          (linear_q): Linear(in_features=512, out_features=512, bias=True)
+          (linear_k): Linear(in_features=512, out_features=512, bias=True)
+          (linear_v): Linear(in_features=512, out_features=512, bias=True)
+          (linear_out): Linear(in_features=512, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+        (src_attn): MultiHeadedAttention(
+          (linear_q): Linear(in_features=512, out_features=512, bias=True)
+          (linear_k): Linear(in_features=512, out_features=512, bias=True)
+          (linear_v): Linear(in_features=512, out_features=512, bias=True)
+          (linear_out): Linear(in_features=512, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+        (feed_forward): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): ReLU()
+        )
+        (norm1): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm2): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm3): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (dropout): Dropout(p=0.1, inplace=False)
+      )
+      (1): DecoderLayer(
+        (self_attn): MultiHeadedAttention(
+          (linear_q): Linear(in_features=512, out_features=512, bias=True)
+          (linear_k): Linear(in_features=512, out_features=512, bias=True)
+          (linear_v): Linear(in_features=512, out_features=512, bias=True)
+          (linear_out): Linear(in_features=512, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+        (src_attn): MultiHeadedAttention(
+          (linear_q): Linear(in_features=512, out_features=512, bias=True)
+          (linear_k): Linear(in_features=512, out_features=512, bias=True)
+          (linear_v): Linear(in_features=512, out_features=512, bias=True)
+          (linear_out): Linear(in_features=512, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+        (feed_forward): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): ReLU()
+        )
+        (norm1): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm2): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm3): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (dropout): Dropout(p=0.1, inplace=False)
+      )
+      (2): DecoderLayer(
+        (self_attn): MultiHeadedAttention(
+          (linear_q): Linear(in_features=512, out_features=512, bias=True)
+          (linear_k): Linear(in_features=512, out_features=512, bias=True)
+          (linear_v): Linear(in_features=512, out_features=512, bias=True)
+          (linear_out): Linear(in_features=512, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+        (src_attn): MultiHeadedAttention(
+          (linear_q): Linear(in_features=512, out_features=512, bias=True)
+          (linear_k): Linear(in_features=512, out_features=512, bias=True)
+          (linear_v): Linear(in_features=512, out_features=512, bias=True)
+          (linear_out): Linear(in_features=512, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+        (feed_forward): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): ReLU()
+        )
+        (norm1): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm2): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm3): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (dropout): Dropout(p=0.1, inplace=False)
+      )
+      (3): DecoderLayer(
+        (self_attn): MultiHeadedAttention(
+          (linear_q): Linear(in_features=512, out_features=512, bias=True)
+          (linear_k): Linear(in_features=512, out_features=512, bias=True)
+          (linear_v): Linear(in_features=512, out_features=512, bias=True)
+          (linear_out): Linear(in_features=512, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+        (src_attn): MultiHeadedAttention(
+          (linear_q): Linear(in_features=512, out_features=512, bias=True)
+          (linear_k): Linear(in_features=512, out_features=512, bias=True)
+          (linear_v): Linear(in_features=512, out_features=512, bias=True)
+          (linear_out): Linear(in_features=512, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+        (feed_forward): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): ReLU()
+        )
+        (norm1): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm2): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm3): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (dropout): Dropout(p=0.1, inplace=False)
+      )
+      (4): DecoderLayer(
+        (self_attn): MultiHeadedAttention(
+          (linear_q): Linear(in_features=512, out_features=512, bias=True)
+          (linear_k): Linear(in_features=512, out_features=512, bias=True)
+          (linear_v): Linear(in_features=512, out_features=512, bias=True)
+          (linear_out): Linear(in_features=512, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+        (src_attn): MultiHeadedAttention(
+          (linear_q): Linear(in_features=512, out_features=512, bias=True)
+          (linear_k): Linear(in_features=512, out_features=512, bias=True)
+          (linear_v): Linear(in_features=512, out_features=512, bias=True)
+          (linear_out): Linear(in_features=512, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+        (feed_forward): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): ReLU()
+        )
+        (norm1): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm2): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm3): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (dropout): Dropout(p=0.1, inplace=False)
+      )
+      (5): DecoderLayer(
+        (self_attn): MultiHeadedAttention(
+          (linear_q): Linear(in_features=512, out_features=512, bias=True)
+          (linear_k): Linear(in_features=512, out_features=512, bias=True)
+          (linear_v): Linear(in_features=512, out_features=512, bias=True)
+          (linear_out): Linear(in_features=512, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+        (src_attn): MultiHeadedAttention(
+          (linear_q): Linear(in_features=512, out_features=512, bias=True)
+          (linear_k): Linear(in_features=512, out_features=512, bias=True)
+          (linear_v): Linear(in_features=512, out_features=512, bias=True)
+          (linear_out): Linear(in_features=512, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+        (feed_forward): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): ReLU()
+        )
+        (norm1): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm2): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm3): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (dropout): Dropout(p=0.1, inplace=False)
+      )
+    )
+  )
+  (criterion_att): LabelSmoothingLoss(
+    (criterion): KLDivLoss()
+  )
+  (ctc): CTC(
+    (ctc_lo): Linear(in_features=512, out_features=5000, bias=True)
+    (ctc_loss): CTCLoss()
+  )
+)
+
+Model summary:
+    Class Name: ESPnetASRModel
+    Total Number of model parameters: 116.15 M
+    Number of trainable parameters: 116.15 M (100.0%)
+    Size: 464.59 MB
+    Type: torch.float32
+[sgi61:0/4] 2022-03-09 14:40:39,379 (abs_task:1161) INFO: Optimizer:
+Adam (
+Parameter Group 0
+    amsgrad: False
+    betas: (0.9, 0.999)
+    eps: 1e-08
+    initial_lr: 0.001
+    lr: 4e-08
+    weight_decay: 0
+)
+[sgi61:0/4] 2022-03-09 14:40:39,379 (abs_task:1162) INFO: Scheduler: WarmupLR(warmup_steps=25000)
+[sgi61:0/4] 2022-03-09 14:40:39,382 (abs_task:1172) INFO: Saving the configuration in exp/asr_train_asr_conformer5_raw_de_bpe5000_sp/config.yaml
+[sgi61:0/4] 2022-03-09 14:40:57,958 (abs_task:1525) INFO: [train] dataset:
+ESPnetDataset(
+  speech: {"path": "dump/raw/train_sp/wav.scp", "type": "sound"}
+  text: {"path": "dump/raw/train_sp/text", "type": "text"}
+  preprocess: <espnet2.train.preprocessor.CommonPreprocessor object at 0x2ae4d66a1fd0>)
+[sgi61:0/4] 2022-03-09 14:40:57,959 (abs_task:1526) INFO: [train] Batch sampler: NumElementsBatchSampler(N-batch=6703, batch_bins=50000000, sort_in_batch=descending, sort_batch=descending)
+[sgi61:0/4] 2022-03-09 14:40:57,960 (abs_task:1528) INFO: [train] mini-batch sizes summary: N-batch=6703, mean=214.2, min=78, max=1393
+[sgi61:0/4] 2022-03-09 14:40:58,168 (abs_task:1525) INFO: [valid] dataset:
+ESPnetDataset(
+  speech: {"path": "dump/raw/dev/wav.scp", "type": "sound"}
+  text: {"path": "dump/raw/dev/text", "type": "text"}
+  preprocess: <espnet2.train.preprocessor.CommonPreprocessor object at 0x2ae5c1c0fad0>)
+[sgi61:0/4] 2022-03-09 14:40:58,168 (abs_task:1526) INFO: [valid] Batch sampler: NumElementsBatchSampler(N-batch=55, batch_bins=50000000, sort_in_batch=descending, sort_batch=descending)
+[sgi61:0/4] 2022-03-09 14:40:58,168 (abs_task:1528) INFO: [valid] mini-batch sizes summary: N-batch=55, mean=210.4, min=73, max=576
+[sgi61:0/4] 2022-03-09 14:40:58,216 (abs_task:1525) INFO: [plot_att] dataset:
+ESPnetDataset(
+  speech: {"path": "dump/raw/dev/wav.scp", "type": "sound"}
+  text: {"path": "dump/raw/dev/text", "type": "text"}
+  preprocess: <espnet2.train.preprocessor.CommonPreprocessor object at 0x2ae5c1c0fdd0>)
+[sgi61:0/4] 2022-03-09 14:40:58,217 (abs_task:1526) INFO: [plot_att] Batch sampler: UnsortedBatchSampler(N-batch=11574, batch_size=1, key_file=exp/asr_stats_raw_de_bpe5000_sp/valid/speech_shape, 
+[sgi61:0/4] 2022-03-09 14:40:58,217 (abs_task:1528) INFO: [plot_att] mini-batch sizes summary: N-batch=3, mean=1.0, min=1, max=1
+sgi61:19207:19207 [0] NCCL INFO Bootstrap : Using [0]eth0:10.1.31.61<0> [1]ib0:10.41.31.61<0>
+sgi61:19207:19207 [0] NCCL INFO NET/Plugin : No plugin found (libnccl-net.so), using internal implementation
+sgi61:19207:19207 [0] NCCL INFO NET/IB : Using [0]mlx5_0:1/IB ; OOB eth0:10.1.31.61<0>
+sgi61:19207:19207 [0] NCCL INFO Using network IB
+NCCL version 2.7.8+cuda11.1
+sgi61:19210:19210 [3] NCCL INFO Bootstrap : Using [0]eth0:10.1.31.61<0> [1]ib0:10.41.31.61<0>
+sgi61:19209:19209 [2] NCCL INFO Bootstrap : Using [0]eth0:10.1.31.61<0> [1]ib0:10.41.31.61<0>
+sgi61:19208:19208 [1] NCCL INFO Bootstrap : Using [0]eth0:10.1.31.61<0> [1]ib0:10.41.31.61<0>
+sgi61:19210:19210 [3] NCCL INFO NET/Plugin : No plugin found (libnccl-net.so), using internal implementation
+sgi61:19209:19209 [2] NCCL INFO NET/Plugin : No plugin found (libnccl-net.so), using internal implementation
+sgi61:19208:19208 [1] NCCL INFO NET/Plugin : No plugin found (libnccl-net.so), using internal implementation
+sgi61:19210:19210 [3] NCCL INFO NET/IB : Using [0]mlx5_0:1/IB ; OOB eth0:10.1.31.61<0>
+sgi61:19210:19210 [3] NCCL INFO Using network IB
+sgi61:19209:19209 [2] NCCL INFO NET/IB : Using [0]mlx5_0:1/IB ; OOB eth0:10.1.31.61<0>
+sgi61:19209:19209 [2] NCCL INFO Using network IB
+sgi61:19208:19208 [1] NCCL INFO NET/IB : Using [0]mlx5_0:1/IB ; OOB eth0:10.1.31.61<0>
+sgi61:19208:19208 [1] NCCL INFO Using network IB
+sgi61:19209:19400 [2] NCCL INFO threadThresholds 8/8/64 | 32/8/64 | 8/8/64
+sgi61:19207:19395 [0] NCCL INFO Channel 00/24 :    0   1   2   3
+sgi61:19207:19395 [0] NCCL INFO Channel 01/24 :    0   1   3   2
+sgi61:19207:19395 [0] NCCL INFO Channel 02/24 :    0   2   3   1
+sgi61:19209:19400 [2] NCCL INFO Trees [0] 3/-1/-1->2->1|1->2->3/-1/-1 [1] 3/-1/-1->2->1|1->2->3/-1/-1 [2] -1/-1/-1->2->0|0->2->-1/-1/-1 [3] -1/-1/-1->2->0|0->2->-1/-1/-1 [4] 0/-1/-1->2->-1|-1->2->0/-1/-1 [5] 0/-1/-1->2->-1|-1->2->0/-1/-1 [6] 1/-1/-1->2->3|3->2->1/-1/-1 [7] 1/-1/-1->2->3|3->2->1/-1/-1 [8] 3/-1/-1->2->1|1->2->3/-1/-1 [9] 3/-1/-1->2->1|1->2->3/-1/-1 [10] -1/-1/-1->2->0|0->2->-1/-1/-1 [11] -1/-1/-1->2->0|0->2->-1/-1/-1 [12] 3/-1/-1->2->1|1->2->3/-1/-1 [13] 3/-1/-1->2->1|1->2->3/-1/-1 [14] -1/-1/-1->2->0|0->2->-1/-1/-1 [15] -1/-1/-1->2->0|0->2->-1/-1/-1 [16] 0/-1/-1->2->-1|-1->2->0/-1/-1 [17] 0/-1/-1->2->-1|-1->2->0/-1/-1 [18] 1/-1/-1->2->3|3->2->1/-1/-1 [19] 1/-1/-1->2->3|3->2->1/-1/-1 [20] 3/-1/-1->2->1|1->2->3/-1/-1 [21] 3/-1/-1->2->1|1->2->3/-1/-1 [22] -1/-1/-1->2->0|0->2->-1/-1/-1 [23] -1/-1/-1->2->0|0->2->-1/-1/-1
+sgi61:19207:19395 [0] NCCL INFO Channel 03/24 :    0   2   1   3
+sgi61:19207:19395 [0] NCCL INFO Channel 04/24 :    0   3   1   2
+sgi61:19207:19395 [0] NCCL INFO Channel 05/24 :    0   3   2   1
+sgi61:19208:19401 [1] NCCL INFO threadThresholds 8/8/64 | 32/8/64 | 8/8/64
+sgi61:19207:19395 [0] NCCL INFO Channel 06/24 :    0   1   2   3
+sgi61:19210:19397 [3] NCCL INFO threadThresholds 8/8/64 | 32/8/64 | 8/8/64
+sgi61:19207:19395 [0] NCCL INFO Channel 07/24 :    0   1   3   2
+sgi61:19207:19395 [0] NCCL INFO Channel 08/24 :    0   2   3   1
+sgi61:19207:19395 [0] NCCL INFO Channel 09/24 :    0   2   1   3
+sgi61:19207:19395 [0] NCCL INFO Channel 10/24 :    0   3   1   2
+sgi61:19207:19395 [0] NCCL INFO Channel 11/24 :    0   3   2   1
+sgi61:19207:19395 [0] NCCL INFO Channel 12/24 :    0   1   2   3
+sgi61:19210:19397 [3] NCCL INFO Trees [0] -1/-1/-1->3->2|2->3->-1/-1/-1 [1] -1/-1/-1->3->2|2->3->-1/-1/-1 [2] 0/-1/-1->3->1|1->3->0/-1/-1 [3] 0/-1/-1->3->1|1->3->0/-1/-1 [4] 1/-1/-1->3->0|0->3->1/-1/-1 [5] 1/-1/-1->3->0|0->3->1/-1/-1 [6] 2/-1/-1->3->-1|-1->3->2/-1/-1 [7] 2/-1/-1->3->-1|-1->3->2/-1/-1 [8] -1/-1/-1->3->2|2->3->-1/-1/-1 [9] -1/-1/-1->3->2|2->3->-1/-1/-1 [10] 0/-1/-1->3->1|1->3->0/-1/-1 [11] 0/-1/-1->3->1|1->3->0/-1/-1 [12] -1/-1/-1->3->2|2->3->-1/-1/-1 [13] -1/-1/-1->3->2|2->3->-1/-1/-1 [14] 0/-1/-1->3->1|1->3->0/-1/-1 [15] 0/-1/-1->3->1|1->3->0/-1/-1 [16] 1/-1/-1->3->0|0->3->1/-1/-1 [17] 1/-1/-1->3->0|0->3->1/-1/-1 [18] 2/-1/-1->3->-1|-1->3->2/-1/-1 [19] 2/-1/-1->3->-1|-1->3->2/-1/-1 [20] -1/-1/-1->3->2|2->3->-1/-1/-1 [21] -1/-1/-1->3->2|2->3->-1/-1/-1 [22] 0/-1/-1->3->1|1->3->0/-1/-1 [23] 0/-1/-1->3->1|1->3->0/-1/-1
+sgi61:19207:19395 [0] NCCL INFO Channel 13/24 :    0   1   3   2
+sgi61:19207:19395 [0] NCCL INFO Channel 14/24 :    0   2   3   1
+sgi61:19207:19395 [0] NCCL INFO Channel 15/24 :    0   2   1   3
+sgi61:19207:19395 [0] NCCL INFO Channel 16/24 :    0   3   1   2
+sgi61:19207:19395 [0] NCCL INFO Channel 17/24 :    0   3   2   1
+sgi61:19207:19395 [0] NCCL INFO Channel 18/24 :    0   1   2   3
+sgi61:19208:19401 [1] NCCL INFO Trees [0] 2/-1/-1->1->0|0->1->2/-1/-1 [1] 2/-1/-1->1->0|0->1->2/-1/-1 [2] 3/-1/-1->1->-1|-1->1->3/-1/-1 [3] 3/-1/-1->1->-1|-1->1->3/-1/-1 [4] -1/-1/-1->1->3|3->1->-1/-1/-1 [5] -1/-1/-1->1->3|3->1->-1/-1/-1 [6] 0/-1/-1->1->2|2->1->0/-1/-1 [7] 0/-1/-1->1->2|2->1->0/-1/-1 [8] 2/-1/-1->1->0|0->1->2/-1/-1 [9] 2/-1/-1->1->0|0->1->2/-1/-1 [10] 3/-1/-1->1->-1|-1->1->3/-1/-1 [11] 3/-1/-1->1->-1|-1->1->3/-1/-1 [12] 2/-1/-1->1->0|0->1->2/-1/-1 [13] 2/-1/-1->1->0|0->1->2/-1/-1 [14] 3/-1/-1->1->-1|-1->1->3/-1/-1 [15] 3/-1/-1->1->-1|-1->1->3/-1/-1 [16] -1/-1/-1->1->3|3->1->-1/-1/-1 [17] -1/-1/-1->1->3|3->1->-1/-1/-1 [18] 0/-1/-1->1->2|2->1->0/-1/-1 [19] 0/-1/-1->1->2|2->1->0/-1/-1 [20] 2/-1/-1->1->0|0->1->2/-1/-1 [21] 2/-1/-1->1->0|0->1->2/-1/-1 [22] 3/-1/-1->1->-1|-1->1->3/-1/-1 [23] 3/-1/-1->1->-1|-1->1->3/-1/-1
+sgi61:19207:19395 [0] NCCL INFO Channel 19/24 :    0   1   3   2
+sgi61:19207:19395 [0] NCCL INFO Channel 20/24 :    0   2   3   1
+sgi61:19207:19395 [0] NCCL INFO Channel 21/24 :    0   2   1   3
+sgi61:19207:19395 [0] NCCL INFO Channel 22/24 :    0   3   1   2
+sgi61:19207:19395 [0] NCCL INFO Channel 23/24 :    0   3   2   1
+sgi61:19207:19395 [0] NCCL INFO threadThresholds 8/8/64 | 32/8/64 | 8/8/64
+sgi61:19207:19395 [0] NCCL INFO Trees [0] 1/-1/-1->0->-1|-1->0->1/-1/-1 [1] 1/-1/-1->0->-1|-1->0->1/-1/-1 [2] 2/-1/-1->0->3|3->0->2/-1/-1 [3] 2/-1/-1->0->3|3->0->2/-1/-1 [4] 3/-1/-1->0->2|2->0->3/-1/-1 [5] 3/-1/-1->0->2|2->0->3/-1/-1 [6] -1/-1/-1->0->1|1->0->-1/-1/-1 [7] -1/-1/-1->0->1|1->0->-1/-1/-1 [8] 1/-1/-1->0->-1|-1->0->1/-1/-1 [9] 1/-1/-1->0->-1|-1->0->1/-1/-1 [10] 2/-1/-1->0->3|3->0->2/-1/-1 [11] 2/-1/-1->0->3|3->0->2/-1/-1 [12] 1/-1/-1->0->-1|-1->0->1/-1/-1 [13] 1/-1/-1->0->-1|-1->0->1/-1/-1 [14] 2/-1/-1->0->3|3->0->2/-1/-1 [15] 2/-1/-1->0->3|3->0->2/-1/-1 [16] 3/-1/-1->0->2|2->0->3/-1/-1 [17] 3/-1/-1->0->2|2->0->3/-1/-1 [18] -1/-1/-1->0->1|1->0->-1/-1/-1 [19] -1/-1/-1->0->1|1->0->-1/-1/-1 [20] 1/-1/-1->0->-1|-1->0->1/-1/-1 [21] 1/-1/-1->0->-1|-1->0->1/-1/-1 [22] 2/-1/-1->0->3|3->0->2/-1/-1 [23] 2/-1/-1->0->3|3->0->2/-1/-1
+sgi61:19209:19400 [2] NCCL INFO Channel 00 : 2[af000] -> 3[b0000] via P2P/IPC/read
+sgi61:19210:19397 [3] NCCL INFO Channel 00 : 3[b0000] -> 0[2f000] via P2P/IPC/read
+sgi61:19207:19395 [0] NCCL INFO Channel 00 : 0[2f000] -> 1[30000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 00 : 1[30000] -> 2[af000] via P2P/IPC/read
+sgi61:19210:19397 [3] NCCL INFO Channel 00 : 3[b0000] -> 2[af000] via P2P/IPC/read
+sgi61:19209:19400 [2] NCCL INFO Channel 00 : 2[af000] -> 1[30000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 00 : 1[30000] -> 0[2f000] via P2P/IPC/read
+sgi61:19210:19397 [3] NCCL INFO Channel 01 : 3[b0000] -> 2[af000] via P2P/IPC/read
+sgi61:19209:19400 [2] NCCL INFO Channel 01 : 2[af000] -> 0[2f000] via P2P/IPC/read
+sgi61:19207:19395 [0] NCCL INFO Channel 01 : 0[2f000] -> 1[30000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 01 : 1[30000] -> 3[b0000] via P2P/IPC/read
+sgi61:19209:19400 [2] NCCL INFO Channel 01 : 2[af000] -> 1[30000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 01 : 1[30000] -> 0[2f000] via P2P/IPC/read
+sgi61:19209:19400 [2] NCCL INFO Channel 01 : 2[af000] -> 3[b0000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 01 : 1[30000] -> 2[af000] via P2P/IPC/read
+sgi61:19207:19395 [0] NCCL INFO Channel 02 : 0[2f000] -> 2[af000] via P2P/IPC/read
+sgi61:19210:19397 [3] NCCL INFO Channel 02 : 3[b0000] -> 1[30000] via P2P/IPC/read
+sgi61:19209:19400 [2] NCCL INFO Channel 02 : 2[af000] -> 3[b0000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 02 : 1[30000] -> 0[2f000] via P2P/IPC/read
+sgi61:19209:19400 [2] NCCL INFO Channel 02 : 2[af000] -> 0[2f000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 02 : 1[30000] -> 3[b0000] via P2P/IPC/read
+sgi61:19207:19395 [0] NCCL INFO Channel 02 : 0[2f000] -> 3[b0000] via P2P/IPC/read
+sgi61:19209:19400 [2] NCCL INFO Channel 03 : 2[af000] -> 1[30000] via P2P/IPC/read
+sgi61:19210:19397 [3] NCCL INFO Channel 02 : 3[b0000] -> 0[2f000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 03 : 1[30000] -> 3[b0000] via P2P/IPC/read
+sgi61:19207:19395 [0] NCCL INFO Channel 03 : 0[2f000] -> 2[af000] via P2P/IPC/read
+sgi61:19210:19397 [3] NCCL INFO Channel 03 : 3[b0000] -> 0[2f000] via P2P/IPC/read
+sgi61:19209:19400 [2] NCCL INFO Channel 03 : 2[af000] -> 0[2f000] via P2P/IPC/read
+sgi61:19207:19395 [0] NCCL INFO Channel 03 : 0[2f000] -> 3[b0000] via P2P/IPC/read
+sgi61:19210:19397 [3] NCCL INFO Channel 03 : 3[b0000] -> 1[30000] via P2P/IPC/read
+sgi61:19209:19400 [2] NCCL INFO Channel 04 : 2[af000] -> 0[2f000] via P2P/IPC/read
+sgi61:19207:19395 [0] NCCL INFO Channel 04 : 0[2f000] -> 3[b0000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 04 : 1[30000] -> 2[af000] via P2P/IPC/read
+sgi61:19210:19397 [3] NCCL INFO Channel 04 : 3[b0000] -> 1[30000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 04 : 1[30000] -> 3[b0000] via P2P/IPC/read
+sgi61:19207:19395 [0] NCCL INFO Channel 04 : 0[2f000] -> 2[af000] via P2P/IPC/read
+sgi61:19210:19397 [3] NCCL INFO Channel 04 : 3[b0000] -> 0[2f000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 05 : 1[30000] -> 0[2f000] via P2P/IPC/read
+sgi61:19209:19400 [2] NCCL INFO Channel 05 : 2[af000] -> 1[30000] via P2P/IPC/read
+sgi61:19207:19395 [0] NCCL INFO Channel 05 : 0[2f000] -> 3[b0000] via P2P/IPC/read
+sgi61:19210:19397 [3] NCCL INFO Channel 05 : 3[b0000] -> 2[af000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 05 : 1[30000] -> 3[b0000] via P2P/IPC/read
+sgi61:19207:19395 [0] NCCL INFO Channel 05 : 0[2f000] -> 2[af000] via P2P/IPC/read
+sgi61:19210:19397 [3] NCCL INFO Channel 05 : 3[b0000] -> 0[2f000] via P2P/IPC/read
+sgi61:19209:19400 [2] NCCL INFO Channel 05 : 2[af000] -> 0[2f000] via P2P/IPC/read
+sgi61:19210:19397 [3] NCCL INFO Channel 05 : 3[b0000] -> 1[30000] via P2P/IPC/read
+sgi61:19209:19400 [2] NCCL INFO Channel 06 : 2[af000] -> 3[b0000] via P2P/IPC/read
+sgi61:19207:19395 [0] NCCL INFO Channel 06 : 0[2f000] -> 1[30000] via P2P/IPC/read
+sgi61:19210:19397 [3] NCCL INFO Channel 06 : 3[b0000] -> 0[2f000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 06 : 1[30000] -> 2[af000] via P2P/IPC/read
+sgi61:19210:19397 [3] NCCL INFO Channel 06 : 3[b0000] -> 2[af000] via P2P/IPC/read
+sgi61:19209:19400 [2] NCCL INFO Channel 06 : 2[af000] -> 1[30000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 06 : 1[30000] -> 0[2f000] via P2P/IPC/read
+sgi61:19210:19397 [3] NCCL INFO Channel 07 : 3[b0000] -> 2[af000] via P2P/IPC/read
+sgi61:19209:19400 [2] NCCL INFO Channel 07 : 2[af000] -> 0[2f000] via P2P/IPC/read
+sgi61:19207:19395 [0] NCCL INFO Channel 07 : 0[2f000] -> 1[30000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 07 : 1[30000] -> 3[b0000] via P2P/IPC/read
+sgi61:19209:19400 [2] NCCL INFO Channel 07 : 2[af000] -> 3[b0000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 07 : 1[30000] -> 2[af000] via P2P/IPC/read
+sgi61:19209:19400 [2] NCCL INFO Channel 07 : 2[af000] -> 1[30000] via P2P/IPC/read
+sgi61:19210:19397 [3] NCCL INFO Channel 08 : 3[b0000] -> 1[30000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 07 : 1[30000] -> 0[2f000] via P2P/IPC/read
+sgi61:19209:19400 [2] NCCL INFO Channel 08 : 2[af000] -> 3[b0000] via P2P/IPC/read
+sgi61:19207:19395 [0] NCCL INFO Channel 08 : 0[2f000] -> 2[af000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 08 : 1[30000] -> 0[2f000] via P2P/IPC/read
+sgi61:19210:19397 [3] NCCL INFO Channel 08 : 3[b0000] -> 2[af000] via P2P/IPC/read
+sgi61:19209:19400 [2] NCCL INFO Channel 08 : 2[af000] -> 1[30000] via P2P/IPC/read
+sgi61:19207:19395 [0] NCCL INFO Channel 08 : 0[2f000] -> 1[30000] via P2P/IPC/read
+sgi61:19210:19397 [3] NCCL INFO Channel 09 : 3[b0000] -> 0[2f000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 08 : 1[30000] -> 2[af000] via P2P/IPC/read
+sgi61:19207:19395 [0] NCCL INFO Channel 09 : 0[2f000] -> 2[af000] via P2P/IPC/read
+sgi61:19209:19400 [2] NCCL INFO Channel 09 : 2[af000] -> 1[30000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 09 : 1[30000] -> 3[b0000] via P2P/IPC/read
+sgi61:19210:19397 [3] NCCL INFO Channel 09 : 3[b0000] -> 2[af000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 09 : 1[30000] -> 0[2f000] via P2P/IPC/read
+sgi61:19207:19395 [0] NCCL INFO Channel 09 : 0[2f000] -> 1[30000] via P2P/IPC/read
+sgi61:19209:19400 [2] NCCL INFO Channel 09 : 2[af000] -> 3[b0000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 09 : 1[30000] -> 2[af000] via P2P/IPC/read
+sgi61:19207:19395 [0] NCCL INFO Channel 10 : 0[2f000] -> 3[b0000] via P2P/IPC/read
+sgi61:19210:19397 [3] NCCL INFO Channel 10 : 3[b0000] -> 1[30000] via P2P/IPC/read
+sgi61:19209:19400 [2] NCCL INFO Channel 10 : 2[af000] -> 0[2f000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 10 : 1[30000] -> 2[af000] via P2P/IPC/read
+sgi61:19207:19395 [0] NCCL INFO Channel 10 : 0[2f000] -> 2[af000] via P2P/IPC/read
+sgi61:19210:19397 [3] NCCL INFO Channel 10 : 3[b0000] -> 0[2f000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 10 : 1[30000] -> 3[b0000] via P2P/IPC/read
+sgi61:19209:19400 [2] NCCL INFO Channel 11 : 2[af000] -> 1[30000] via P2P/IPC/read
+sgi61:19207:19395 [0] NCCL INFO Channel 11 : 0[2f000] -> 3[b0000] via P2P/IPC/read
+sgi61:19210:19397 [3] NCCL INFO Channel 11 : 3[b0000] -> 2[af000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 11 : 1[30000] -> 0[2f000] via P2P/IPC/read
+sgi61:19209:19400 [2] NCCL INFO Channel 11 : 2[af000] -> 0[2f000] via P2P/IPC/read
+sgi61:19210:19397 [3] NCCL INFO Channel 11 : 3[b0000] -> 1[30000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 11 : 1[30000] -> 3[b0000] via P2P/IPC/read
+sgi61:19207:19395 [0] NCCL INFO Channel 11 : 0[2f000] -> 2[af000] via P2P/IPC/read
+sgi61:19210:19397 [3] NCCL INFO Channel 11 : 3[b0000] -> 0[2f000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 12 : 1[30000] -> 2[af000] via P2P/IPC/read
+sgi61:19209:19400 [2] NCCL INFO Channel 12 : 2[af000] -> 3[b0000] via P2P/IPC/read
+sgi61:19207:19395 [0] NCCL INFO Channel 12 : 0[2f000] -> 1[30000] via P2P/IPC/read
+sgi61:19210:19397 [3] NCCL INFO Channel 12 : 3[b0000] -> 0[2f000] via P2P/IPC/read
+sgi61:19210:19397 [3] NCCL INFO Channel 12 : 3[b0000] -> 2[af000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 12 : 1[30000] -> 0[2f000] via P2P/IPC/read
+sgi61:19209:19400 [2] NCCL INFO Channel 12 : 2[af000] -> 1[30000] via P2P/IPC/read
+sgi61:19210:19397 [3] NCCL INFO Channel 13 : 3[b0000] -> 2[af000] via P2P/IPC/read
+sgi61:19207:19395 [0] NCCL INFO Channel 13 : 0[2f000] -> 1[30000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 13 : 1[30000] -> 3[b0000] via P2P/IPC/read
+sgi61:19209:19400 [2] NCCL INFO Channel 13 : 2[af000] -> 0[2f000] via P2P/IPC/read
+sgi61:19209:19400 [2] NCCL INFO Channel 13 : 2[af000] -> 1[30000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 13 : 1[30000] -> 0[2f000] via P2P/IPC/read
+sgi61:19209:19400 [2] NCCL INFO Channel 13 : 2[af000] -> 3[b0000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 13 : 1[30000] -> 2[af000] via P2P/IPC/read
+sgi61:19207:19395 [0] NCCL INFO Channel 14 : 0[2f000] -> 2[af000] via P2P/IPC/read
+sgi61:19210:19397 [3] NCCL INFO Channel 14 : 3[b0000] -> 1[30000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 14 : 1[30000] -> 0[2f000] via P2P/IPC/read
+sgi61:19209:19400 [2] NCCL INFO Channel 14 : 2[af000] -> 3[b0000] via P2P/IPC/read
+sgi61:19209:19400 [2] NCCL INFO Channel 14 : 2[af000] -> 0[2f000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 14 : 1[30000] -> 3[b0000] via P2P/IPC/read
+sgi61:19207:19395 [0] NCCL INFO Channel 14 : 0[2f000] -> 3[b0000] via P2P/IPC/read
+sgi61:19210:19397 [3] NCCL INFO Channel 14 : 3[b0000] -> 0[2f000] via P2P/IPC/read
+sgi61:19209:19400 [2] NCCL INFO Channel 15 : 2[af000] -> 1[30000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 15 : 1[30000] -> 3[b0000] via P2P/IPC/read
+sgi61:19207:19395 [0] NCCL INFO Channel 15 : 0[2f000] -> 2[af000] via P2P/IPC/read
+sgi61:19210:19397 [3] NCCL INFO Channel 15 : 3[b0000] -> 0[2f000] via P2P/IPC/read
+sgi61:19209:19400 [2] NCCL INFO Channel 15 : 2[af000] -> 0[2f000] via P2P/IPC/read
+sgi61:19207:19395 [0] NCCL INFO Channel 15 : 0[2f000] -> 3[b0000] via P2P/IPC/read
+sgi61:19210:19397 [3] NCCL INFO Channel 15 : 3[b0000] -> 1[30000] via P2P/IPC/read
+sgi61:19209:19400 [2] NCCL INFO Channel 16 : 2[af000] -> 0[2f000] via P2P/IPC/read
+sgi61:19207:19395 [0] NCCL INFO Channel 16 : 0[2f000] -> 3[b0000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 16 : 1[30000] -> 2[af000] via P2P/IPC/read
+sgi61:19210:19397 [3] NCCL INFO Channel 16 : 3[b0000] -> 1[30000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 16 : 1[30000] -> 3[b0000] via P2P/IPC/read
+sgi61:19207:19395 [0] NCCL INFO Channel 16 : 0[2f000] -> 2[af000] via P2P/IPC/read
+sgi61:19210:19397 [3] NCCL INFO Channel 16 : 3[b0000] -> 0[2f000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 17 : 1[30000] -> 0[2f000] via P2P/IPC/read
+sgi61:19209:19400 [2] NCCL INFO Channel 17 : 2[af000] -> 1[30000] via P2P/IPC/read
+sgi61:19207:19395 [0] NCCL INFO Channel 17 : 0[2f000] -> 3[b0000] via P2P/IPC/read
+sgi61:19210:19397 [3] NCCL INFO Channel 17 : 3[b0000] -> 2[af000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 17 : 1[30000] -> 3[b0000] via P2P/IPC/read
+sgi61:19207:19395 [0] NCCL INFO Channel 17 : 0[2f000] -> 2[af000] via P2P/IPC/read
+sgi61:19210:19397 [3] NCCL INFO Channel 17 : 3[b0000] -> 0[2f000] via P2P/IPC/read
+sgi61:19209:19400 [2] NCCL INFO Channel 17 : 2[af000] -> 0[2f000] via P2P/IPC/read
+sgi61:19210:19397 [3] NCCL INFO Channel 17 : 3[b0000] -> 1[30000] via P2P/IPC/read
+sgi61:19207:19395 [0] NCCL INFO Channel 18 : 0[2f000] -> 1[30000] via P2P/IPC/read
+sgi61:19209:19400 [2] NCCL INFO Channel 18 : 2[af000] -> 3[b0000] via P2P/IPC/read
+sgi61:19210:19397 [3] NCCL INFO Channel 18 : 3[b0000] -> 0[2f000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 18 : 1[30000] -> 2[af000] via P2P/IPC/read
+sgi61:19210:19397 [3] NCCL INFO Channel 18 : 3[b0000] -> 2[af000] via P2P/IPC/read
+sgi61:19209:19400 [2] NCCL INFO Channel 18 : 2[af000] -> 1[30000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 18 : 1[30000] -> 0[2f000] via P2P/IPC/read
+sgi61:19210:19397 [3] NCCL INFO Channel 19 : 3[b0000] -> 2[af000] via P2P/IPC/read
+sgi61:19209:19400 [2] NCCL INFO Channel 19 : 2[af000] -> 0[2f000] via P2P/IPC/read
+sgi61:19207:19395 [0] NCCL INFO Channel 19 : 0[2f000] -> 1[30000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 19 : 1[30000] -> 3[b0000] via P2P/IPC/read
+sgi61:19209:19400 [2] NCCL INFO Channel 19 : 2[af000] -> 3[b0000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 19 : 1[30000] -> 2[af000] via P2P/IPC/read
+sgi61:19209:19400 [2] NCCL INFO Channel 19 : 2[af000] -> 1[30000] via P2P/IPC/read
+sgi61:19210:19397 [3] NCCL INFO Channel 20 : 3[b0000] -> 1[30000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 19 : 1[30000] -> 0[2f000] via P2P/IPC/read
+sgi61:19209:19400 [2] NCCL INFO Channel 20 : 2[af000] -> 3[b0000] via P2P/IPC/read
+sgi61:19207:19395 [0] NCCL INFO Channel 20 : 0[2f000] -> 2[af000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 20 : 1[30000] -> 0[2f000] via P2P/IPC/read
+sgi61:19210:19397 [3] NCCL INFO Channel 20 : 3[b0000] -> 2[af000] via P2P/IPC/read
+sgi61:19209:19400 [2] NCCL INFO Channel 20 : 2[af000] -> 1[30000] via P2P/IPC/read
+sgi61:19207:19395 [0] NCCL INFO Channel 20 : 0[2f000] -> 1[30000] via P2P/IPC/read
+sgi61:19210:19397 [3] NCCL INFO Channel 21 : 3[b0000] -> 0[2f000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 20 : 1[30000] -> 2[af000] via P2P/IPC/read
+sgi61:19207:19395 [0] NCCL INFO Channel 21 : 0[2f000] -> 2[af000] via P2P/IPC/read
+sgi61:19209:19400 [2] NCCL INFO Channel 21 : 2[af000] -> 1[30000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 21 : 1[30000] -> 3[b0000] via P2P/IPC/read
+sgi61:19210:19397 [3] NCCL INFO Channel 21 : 3[b0000] -> 2[af000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 21 : 1[30000] -> 0[2f000] via P2P/IPC/read
+sgi61:19207:19395 [0] NCCL INFO Channel 21 : 0[2f000] -> 1[30000] via P2P/IPC/read
+sgi61:19209:19400 [2] NCCL INFO Channel 21 : 2[af000] -> 3[b0000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 21 : 1[30000] -> 2[af000] via P2P/IPC/read
+sgi61:19210:19397 [3] NCCL INFO Channel 22 : 3[b0000] -> 1[30000] via P2P/IPC/read
+sgi61:19207:19395 [0] NCCL INFO Channel 22 : 0[2f000] -> 3[b0000] via P2P/IPC/read
+sgi61:19209:19400 [2] NCCL INFO Channel 22 : 2[af000] -> 0[2f000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 22 : 1[30000] -> 2[af000] via P2P/IPC/read
+sgi61:19207:19395 [0] NCCL INFO Channel 22 : 0[2f000] -> 2[af000] via P2P/IPC/read
+sgi61:19210:19397 [3] NCCL INFO Channel 22 : 3[b0000] -> 0[2f000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 22 : 1[30000] -> 3[b0000] via P2P/IPC/read
+sgi61:19209:19400 [2] NCCL INFO Channel 23 : 2[af000] -> 1[30000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 23 : 1[30000] -> 0[2f000] via P2P/IPC/read
+sgi61:19210:19397 [3] NCCL INFO Channel 23 : 3[b0000] -> 2[af000] via P2P/IPC/read
+sgi61:19207:19395 [0] NCCL INFO Channel 23 : 0[2f000] -> 3[b0000] via P2P/IPC/read
+sgi61:19209:19400 [2] NCCL INFO Channel 23 : 2[af000] -> 0[2f000] via P2P/IPC/read
+sgi61:19210:19397 [3] NCCL INFO Channel 23 : 3[b0000] -> 1[30000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO Channel 23 : 1[30000] -> 3[b0000] via P2P/IPC/read
+sgi61:19210:19397 [3] NCCL INFO Channel 23 : 3[b0000] -> 0[2f000] via P2P/IPC/read
+sgi61:19207:19395 [0] NCCL INFO Channel 23 : 0[2f000] -> 2[af000] via P2P/IPC/read
+sgi61:19208:19401 [1] NCCL INFO 24 coll channels, 32 p2p channels, 8 p2p channels per peer
+sgi61:19208:19401 [1] NCCL INFO comm 0x2b10dc002010 rank 1 nranks 4 cudaDev 1 busId 30000 - Init COMPLETE
+sgi61:19210:19397 [3] NCCL INFO 24 coll channels, 32 p2p channels, 8 p2p channels per peer
+sgi61:19210:19397 [3] NCCL INFO comm 0x2aef10002010 rank 3 nranks 4 cudaDev 3 busId b0000 - Init COMPLETE
+sgi61:19209:19400 [2] NCCL INFO 24 coll channels, 32 p2p channels, 8 p2p channels per peer
+sgi61:19209:19400 [2] NCCL INFO comm 0x2ab3fc002010 rank 2 nranks 4 cudaDev 2 busId af000 - Init COMPLETE
+sgi61:19207:19395 [0] NCCL INFO 24 coll channels, 32 p2p channels, 8 p2p channels per peer
+sgi61:19207:19395 [0] NCCL INFO comm 0x2ae5f4002010 rank 0 nranks 4 cudaDev 0 busId 2f000 - Init COMPLETE
+sgi61:19207:19207 [0] NCCL INFO Launch mode Parallel
+[sgi61:0/4] 2022-03-09 14:41:00,621 (trainer:280) INFO: 1/35epoch started
+/scicore/home/graber0001/schran0000/espnet/tools/venv/lib/python3.7/site-packages/torch/_tensor.py:575: UserWarning: floor_divide is deprecated, and will be removed in a future version of pytorch. It currently rounds toward 0 (like the 'trunc' function NOT 'floor'). This results in incorrect rounding for negative values.
+To keep the current behavior, use torch.div(a, b, rounding_mode='trunc'), or for actual floor division, use torch.div(a, b, rounding_mode='floor'). (Triggered internally at  /pytorch/aten/src/ATen/native/BinaryOps.cpp:467.)
+  return torch.floor_divide(self, other)
+[sgi61:0/4] 2022-03-09 14:41:22,613 (distributed:788) INFO: Reducer buckets have been rebuilt in this iteration.
+[sgi61:0/4] 2022-03-09 14:50:53,142 (trainer:675) INFO: 1epoch:train:1-335batch: iter_time=1.077, forward_time=0.154, loss_ctc=384.316, loss_att=143.828, acc=0.030, loss=215.975, backward_time=0.257, optim_step_time=0.054, optim0_lr0=6.760e-06, train_time=1.768
+[sgi61:0/4] 2022-03-09 14:59:57,406 (trainer:675) INFO: 1epoch:train:336-670batch: iter_time=0.853, forward_time=0.153, loss_ctc=135.536, loss_att=114.892, acc=0.076, loss=121.085, backward_time=0.253, optim_step_time=0.053, optim0_lr0=2.016e-05, train_time=1.624
+[sgi61:0/4] 2022-03-09 15:08:42,433 (trainer:675) INFO: 1epoch:train:671-1005batch: iter_time=0.960, forward_time=0.153, loss_ctc=132.923, loss_att=106.697, acc=0.102, loss=114.565, backward_time=0.250, optim_step_time=0.060, optim0_lr0=3.356e-05, train_time=1.567
+[sgi61:0/4] 2022-03-09 15:17:14,254 (trainer:675) INFO: 1epoch:train:1006-1340batch: iter_time=0.800, forward_time=0.151, loss_ctc=126.369, loss_att=95.470, acc=0.139, loss=104.740, backward_time=0.247, optim_step_time=0.055, optim0_lr0=4.696e-05, train_time=1.527
+[sgi61:0/4] 2022-03-09 15:25:29,436 (trainer:675) INFO: 1epoch:train:1341-1675batch: iter_time=0.790, forward_time=0.150, loss_ctc=128.406, loss_att=92.792, acc=0.160, loss=103.476, backward_time=0.250, optim_step_time=0.055, optim0_lr0=6.036e-05, train_time=1.478
+[sgi61:0/4] 2022-03-09 15:34:04,813 (trainer:675) INFO: 1epoch:train:1676-2010batch: iter_time=0.420, forward_time=0.152, loss_ctc=125.418, loss_att=87.872, acc=0.175, loss=99.136, backward_time=0.250, optim_step_time=0.054, optim0_lr0=7.376e-05, train_time=1.538
+[sgi61:0/4] 2022-03-09 15:42:24,726 (trainer:675) INFO: 1epoch:train:2011-2345batch: iter_time=0.921, forward_time=0.153, loss_ctc=125.244, loss_att=85.500, acc=0.187, loss=97.423, backward_time=0.250, optim_step_time=0.058, optim0_lr0=8.716e-05, train_time=1.492
+[sgi61:0/4] 2022-03-09 15:50:31,997 (trainer:675) INFO: 1epoch:train:2346-2680batch: iter_time=0.840, forward_time=0.152, loss_ctc=128.499, loss_att=85.899, acc=0.193, loss=98.679, backward_time=0.251, optim_step_time=0.058, optim0_lr0=1.006e-04, train_time=1.454
+[sgi61:0/4] 2022-03-09 15:58:34,746 (trainer:675) INFO: 1epoch:train:2681-3015batch: iter_time=0.834, forward_time=0.152, loss_ctc=127.731, loss_att=83.763, acc=0.204, loss=96.954, backward_time=0.250, optim_step_time=0.057, optim0_lr0=1.140e-04, train_time=1.441
+[sgi61:0/4] 2022-03-09 16:06:34,697 (trainer:675) INFO: 1epoch:train:3016-3350batch: iter_time=0.666, forward_time=0.154, loss_ctc=128.418, loss_att=83.194, acc=0.211, loss=96.761, backward_time=0.251, optim_step_time=0.057, optim0_lr0=1.274e-04, train_time=1.432
+[sgi61:0/4] 2022-03-09 16:14:46,288 (trainer:675) INFO: 1epoch:train:3351-3685batch: iter_time=0.800, forward_time=0.153, loss_ctc=123.533, loss_att=79.444, acc=0.221, loss=92.671, backward_time=0.253, optim_step_time=0.056, optim0_lr0=1.408e-04, train_time=1.467
+[sgi61:0/4] 2022-03-09 16:23:04,125 (trainer:675) INFO: 1epoch:train:3686-4020batch: iter_time=0.833, forward_time=0.152, loss_ctc=121.967, loss_att=77.951, acc=0.228, loss=91.156, backward_time=0.250, optim_step_time=0.057, optim0_lr0=1.542e-04, train_time=1.486
+[sgi61:0/4] 2022-03-09 16:31:29,721 (trainer:675) INFO: 1epoch:train:4021-4355batch: iter_time=0.953, forward_time=0.150, loss_ctc=117.943, loss_att=74.607, acc=0.237, loss=87.608, backward_time=0.247, optim_step_time=0.051, optim0_lr0=1.676e-04, train_time=1.509
+[sgi61:0/4] 2022-03-09 16:39:23,567 (trainer:675) INFO: 1epoch:train:4356-4690batch: iter_time=0.681, forward_time=0.154, loss_ctc=129.256, loss_att=80.851, acc=0.238, loss=95.373, backward_time=0.253, optim_step_time=0.060, optim0_lr0=1.810e-04, train_time=1.414
+/scicore/home/graber0001/schran0000/espnet/tools/venv/lib/python3.7/site-packages/torch/_tensor.py:575: UserWarning: floor_divide is deprecated, and will be removed in a future version of pytorch. It currently rounds toward 0 (like the 'trunc' function NOT 'floor'). This results in incorrect rounding for negative values.
+To keep the current behavior, use torch.div(a, b, rounding_mode='trunc'), or for actual floor division, use torch.div(a, b, rounding_mode='floor'). (Triggered internally at  /pytorch/aten/src/ATen/native/BinaryOps.cpp:467.)
+  return torch.floor_divide(self, other)
+Process SpawnProcess-2:
+Traceback (most recent call last):
+  File "/scicore/soft/apps/Python/3.7.4-GCCcore-8.3.0/lib/python3.7/multiprocessing/process.py", line 297, in _bootstrap
+    self.run()
+  File "/scicore/soft/apps/Python/3.7.4-GCCcore-8.3.0/lib/python3.7/multiprocessing/process.py", line 99, in run
+    self._target(*self._args, **self._kwargs)
+  File "/scicore/home/graber0001/schran0000/espnet/espnet2/tasks/abs_task.py", line 1323, in main_worker
+    distributed_option=distributed_option,
+  File "/scicore/home/graber0001/schran0000/espnet/espnet2/train/trainer.py", line 295, in run
+    distributed_option=distributed_option,
+  File "/scicore/home/graber0001/schran0000/espnet/espnet2/train/trainer.py", line 586, in train_one_epoch
+    loss.backward()
+  File "/scicore/home/graber0001/schran0000/espnet/tools/venv/lib/python3.7/site-packages/torch/_tensor.py", line 255, in backward
+    torch.autograd.backward(self, gradient, retain_graph, create_graph, inputs=inputs)
+  File "/scicore/home/graber0001/schran0000/espnet/tools/venv/lib/python3.7/site-packages/torch/autograd/__init__.py", line 149, in backward
+    allow_unreachable=True, accumulate_grad=True)  # allow_unreachable flag
+RuntimeError: Unable to find a valid cuDNN algorithm to run convolution
+/scicore/soft/apps/Python/3.7.4-GCCcore-8.3.0/lib/python3.7/multiprocessing/semaphore_tracker.py:144: UserWarning: semaphore_tracker: There appear to be 11 leaked semaphores to clean up at shutdown
+  len(cache))
+Traceback (most recent call last):
+  File "/scicore/soft/apps/Python/3.7.4-GCCcore-8.3.0/lib/python3.7/runpy.py", line 193, in _run_module_as_main
+    "__main__", mod_spec)
+  File "/scicore/soft/apps/Python/3.7.4-GCCcore-8.3.0/lib/python3.7/runpy.py", line 85, in _run_code
+    exec(code, run_globals)
+  File "/scicore/home/graber0001/schran0000/espnet/espnet2/bin/asr_train.py", line 23, in <module>
+    main()
+  File "/scicore/home/graber0001/schran0000/espnet/espnet2/bin/asr_train.py", line 19, in main
+    ASRTask.main(cmd=cmd)
+  File "/scicore/home/graber0001/schran0000/espnet/espnet2/tasks/abs_task.py", line 1069, in main
+    while not ProcessContext(processes, error_queues).join():
+  File "/scicore/home/graber0001/schran0000/espnet/tools/venv/lib/python3.7/site-packages/torch/multiprocessing/spawn.py", line 144, in join
+    exit_code=exitcode
+torch.multiprocessing.spawn.ProcessExitedException: process 1 terminated with exit code 1
+# Accounting: time=7194 threads=1
+# Ended (code 1) at Wed Mar  9 16:39:56 CET 2022, elapsed time 7194 seconds
+

@@ -1,0 +1,1017 @@
+2022-03-10 08:34:09,679 (launch:95) INFO: /scicore/home/graber0001/schran0000/espnet/tools/venv/bin/python3 /scicore/home/graber0001/schran0000/espnet/espnet2/bin/launch.py --cmd 'run.pl --name exp/asr_train_asr_conformer5_raw_de_bpe5000_sp/train.log' --log exp/asr_train_asr_conformer5_raw_de_bpe5000_sp/train.log --ngpu 4 --num_nodes 1 --init_file_prefix exp/asr_train_asr_conformer5_raw_de_bpe5000_sp/.dist_init_ --multiprocessing_distributed true -- python3 -m espnet2.bin.asr_train --use_preprocessor true --bpemodel data/de_token_list/bpe_unigram5000/bpe.model --token_type bpe --token_list data/de_token_list/bpe_unigram5000/tokens.txt --non_linguistic_symbols none --cleaner none --g2p none --valid_data_path_and_name_and_type dump/raw/dev/wav.scp,speech,sound --valid_data_path_and_name_and_type dump/raw/dev/text,text,text --valid_shape_file exp/asr_stats_raw_de_bpe5000_sp/valid/speech_shape --valid_shape_file exp/asr_stats_raw_de_bpe5000_sp/valid/text_shape.bpe --resume true --init_param --ignore_init_mismatch false --fold_length 80000 --fold_length 150 --output_dir exp/asr_train_asr_conformer5_raw_de_bpe5000_sp --config conf/tuning/train_asr_conformer5.yaml --frontend_conf fs=16k --normalize=global_mvn --normalize_conf stats_file=exp/asr_stats_raw_de_bpe5000_sp/train/feats_stats.npz --train_data_path_and_name_and_type dump/raw/train_sp/wav.scp,speech,sound --train_data_path_and_name_and_type dump/raw/train_sp/text,text,text --train_shape_file exp/asr_stats_raw_de_bpe5000_sp/train/speech_shape --train_shape_file exp/asr_stats_raw_de_bpe5000_sp/train/text_shape.bpe
+2022-03-10 08:34:09,726 (launch:238) INFO: single-node with 4gpu on distributed mode
+2022-03-10 08:34:09,748 (launch:349) INFO: log file: exp/asr_train_asr_conformer5_raw_de_bpe5000_sp/train.log
+run.pl: job failed, log is in exp/asr_train_asr_conformer5_raw_de_bpe5000_sp/train.log
+Command '['run.pl', '--name', 'exp/asr_train_asr_conformer5_raw_de_bpe5000_sp/train.log', '--gpu', '4', 'exp/asr_train_asr_conformer5_raw_de_bpe5000_sp/train.log', 'python3', '-m', 'espnet2.bin.asr_train', '--use_preprocessor', 'true', '--bpemodel', 'data/de_token_list/bpe_unigram5000/bpe.model', '--token_type', 'bpe', '--token_list', 'data/de_token_list/bpe_unigram5000/tokens.txt', '--non_linguistic_symbols', 'none', '--cleaner', 'none', '--g2p', 'none', '--valid_data_path_and_name_and_type', 'dump/raw/dev/wav.scp,speech,sound', '--valid_data_path_and_name_and_type', 'dump/raw/dev/text,text,text', '--valid_shape_file', 'exp/asr_stats_raw_de_bpe5000_sp/valid/speech_shape', '--valid_shape_file', 'exp/asr_stats_raw_de_bpe5000_sp/valid/text_shape.bpe', '--resume', 'true', '--init_param', '--ignore_init_mismatch', 'false', '--fold_length', '80000', '--fold_length', '150', '--output_dir', 'exp/asr_train_asr_conformer5_raw_de_bpe5000_sp', '--config', 'conf/tuning/train_asr_conformer5.yaml', '--frontend_conf', 'fs=16k', '--normalize=global_mvn', '--normalize_conf', 'stats_file=exp/asr_stats_raw_de_bpe5000_sp/train/feats_stats.npz', '--train_data_path_and_name_and_type', 'dump/raw/train_sp/wav.scp,speech,sound', '--train_data_path_and_name_and_type', 'dump/raw/train_sp/text,text,text', '--train_shape_file', 'exp/asr_stats_raw_de_bpe5000_sp/train/speech_shape', '--train_shape_file', 'exp/asr_stats_raw_de_bpe5000_sp/train/text_shape.bpe', '--ngpu', '4', '--multiprocessing_distributed', 'True']' returned non-zero exit status 1.
+Traceback (most recent call last):
+  File "/scicore/soft/apps/Python/3.7.4-GCCcore-8.3.0/lib/python3.7/runpy.py", line 193, in _run_module_as_main
+    "__main__", mod_spec)
+  File "/scicore/soft/apps/Python/3.7.4-GCCcore-8.3.0/lib/python3.7/runpy.py", line 85, in _run_code
+    exec(code, run_globals)
+  File "/scicore/home/graber0001/schran0000/espnet/espnet2/bin/launch.py", line 385, in <module>
+    main()
+  File "/scicore/home/graber0001/schran0000/espnet/espnet2/bin/launch.py", line 378, in main
+    f"###################\n" + "".join(lines[-1000:])
+RuntimeError: 
+################### The last 1000 lines of exp/asr_train_asr_conformer5_raw_de_bpe5000_sp/train.log ###################
+          (linear_out): Linear(in_features=512, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (linear_pos): Linear(in_features=512, out_features=512, bias=False)
+        )
+        (feed_forward): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): Swish()
+        )
+        (feed_forward_macaron): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): Swish()
+        )
+        (conv_module): ConvolutionModule(
+          (pointwise_conv1): Conv1d(512, 1024, kernel_size=(1,), stride=(1,))
+          (depthwise_conv): Conv1d(512, 512, kernel_size=(31,), stride=(1,), padding=(15,), groups=512)
+          (norm): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (pointwise_conv2): Conv1d(512, 512, kernel_size=(1,), stride=(1,))
+          (activation): Swish()
+        )
+        (norm_ff): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_mha): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_ff_macaron): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_conv): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_final): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (dropout): Dropout(p=0.1, inplace=False)
+      )
+      (2): EncoderLayer(
+        (self_attn): LegacyRelPositionMultiHeadedAttention(
+          (linear_q): Linear(in_features=512, out_features=512, bias=True)
+          (linear_k): Linear(in_features=512, out_features=512, bias=True)
+          (linear_v): Linear(in_features=512, out_features=512, bias=True)
+          (linear_out): Linear(in_features=512, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (linear_pos): Linear(in_features=512, out_features=512, bias=False)
+        )
+        (feed_forward): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): Swish()
+        )
+        (feed_forward_macaron): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): Swish()
+        )
+        (conv_module): ConvolutionModule(
+          (pointwise_conv1): Conv1d(512, 1024, kernel_size=(1,), stride=(1,))
+          (depthwise_conv): Conv1d(512, 512, kernel_size=(31,), stride=(1,), padding=(15,), groups=512)
+          (norm): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (pointwise_conv2): Conv1d(512, 512, kernel_size=(1,), stride=(1,))
+          (activation): Swish()
+        )
+        (norm_ff): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_mha): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_ff_macaron): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_conv): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_final): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (dropout): Dropout(p=0.1, inplace=False)
+      )
+      (3): EncoderLayer(
+        (self_attn): LegacyRelPositionMultiHeadedAttention(
+          (linear_q): Linear(in_features=512, out_features=512, bias=True)
+          (linear_k): Linear(in_features=512, out_features=512, bias=True)
+          (linear_v): Linear(in_features=512, out_features=512, bias=True)
+          (linear_out): Linear(in_features=512, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (linear_pos): Linear(in_features=512, out_features=512, bias=False)
+        )
+        (feed_forward): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): Swish()
+        )
+        (feed_forward_macaron): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): Swish()
+        )
+        (conv_module): ConvolutionModule(
+          (pointwise_conv1): Conv1d(512, 1024, kernel_size=(1,), stride=(1,))
+          (depthwise_conv): Conv1d(512, 512, kernel_size=(31,), stride=(1,), padding=(15,), groups=512)
+          (norm): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (pointwise_conv2): Conv1d(512, 512, kernel_size=(1,), stride=(1,))
+          (activation): Swish()
+        )
+        (norm_ff): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_mha): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_ff_macaron): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_conv): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_final): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (dropout): Dropout(p=0.1, inplace=False)
+      )
+      (4): EncoderLayer(
+        (self_attn): LegacyRelPositionMultiHeadedAttention(
+          (linear_q): Linear(in_features=512, out_features=512, bias=True)
+          (linear_k): Linear(in_features=512, out_features=512, bias=True)
+          (linear_v): Linear(in_features=512, out_features=512, bias=True)
+          (linear_out): Linear(in_features=512, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (linear_pos): Linear(in_features=512, out_features=512, bias=False)
+        )
+        (feed_forward): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): Swish()
+        )
+        (feed_forward_macaron): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): Swish()
+        )
+        (conv_module): ConvolutionModule(
+          (pointwise_conv1): Conv1d(512, 1024, kernel_size=(1,), stride=(1,))
+          (depthwise_conv): Conv1d(512, 512, kernel_size=(31,), stride=(1,), padding=(15,), groups=512)
+          (norm): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (pointwise_conv2): Conv1d(512, 512, kernel_size=(1,), stride=(1,))
+          (activation): Swish()
+        )
+        (norm_ff): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_mha): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_ff_macaron): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_conv): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_final): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (dropout): Dropout(p=0.1, inplace=False)
+      )
+      (5): EncoderLayer(
+        (self_attn): LegacyRelPositionMultiHeadedAttention(
+          (linear_q): Linear(in_features=512, out_features=512, bias=True)
+          (linear_k): Linear(in_features=512, out_features=512, bias=True)
+          (linear_v): Linear(in_features=512, out_features=512, bias=True)
+          (linear_out): Linear(in_features=512, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (linear_pos): Linear(in_features=512, out_features=512, bias=False)
+        )
+        (feed_forward): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): Swish()
+        )
+        (feed_forward_macaron): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): Swish()
+        )
+        (conv_module): ConvolutionModule(
+          (pointwise_conv1): Conv1d(512, 1024, kernel_size=(1,), stride=(1,))
+          (depthwise_conv): Conv1d(512, 512, kernel_size=(31,), stride=(1,), padding=(15,), groups=512)
+          (norm): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (pointwise_conv2): Conv1d(512, 512, kernel_size=(1,), stride=(1,))
+          (activation): Swish()
+        )
+        (norm_ff): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_mha): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_ff_macaron): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_conv): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_final): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (dropout): Dropout(p=0.1, inplace=False)
+      )
+      (6): EncoderLayer(
+        (self_attn): LegacyRelPositionMultiHeadedAttention(
+          (linear_q): Linear(in_features=512, out_features=512, bias=True)
+          (linear_k): Linear(in_features=512, out_features=512, bias=True)
+          (linear_v): Linear(in_features=512, out_features=512, bias=True)
+          (linear_out): Linear(in_features=512, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (linear_pos): Linear(in_features=512, out_features=512, bias=False)
+        )
+        (feed_forward): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): Swish()
+        )
+        (feed_forward_macaron): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): Swish()
+        )
+        (conv_module): ConvolutionModule(
+          (pointwise_conv1): Conv1d(512, 1024, kernel_size=(1,), stride=(1,))
+          (depthwise_conv): Conv1d(512, 512, kernel_size=(31,), stride=(1,), padding=(15,), groups=512)
+          (norm): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (pointwise_conv2): Conv1d(512, 512, kernel_size=(1,), stride=(1,))
+          (activation): Swish()
+        )
+        (norm_ff): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_mha): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_ff_macaron): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_conv): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_final): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (dropout): Dropout(p=0.1, inplace=False)
+      )
+      (7): EncoderLayer(
+        (self_attn): LegacyRelPositionMultiHeadedAttention(
+          (linear_q): Linear(in_features=512, out_features=512, bias=True)
+          (linear_k): Linear(in_features=512, out_features=512, bias=True)
+          (linear_v): Linear(in_features=512, out_features=512, bias=True)
+          (linear_out): Linear(in_features=512, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (linear_pos): Linear(in_features=512, out_features=512, bias=False)
+        )
+        (feed_forward): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): Swish()
+        )
+        (feed_forward_macaron): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): Swish()
+        )
+        (conv_module): ConvolutionModule(
+          (pointwise_conv1): Conv1d(512, 1024, kernel_size=(1,), stride=(1,))
+          (depthwise_conv): Conv1d(512, 512, kernel_size=(31,), stride=(1,), padding=(15,), groups=512)
+          (norm): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (pointwise_conv2): Conv1d(512, 512, kernel_size=(1,), stride=(1,))
+          (activation): Swish()
+        )
+        (norm_ff): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_mha): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_ff_macaron): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_conv): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_final): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (dropout): Dropout(p=0.1, inplace=False)
+      )
+      (8): EncoderLayer(
+        (self_attn): LegacyRelPositionMultiHeadedAttention(
+          (linear_q): Linear(in_features=512, out_features=512, bias=True)
+          (linear_k): Linear(in_features=512, out_features=512, bias=True)
+          (linear_v): Linear(in_features=512, out_features=512, bias=True)
+          (linear_out): Linear(in_features=512, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (linear_pos): Linear(in_features=512, out_features=512, bias=False)
+        )
+        (feed_forward): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): Swish()
+        )
+        (feed_forward_macaron): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): Swish()
+        )
+        (conv_module): ConvolutionModule(
+          (pointwise_conv1): Conv1d(512, 1024, kernel_size=(1,), stride=(1,))
+          (depthwise_conv): Conv1d(512, 512, kernel_size=(31,), stride=(1,), padding=(15,), groups=512)
+          (norm): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (pointwise_conv2): Conv1d(512, 512, kernel_size=(1,), stride=(1,))
+          (activation): Swish()
+        )
+        (norm_ff): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_mha): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_ff_macaron): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_conv): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_final): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (dropout): Dropout(p=0.1, inplace=False)
+      )
+      (9): EncoderLayer(
+        (self_attn): LegacyRelPositionMultiHeadedAttention(
+          (linear_q): Linear(in_features=512, out_features=512, bias=True)
+          (linear_k): Linear(in_features=512, out_features=512, bias=True)
+          (linear_v): Linear(in_features=512, out_features=512, bias=True)
+          (linear_out): Linear(in_features=512, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (linear_pos): Linear(in_features=512, out_features=512, bias=False)
+        )
+        (feed_forward): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): Swish()
+        )
+        (feed_forward_macaron): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): Swish()
+        )
+        (conv_module): ConvolutionModule(
+          (pointwise_conv1): Conv1d(512, 1024, kernel_size=(1,), stride=(1,))
+          (depthwise_conv): Conv1d(512, 512, kernel_size=(31,), stride=(1,), padding=(15,), groups=512)
+          (norm): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (pointwise_conv2): Conv1d(512, 512, kernel_size=(1,), stride=(1,))
+          (activation): Swish()
+        )
+        (norm_ff): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_mha): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_ff_macaron): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_conv): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_final): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (dropout): Dropout(p=0.1, inplace=False)
+      )
+      (10): EncoderLayer(
+        (self_attn): LegacyRelPositionMultiHeadedAttention(
+          (linear_q): Linear(in_features=512, out_features=512, bias=True)
+          (linear_k): Linear(in_features=512, out_features=512, bias=True)
+          (linear_v): Linear(in_features=512, out_features=512, bias=True)
+          (linear_out): Linear(in_features=512, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (linear_pos): Linear(in_features=512, out_features=512, bias=False)
+        )
+        (feed_forward): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): Swish()
+        )
+        (feed_forward_macaron): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): Swish()
+        )
+        (conv_module): ConvolutionModule(
+          (pointwise_conv1): Conv1d(512, 1024, kernel_size=(1,), stride=(1,))
+          (depthwise_conv): Conv1d(512, 512, kernel_size=(31,), stride=(1,), padding=(15,), groups=512)
+          (norm): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (pointwise_conv2): Conv1d(512, 512, kernel_size=(1,), stride=(1,))
+          (activation): Swish()
+        )
+        (norm_ff): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_mha): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_ff_macaron): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_conv): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_final): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (dropout): Dropout(p=0.1, inplace=False)
+      )
+      (11): EncoderLayer(
+        (self_attn): LegacyRelPositionMultiHeadedAttention(
+          (linear_q): Linear(in_features=512, out_features=512, bias=True)
+          (linear_k): Linear(in_features=512, out_features=512, bias=True)
+          (linear_v): Linear(in_features=512, out_features=512, bias=True)
+          (linear_out): Linear(in_features=512, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (linear_pos): Linear(in_features=512, out_features=512, bias=False)
+        )
+        (feed_forward): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): Swish()
+        )
+        (feed_forward_macaron): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): Swish()
+        )
+        (conv_module): ConvolutionModule(
+          (pointwise_conv1): Conv1d(512, 1024, kernel_size=(1,), stride=(1,))
+          (depthwise_conv): Conv1d(512, 512, kernel_size=(31,), stride=(1,), padding=(15,), groups=512)
+          (norm): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (pointwise_conv2): Conv1d(512, 512, kernel_size=(1,), stride=(1,))
+          (activation): Swish()
+        )
+        (norm_ff): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_mha): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_ff_macaron): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_conv): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm_final): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (dropout): Dropout(p=0.1, inplace=False)
+      )
+    )
+    (after_norm): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+  )
+  (decoder): TransformerDecoder(
+    (embed): Sequential(
+      (0): Embedding(5000, 512)
+      (1): PositionalEncoding(
+        (dropout): Dropout(p=0.1, inplace=False)
+      )
+    )
+    (after_norm): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+    (output_layer): Linear(in_features=512, out_features=5000, bias=True)
+    (decoders): MultiSequential(
+      (0): DecoderLayer(
+        (self_attn): MultiHeadedAttention(
+          (linear_q): Linear(in_features=512, out_features=512, bias=True)
+          (linear_k): Linear(in_features=512, out_features=512, bias=True)
+          (linear_v): Linear(in_features=512, out_features=512, bias=True)
+          (linear_out): Linear(in_features=512, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+        (src_attn): MultiHeadedAttention(
+          (linear_q): Linear(in_features=512, out_features=512, bias=True)
+          (linear_k): Linear(in_features=512, out_features=512, bias=True)
+          (linear_v): Linear(in_features=512, out_features=512, bias=True)
+          (linear_out): Linear(in_features=512, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+        (feed_forward): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): ReLU()
+        )
+        (norm1): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm2): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm3): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (dropout): Dropout(p=0.1, inplace=False)
+      )
+      (1): DecoderLayer(
+        (self_attn): MultiHeadedAttention(
+          (linear_q): Linear(in_features=512, out_features=512, bias=True)
+          (linear_k): Linear(in_features=512, out_features=512, bias=True)
+          (linear_v): Linear(in_features=512, out_features=512, bias=True)
+          (linear_out): Linear(in_features=512, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+        (src_attn): MultiHeadedAttention(
+          (linear_q): Linear(in_features=512, out_features=512, bias=True)
+          (linear_k): Linear(in_features=512, out_features=512, bias=True)
+          (linear_v): Linear(in_features=512, out_features=512, bias=True)
+          (linear_out): Linear(in_features=512, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+        (feed_forward): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): ReLU()
+        )
+        (norm1): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm2): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm3): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (dropout): Dropout(p=0.1, inplace=False)
+      )
+      (2): DecoderLayer(
+        (self_attn): MultiHeadedAttention(
+          (linear_q): Linear(in_features=512, out_features=512, bias=True)
+          (linear_k): Linear(in_features=512, out_features=512, bias=True)
+          (linear_v): Linear(in_features=512, out_features=512, bias=True)
+          (linear_out): Linear(in_features=512, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+        (src_attn): MultiHeadedAttention(
+          (linear_q): Linear(in_features=512, out_features=512, bias=True)
+          (linear_k): Linear(in_features=512, out_features=512, bias=True)
+          (linear_v): Linear(in_features=512, out_features=512, bias=True)
+          (linear_out): Linear(in_features=512, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+        (feed_forward): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): ReLU()
+        )
+        (norm1): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm2): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm3): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (dropout): Dropout(p=0.1, inplace=False)
+      )
+      (3): DecoderLayer(
+        (self_attn): MultiHeadedAttention(
+          (linear_q): Linear(in_features=512, out_features=512, bias=True)
+          (linear_k): Linear(in_features=512, out_features=512, bias=True)
+          (linear_v): Linear(in_features=512, out_features=512, bias=True)
+          (linear_out): Linear(in_features=512, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+        (src_attn): MultiHeadedAttention(
+          (linear_q): Linear(in_features=512, out_features=512, bias=True)
+          (linear_k): Linear(in_features=512, out_features=512, bias=True)
+          (linear_v): Linear(in_features=512, out_features=512, bias=True)
+          (linear_out): Linear(in_features=512, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+        (feed_forward): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): ReLU()
+        )
+        (norm1): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm2): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm3): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (dropout): Dropout(p=0.1, inplace=False)
+      )
+      (4): DecoderLayer(
+        (self_attn): MultiHeadedAttention(
+          (linear_q): Linear(in_features=512, out_features=512, bias=True)
+          (linear_k): Linear(in_features=512, out_features=512, bias=True)
+          (linear_v): Linear(in_features=512, out_features=512, bias=True)
+          (linear_out): Linear(in_features=512, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+        (src_attn): MultiHeadedAttention(
+          (linear_q): Linear(in_features=512, out_features=512, bias=True)
+          (linear_k): Linear(in_features=512, out_features=512, bias=True)
+          (linear_v): Linear(in_features=512, out_features=512, bias=True)
+          (linear_out): Linear(in_features=512, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+        (feed_forward): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): ReLU()
+        )
+        (norm1): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm2): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm3): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (dropout): Dropout(p=0.1, inplace=False)
+      )
+      (5): DecoderLayer(
+        (self_attn): MultiHeadedAttention(
+          (linear_q): Linear(in_features=512, out_features=512, bias=True)
+          (linear_k): Linear(in_features=512, out_features=512, bias=True)
+          (linear_v): Linear(in_features=512, out_features=512, bias=True)
+          (linear_out): Linear(in_features=512, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+        (src_attn): MultiHeadedAttention(
+          (linear_q): Linear(in_features=512, out_features=512, bias=True)
+          (linear_k): Linear(in_features=512, out_features=512, bias=True)
+          (linear_v): Linear(in_features=512, out_features=512, bias=True)
+          (linear_out): Linear(in_features=512, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+        (feed_forward): PositionwiseFeedForward(
+          (w_1): Linear(in_features=512, out_features=2048, bias=True)
+          (w_2): Linear(in_features=2048, out_features=512, bias=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+          (activation): ReLU()
+        )
+        (norm1): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm2): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (norm3): LayerNorm((512,), eps=1e-12, elementwise_affine=True)
+        (dropout): Dropout(p=0.1, inplace=False)
+      )
+    )
+  )
+  (criterion_att): LabelSmoothingLoss(
+    (criterion): KLDivLoss()
+  )
+  (ctc): CTC(
+    (ctc_lo): Linear(in_features=512, out_features=5000, bias=True)
+    (ctc_loss): CTCLoss()
+  )
+)
+
+Model summary:
+    Class Name: ESPnetASRModel
+    Total Number of model parameters: 116.15 M
+    Number of trainable parameters: 116.15 M (100.0%)
+    Size: 464.59 MB
+    Type: torch.float32
+[sgi63:0/4] 2022-03-10 08:34:43,978 (abs_task:1161) INFO: Optimizer:
+Adam (
+Parameter Group 0
+    amsgrad: False
+    betas: (0.9, 0.999)
+    eps: 1e-08
+    initial_lr: 0.001
+    lr: 4e-08
+    weight_decay: 0
+)
+[sgi63:0/4] 2022-03-10 08:34:43,979 (abs_task:1162) INFO: Scheduler: WarmupLR(warmup_steps=25000)
+[sgi63:0/4] 2022-03-10 08:34:43,990 (abs_task:1172) INFO: Saving the configuration in exp/asr_train_asr_conformer5_raw_de_bpe5000_sp/config.yaml
+[sgi63:0/4] 2022-03-10 08:34:56,420 (abs_task:1525) INFO: [train] dataset:
+ESPnetDataset(
+  speech: {"path": "dump/raw/train_sp/wav.scp", "type": "sound"}
+  text: {"path": "dump/raw/train_sp/text", "type": "text"}
+  preprocess: <espnet2.train.preprocessor.CommonPreprocessor object at 0x2b49d575c810>)
+[sgi63:0/4] 2022-03-10 08:34:56,420 (abs_task:1526) INFO: [train] Batch sampler: FoldedBatchSampler(N-batch=79835, batch_size=32, shape_files=['exp/asr_stats_raw_de_bpe5000_sp/train/speech_shape', 'exp/asr_stats_raw_de_bpe5000_sp/train/text_shape.bpe'], sort_in_batch=descending, sort_batch=descending)
+[sgi63:0/4] 2022-03-10 08:34:56,434 (abs_task:1528) INFO: [train] mini-batch sizes summary: N-batch=79835, mean=18.0, min=5, max=32
+[sgi63:0/4] 2022-03-10 08:34:56,841 (abs_task:1525) INFO: [valid] dataset:
+ESPnetDataset(
+  speech: {"path": "dump/raw/dev/wav.scp", "type": "sound"}
+  text: {"path": "dump/raw/dev/text", "type": "text"}
+  preprocess: <espnet2.train.preprocessor.CommonPreprocessor object at 0x2b49d5ee2c90>)
+[sgi63:0/4] 2022-03-10 08:34:56,841 (abs_task:1526) INFO: [valid] Batch sampler: FoldedBatchSampler(N-batch=635, batch_size=32, shape_files=['exp/asr_stats_raw_de_bpe5000_sp/valid/speech_shape', 'exp/asr_stats_raw_de_bpe5000_sp/valid/text_shape.bpe'], sort_in_batch=descending, sort_batch=descending)
+[sgi63:0/4] 2022-03-10 08:34:56,841 (abs_task:1528) INFO: [valid] mini-batch sizes summary: N-batch=635, mean=18.2, min=10, max=32
+[sgi63:0/4] 2022-03-10 08:34:56,892 (abs_task:1525) INFO: [plot_att] dataset:
+ESPnetDataset(
+  speech: {"path": "dump/raw/dev/wav.scp", "type": "sound"}
+  text: {"path": "dump/raw/dev/text", "type": "text"}
+  preprocess: <espnet2.train.preprocessor.CommonPreprocessor object at 0x2b4ac4ae3b90>)
+[sgi63:0/4] 2022-03-10 08:34:56,892 (abs_task:1526) INFO: [plot_att] Batch sampler: UnsortedBatchSampler(N-batch=11574, batch_size=1, key_file=exp/asr_stats_raw_de_bpe5000_sp/valid/speech_shape, 
+[sgi63:0/4] 2022-03-10 08:34:56,892 (abs_task:1528) INFO: [plot_att] mini-batch sizes summary: N-batch=3, mean=1.0, min=1, max=1
+sgi63:15552:15552 [0] NCCL INFO Bootstrap : Using [0]eth0:10.1.31.63<0> [1]ib0:10.41.31.63<0>
+sgi63:15552:15552 [0] NCCL INFO NET/Plugin : No plugin found (libnccl-net.so), using internal implementation
+sgi63:15552:15552 [0] NCCL INFO NET/IB : Using [0]mlx5_0:1/IB ; OOB eth0:10.1.31.63<0>
+sgi63:15552:15552 [0] NCCL INFO Using network IB
+NCCL version 2.7.8+cuda11.1
+sgi63:15553:15553 [1] NCCL INFO Bootstrap : Using [0]eth0:10.1.31.63<0> [1]ib0:10.41.31.63<0>
+sgi63:15554:15554 [2] NCCL INFO Bootstrap : Using [0]eth0:10.1.31.63<0> [1]ib0:10.41.31.63<0>
+sgi63:15555:15555 [3] NCCL INFO Bootstrap : Using [0]eth0:10.1.31.63<0> [1]ib0:10.41.31.63<0>
+sgi63:15553:15553 [1] NCCL INFO NET/Plugin : No plugin found (libnccl-net.so), using internal implementation
+sgi63:15554:15554 [2] NCCL INFO NET/Plugin : No plugin found (libnccl-net.so), using internal implementation
+sgi63:15555:15555 [3] NCCL INFO NET/Plugin : No plugin found (libnccl-net.so), using internal implementation
+sgi63:15553:15553 [1] NCCL INFO NET/IB : Using [0]mlx5_0:1/IB ; OOB eth0:10.1.31.63<0>
+sgi63:15554:15554 [2] NCCL INFO NET/IB : Using [0]mlx5_0:1/IB ; OOB eth0:10.1.31.63<0>
+sgi63:15553:15553 [1] NCCL INFO Using network IB
+sgi63:15554:15554 [2] NCCL INFO Using network IB
+sgi63:15555:15555 [3] NCCL INFO NET/IB : Using [0]mlx5_0:1/IB ; OOB eth0:10.1.31.63<0>
+sgi63:15555:15555 [3] NCCL INFO Using network IB
+sgi63:15552:15751 [0] NCCL INFO Channel 00/24 :    0   1   2   3
+sgi63:15553:15755 [1] NCCL INFO threadThresholds 8/8/64 | 32/8/64 | 8/8/64
+sgi63:15554:15754 [2] NCCL INFO threadThresholds 8/8/64 | 32/8/64 | 8/8/64
+sgi63:15555:15757 [3] NCCL INFO threadThresholds 8/8/64 | 32/8/64 | 8/8/64
+sgi63:15552:15751 [0] NCCL INFO Channel 01/24 :    0   1   3   2
+sgi63:15553:15755 [1] NCCL INFO Trees [0] 2/-1/-1->1->0|0->1->2/-1/-1 [1] 2/-1/-1->1->0|0->1->2/-1/-1 [2] 3/-1/-1->1->-1|-1->1->3/-1/-1 [3] 3/-1/-1->1->-1|-1->1->3/-1/-1 [4] -1/-1/-1->1->3|3->1->-1/-1/-1 [5] -1/-1/-1->1->3|3->1->-1/-1/-1 [6] 0/-1/-1->1->2|2->1->0/-1/-1 [7] 0/-1/-1->1->2|2->1->0/-1/-1 [8] 2/-1/-1->1->0|0->1->2/-1/-1 [9] 2/-1/-1->1->0|0->1->2/-1/-1 [10] 3/-1/-1->1->-1|-1->1->3/-1/-1 [11] 3/-1/-1->1->-1|-1->1->3/-1/-1 [12] 2/-1/-1->1->0|0->1->2/-1/-1 [13] 2/-1/-1->1->0|0->1->2/-1/-1 [14] 3/-1/-1->1->-1|-1->1->3/-1/-1 [15] 3/-1/-1->1->-1|-1->1->3/-1/-1 [16] -1/-1/-1->1->3|3->1->-1/-1/-1 [17] -1/-1/-1->1->3|3->1->-1/-1/-1 [18] 0/-1/-1->1->2|2->1->0/-1/-1 [19] 0/-1/-1->1->2|2->1->0/-1/-1 [20] 2/-1/-1->1->0|0->1->2/-1/-1 [21] 2/-1/-1->1->0|0->1->2/-1/-1 [22] 3/-1/-1->1->-1|-1->1->3/-1/-1 [23] 3/-1/-1->1->-1|-1->1->3/-1/-1
+sgi63:15552:15751 [0] NCCL INFO Channel 02/24 :    0   2   3   1
+sgi63:15552:15751 [0] NCCL INFO Channel 03/24 :    0   2   1   3
+sgi63:15554:15754 [2] NCCL INFO Trees [0] 3/-1/-1->2->1|1->2->3/-1/-1 [1] 3/-1/-1->2->1|1->2->3/-1/-1 [2] -1/-1/-1->2->0|0->2->-1/-1/-1 [3] -1/-1/-1->2->0|0->2->-1/-1/-1 [4] 0/-1/-1->2->-1|-1->2->0/-1/-1 [5] 0/-1/-1->2->-1|-1->2->0/-1/-1 [6] 1/-1/-1->2->3|3->2->1/-1/-1 [7] 1/-1/-1->2->3|3->2->1/-1/-1 [8] 3/-1/-1->2->1|1->2->3/-1/-1 [9] 3/-1/-1->2->1|1->2->3/-1/-1 [10] -1/-1/-1->2->0|0->2->-1/-1/-1 [11] -1/-1/-1->2->0|0->2->-1/-1/-1 [12] 3/-1/-1->2->1|1->2->3/-1/-1 [13] 3/-1/-1->2->1|1->2->3/-1/-1 [14] -1/-1/-1->2->0|0->2->-1/-1/-1 [15] -1/-1/-1->2->0|0->2->-1/-1/-1 [16] 0/-1/-1->2->-1|-1->2->0/-1/-1 [17] 0/-1/-1->2->-1|-1->2->0/-1/-1 [18] 1/-1/-1->2->3|3->2->1/-1/-1 [19] 1/-1/-1->2->3|3->2->1/-1/-1 [20] 3/-1/-1->2->1|1->2->3/-1/-1 [21] 3/-1/-1->2->1|1->2->3/-1/-1 [22] -1/-1/-1->2->0|0->2->-1/-1/-1 [23] -1/-1/-1->2->0|0->2->-1/-1/-1
+sgi63:15552:15751 [0] NCCL INFO Channel 04/24 :    0   3   1   2
+sgi63:15555:15757 [3] NCCL INFO Trees [0] -1/-1/-1->3->2|2->3->-1/-1/-1 [1] -1/-1/-1->3->2|2->3->-1/-1/-1 [2] 0/-1/-1->3->1|1->3->0/-1/-1 [3] 0/-1/-1->3->1|1->3->0/-1/-1 [4] 1/-1/-1->3->0|0->3->1/-1/-1 [5] 1/-1/-1->3->0|0->3->1/-1/-1 [6] 2/-1/-1->3->-1|-1->3->2/-1/-1 [7] 2/-1/-1->3->-1|-1->3->2/-1/-1 [8] -1/-1/-1->3->2|2->3->-1/-1/-1 [9] -1/-1/-1->3->2|2->3->-1/-1/-1 [10] 0/-1/-1->3->1|1->3->0/-1/-1 [11] 0/-1/-1->3->1|1->3->0/-1/-1 [12] -1/-1/-1->3->2|2->3->-1/-1/-1 [13] -1/-1/-1->3->2|2->3->-1/-1/-1 [14] 0/-1/-1->3->1|1->3->0/-1/-1 [15] 0/-1/-1->3->1|1->3->0/-1/-1 [16] 1/-1/-1->3->0|0->3->1/-1/-1 [17] 1/-1/-1->3->0|0->3->1/-1/-1 [18] 2/-1/-1->3->-1|-1->3->2/-1/-1 [19] 2/-1/-1->3->-1|-1->3->2/-1/-1 [20] -1/-1/-1->3->2|2->3->-1/-1/-1 [21] -1/-1/-1->3->2|2->3->-1/-1/-1 [22] 0/-1/-1->3->1|1->3->0/-1/-1 [23] 0/-1/-1->3->1|1->3->0/-1/-1
+sgi63:15552:15751 [0] NCCL INFO Channel 05/24 :    0   3   2   1
+sgi63:15552:15751 [0] NCCL INFO Channel 06/24 :    0   1   2   3
+sgi63:15552:15751 [0] NCCL INFO Channel 07/24 :    0   1   3   2
+sgi63:15552:15751 [0] NCCL INFO Channel 08/24 :    0   2   3   1
+sgi63:15552:15751 [0] NCCL INFO Channel 09/24 :    0   2   1   3
+sgi63:15552:15751 [0] NCCL INFO Channel 10/24 :    0   3   1   2
+sgi63:15552:15751 [0] NCCL INFO Channel 11/24 :    0   3   2   1
+sgi63:15552:15751 [0] NCCL INFO Channel 12/24 :    0   1   2   3
+sgi63:15552:15751 [0] NCCL INFO Channel 13/24 :    0   1   3   2
+sgi63:15552:15751 [0] NCCL INFO Channel 14/24 :    0   2   3   1
+sgi63:15552:15751 [0] NCCL INFO Channel 15/24 :    0   2   1   3
+sgi63:15552:15751 [0] NCCL INFO Channel 16/24 :    0   3   1   2
+sgi63:15552:15751 [0] NCCL INFO Channel 17/24 :    0   3   2   1
+sgi63:15552:15751 [0] NCCL INFO Channel 18/24 :    0   1   2   3
+sgi63:15552:15751 [0] NCCL INFO Channel 19/24 :    0   1   3   2
+sgi63:15552:15751 [0] NCCL INFO Channel 20/24 :    0   2   3   1
+sgi63:15552:15751 [0] NCCL INFO Channel 21/24 :    0   2   1   3
+sgi63:15552:15751 [0] NCCL INFO Channel 22/24 :    0   3   1   2
+sgi63:15552:15751 [0] NCCL INFO Channel 23/24 :    0   3   2   1
+sgi63:15552:15751 [0] NCCL INFO threadThresholds 8/8/64 | 32/8/64 | 8/8/64
+sgi63:15552:15751 [0] NCCL INFO Trees [0] 1/-1/-1->0->-1|-1->0->1/-1/-1 [1] 1/-1/-1->0->-1|-1->0->1/-1/-1 [2] 2/-1/-1->0->3|3->0->2/-1/-1 [3] 2/-1/-1->0->3|3->0->2/-1/-1 [4] 3/-1/-1->0->2|2->0->3/-1/-1 [5] 3/-1/-1->0->2|2->0->3/-1/-1 [6] -1/-1/-1->0->1|1->0->-1/-1/-1 [7] -1/-1/-1->0->1|1->0->-1/-1/-1 [8] 1/-1/-1->0->-1|-1->0->1/-1/-1 [9] 1/-1/-1->0->-1|-1->0->1/-1/-1 [10] 2/-1/-1->0->3|3->0->2/-1/-1 [11] 2/-1/-1->0->3|3->0->2/-1/-1 [12] 1/-1/-1->0->-1|-1->0->1/-1/-1 [13] 1/-1/-1->0->-1|-1->0->1/-1/-1 [14] 2/-1/-1->0->3|3->0->2/-1/-1 [15] 2/-1/-1->0->3|3->0->2/-1/-1 [16] 3/-1/-1->0->2|2->0->3/-1/-1 [17] 3/-1/-1->0->2|2->0->3/-1/-1 [18] -1/-1/-1->0->1|1->0->-1/-1/-1 [19] -1/-1/-1->0->1|1->0->-1/-1/-1 [20] 1/-1/-1->0->-1|-1->0->1/-1/-1 [21] 1/-1/-1->0->-1|-1->0->1/-1/-1 [22] 2/-1/-1->0->3|3->0->2/-1/-1 [23] 2/-1/-1->0->3|3->0->2/-1/-1
+sgi63:15553:15755 [1] NCCL INFO Channel 00 : 1[30000] -> 2[af000] via P2P/IPC/read
+sgi63:15554:15754 [2] NCCL INFO Channel 00 : 2[af000] -> 3[b0000] via P2P/IPC/read
+sgi63:15552:15751 [0] NCCL INFO Channel 00 : 0[2f000] -> 1[30000] via P2P/IPC/read
+sgi63:15555:15757 [3] NCCL INFO Channel 00 : 3[b0000] -> 0[2f000] via P2P/IPC/read
+sgi63:15555:15757 [3] NCCL INFO Channel 00 : 3[b0000] -> 2[af000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 00 : 1[30000] -> 0[2f000] via P2P/IPC/read
+sgi63:15554:15754 [2] NCCL INFO Channel 00 : 2[af000] -> 1[30000] via P2P/IPC/read
+sgi63:15552:15751 [0] NCCL INFO Channel 01 : 0[2f000] -> 1[30000] via P2P/IPC/read
+sgi63:15555:15757 [3] NCCL INFO Channel 01 : 3[b0000] -> 2[af000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 01 : 1[30000] -> 3[b0000] via P2P/IPC/read
+sgi63:15554:15754 [2] NCCL INFO Channel 01 : 2[af000] -> 0[2f000] via P2P/IPC/read
+sgi63:15554:15754 [2] NCCL INFO Channel 01 : 2[af000] -> 1[30000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 01 : 1[30000] -> 0[2f000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 01 : 1[30000] -> 2[af000] via P2P/IPC/read
+sgi63:15554:15754 [2] NCCL INFO Channel 01 : 2[af000] -> 3[b0000] via P2P/IPC/read
+sgi63:15552:15751 [0] NCCL INFO Channel 02 : 0[2f000] -> 2[af000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 02 : 1[30000] -> 0[2f000] via P2P/IPC/read
+sgi63:15555:15757 [3] NCCL INFO Channel 02 : 3[b0000] -> 1[30000] via P2P/IPC/read
+sgi63:15554:15754 [2] NCCL INFO Channel 02 : 2[af000] -> 3[b0000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 02 : 1[30000] -> 3[b0000] via P2P/IPC/read
+sgi63:15554:15754 [2] NCCL INFO Channel 02 : 2[af000] -> 0[2f000] via P2P/IPC/read
+sgi63:15552:15751 [0] NCCL INFO Channel 02 : 0[2f000] -> 3[b0000] via P2P/IPC/read
+sgi63:15554:15754 [2] NCCL INFO Channel 03 : 2[af000] -> 1[30000] via P2P/IPC/read
+sgi63:15555:15757 [3] NCCL INFO Channel 02 : 3[b0000] -> 0[2f000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 03 : 1[30000] -> 3[b0000] via P2P/IPC/read
+sgi63:15552:15751 [0] NCCL INFO Channel 03 : 0[2f000] -> 2[af000] via P2P/IPC/read
+sgi63:15555:15757 [3] NCCL INFO Channel 03 : 3[b0000] -> 0[2f000] via P2P/IPC/read
+sgi63:15554:15754 [2] NCCL INFO Channel 03 : 2[af000] -> 0[2f000] via P2P/IPC/read
+sgi63:15552:15751 [0] NCCL INFO Channel 03 : 0[2f000] -> 3[b0000] via P2P/IPC/read
+sgi63:15555:15757 [3] NCCL INFO Channel 03 : 3[b0000] -> 1[30000] via P2P/IPC/read
+sgi63:15554:15754 [2] NCCL INFO Channel 04 : 2[af000] -> 0[2f000] via P2P/IPC/read
+sgi63:15552:15751 [0] NCCL INFO Channel 04 : 0[2f000] -> 3[b0000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 04 : 1[30000] -> 2[af000] via P2P/IPC/read
+sgi63:15555:15757 [3] NCCL INFO Channel 04 : 3[b0000] -> 1[30000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 04 : 1[30000] -> 3[b0000] via P2P/IPC/read
+sgi63:15552:15751 [0] NCCL INFO Channel 04 : 0[2f000] -> 2[af000] via P2P/IPC/read
+sgi63:15555:15757 [3] NCCL INFO Channel 04 : 3[b0000] -> 0[2f000] via P2P/IPC/read
+sgi63:15554:15754 [2] NCCL INFO Channel 05 : 2[af000] -> 1[30000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 05 : 1[30000] -> 0[2f000] via P2P/IPC/read
+sgi63:15552:15751 [0] NCCL INFO Channel 05 : 0[2f000] -> 3[b0000] via P2P/IPC/read
+sgi63:15555:15757 [3] NCCL INFO Channel 05 : 3[b0000] -> 2[af000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 05 : 1[30000] -> 3[b0000] via P2P/IPC/read
+sgi63:15552:15751 [0] NCCL INFO Channel 05 : 0[2f000] -> 2[af000] via P2P/IPC/read
+sgi63:15555:15757 [3] NCCL INFO Channel 05 : 3[b0000] -> 0[2f000] via P2P/IPC/read
+sgi63:15554:15754 [2] NCCL INFO Channel 05 : 2[af000] -> 0[2f000] via P2P/IPC/read
+sgi63:15555:15757 [3] NCCL INFO Channel 05 : 3[b0000] -> 1[30000] via P2P/IPC/read
+sgi63:15554:15754 [2] NCCL INFO Channel 06 : 2[af000] -> 3[b0000] via P2P/IPC/read
+sgi63:15552:15751 [0] NCCL INFO Channel 06 : 0[2f000] -> 1[30000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 06 : 1[30000] -> 2[af000] via P2P/IPC/read
+sgi63:15555:15757 [3] NCCL INFO Channel 06 : 3[b0000] -> 0[2f000] via P2P/IPC/read
+sgi63:15555:15757 [3] NCCL INFO Channel 06 : 3[b0000] -> 2[af000] via P2P/IPC/read
+sgi63:15554:15754 [2] NCCL INFO Channel 06 : 2[af000] -> 1[30000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 06 : 1[30000] -> 0[2f000] via P2P/IPC/read
+sgi63:15555:15757 [3] NCCL INFO Channel 07 : 3[b0000] -> 2[af000] via P2P/IPC/read
+sgi63:15554:15754 [2] NCCL INFO Channel 07 : 2[af000] -> 0[2f000] via P2P/IPC/read
+sgi63:15552:15751 [0] NCCL INFO Channel 07 : 0[2f000] -> 1[30000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 07 : 1[30000] -> 3[b0000] via P2P/IPC/read
+sgi63:15554:15754 [2] NCCL INFO Channel 07 : 2[af000] -> 3[b0000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 07 : 1[30000] -> 2[af000] via P2P/IPC/read
+sgi63:15554:15754 [2] NCCL INFO Channel 07 : 2[af000] -> 1[30000] via P2P/IPC/read
+sgi63:15555:15757 [3] NCCL INFO Channel 08 : 3[b0000] -> 1[30000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 07 : 1[30000] -> 0[2f000] via P2P/IPC/read
+sgi63:15554:15754 [2] NCCL INFO Channel 08 : 2[af000] -> 3[b0000] via P2P/IPC/read
+sgi63:15552:15751 [0] NCCL INFO Channel 08 : 0[2f000] -> 2[af000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 08 : 1[30000] -> 0[2f000] via P2P/IPC/read
+sgi63:15555:15757 [3] NCCL INFO Channel 08 : 3[b0000] -> 2[af000] via P2P/IPC/read
+sgi63:15552:15751 [0] NCCL INFO Channel 08 : 0[2f000] -> 1[30000] via P2P/IPC/read
+sgi63:15554:15754 [2] NCCL INFO Channel 08 : 2[af000] -> 1[30000] via P2P/IPC/read
+sgi63:15555:15757 [3] NCCL INFO Channel 09 : 3[b0000] -> 0[2f000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 08 : 1[30000] -> 2[af000] via P2P/IPC/read
+sgi63:15552:15751 [0] NCCL INFO Channel 09 : 0[2f000] -> 2[af000] via P2P/IPC/read
+sgi63:15554:15754 [2] NCCL INFO Channel 09 : 2[af000] -> 1[30000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 09 : 1[30000] -> 3[b0000] via P2P/IPC/read
+sgi63:15555:15757 [3] NCCL INFO Channel 09 : 3[b0000] -> 2[af000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 09 : 1[30000] -> 0[2f000] via P2P/IPC/read
+sgi63:15552:15751 [0] NCCL INFO Channel 09 : 0[2f000] -> 1[30000] via P2P/IPC/read
+sgi63:15554:15754 [2] NCCL INFO Channel 09 : 2[af000] -> 3[b0000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 09 : 1[30000] -> 2[af000] via P2P/IPC/read
+sgi63:15552:15751 [0] NCCL INFO Channel 10 : 0[2f000] -> 3[b0000] via P2P/IPC/read
+sgi63:15555:15757 [3] NCCL INFO Channel 10 : 3[b0000] -> 1[30000] via P2P/IPC/read
+sgi63:15554:15754 [2] NCCL INFO Channel 10 : 2[af000] -> 0[2f000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 10 : 1[30000] -> 2[af000] via P2P/IPC/read
+sgi63:15552:15751 [0] NCCL INFO Channel 10 : 0[2f000] -> 2[af000] via P2P/IPC/read
+sgi63:15555:15757 [3] NCCL INFO Channel 10 : 3[b0000] -> 0[2f000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 10 : 1[30000] -> 3[b0000] via P2P/IPC/read
+sgi63:15554:15754 [2] NCCL INFO Channel 11 : 2[af000] -> 1[30000] via P2P/IPC/read
+sgi63:15552:15751 [0] NCCL INFO Channel 11 : 0[2f000] -> 3[b0000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 11 : 1[30000] -> 0[2f000] via P2P/IPC/read
+sgi63:15555:15757 [3] NCCL INFO Channel 11 : 3[b0000] -> 2[af000] via P2P/IPC/read
+sgi63:15554:15754 [2] NCCL INFO Channel 11 : 2[af000] -> 0[2f000] via P2P/IPC/read
+sgi63:15555:15757 [3] NCCL INFO Channel 11 : 3[b0000] -> 1[30000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 11 : 1[30000] -> 3[b0000] via P2P/IPC/read
+sgi63:15552:15751 [0] NCCL INFO Channel 11 : 0[2f000] -> 2[af000] via P2P/IPC/read
+sgi63:15555:15757 [3] NCCL INFO Channel 11 : 3[b0000] -> 0[2f000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 12 : 1[30000] -> 2[af000] via P2P/IPC/read
+sgi63:15554:15754 [2] NCCL INFO Channel 12 : 2[af000] -> 3[b0000] via P2P/IPC/read
+sgi63:15552:15751 [0] NCCL INFO Channel 12 : 0[2f000] -> 1[30000] via P2P/IPC/read
+sgi63:15555:15757 [3] NCCL INFO Channel 12 : 3[b0000] -> 0[2f000] via P2P/IPC/read
+sgi63:15554:15754 [2] NCCL INFO Channel 12 : 2[af000] -> 1[30000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 12 : 1[30000] -> 0[2f000] via P2P/IPC/read
+sgi63:15555:15757 [3] NCCL INFO Channel 12 : 3[b0000] -> 2[af000] via P2P/IPC/read
+sgi63:15552:15751 [0] NCCL INFO Channel 13 : 0[2f000] -> 1[30000] via P2P/IPC/read
+sgi63:15554:15754 [2] NCCL INFO Channel 13 : 2[af000] -> 0[2f000] via P2P/IPC/read
+sgi63:15555:15757 [3] NCCL INFO Channel 13 : 3[b0000] -> 2[af000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 13 : 1[30000] -> 3[b0000] via P2P/IPC/read
+sgi63:15554:15754 [2] NCCL INFO Channel 13 : 2[af000] -> 1[30000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 13 : 1[30000] -> 0[2f000] via P2P/IPC/read
+sgi63:15554:15754 [2] NCCL INFO Channel 13 : 2[af000] -> 3[b0000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 13 : 1[30000] -> 2[af000] via P2P/IPC/read
+sgi63:15552:15751 [0] NCCL INFO Channel 14 : 0[2f000] -> 2[af000] via P2P/IPC/read
+sgi63:15555:15757 [3] NCCL INFO Channel 14 : 3[b0000] -> 1[30000] via P2P/IPC/read
+sgi63:15554:15754 [2] NCCL INFO Channel 14 : 2[af000] -> 3[b0000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 14 : 1[30000] -> 0[2f000] via P2P/IPC/read
+sgi63:15554:15754 [2] NCCL INFO Channel 14 : 2[af000] -> 0[2f000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 14 : 1[30000] -> 3[b0000] via P2P/IPC/read
+sgi63:15552:15751 [0] NCCL INFO Channel 14 : 0[2f000] -> 3[b0000] via P2P/IPC/read
+sgi63:15554:15754 [2] NCCL INFO Channel 15 : 2[af000] -> 1[30000] via P2P/IPC/read
+sgi63:15555:15757 [3] NCCL INFO Channel 14 : 3[b0000] -> 0[2f000] via P2P/IPC/read
+sgi63:15552:15751 [0] NCCL INFO Channel 15 : 0[2f000] -> 2[af000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 15 : 1[30000] -> 3[b0000] via P2P/IPC/read
+sgi63:15554:15754 [2] NCCL INFO Channel 15 : 2[af000] -> 0[2f000] via P2P/IPC/read
+sgi63:15555:15757 [3] NCCL INFO Channel 15 : 3[b0000] -> 0[2f000] via P2P/IPC/read
+sgi63:15552:15751 [0] NCCL INFO Channel 15 : 0[2f000] -> 3[b0000] via P2P/IPC/read
+sgi63:15555:15757 [3] NCCL INFO Channel 15 : 3[b0000] -> 1[30000] via P2P/IPC/read
+sgi63:15554:15754 [2] NCCL INFO Channel 16 : 2[af000] -> 0[2f000] via P2P/IPC/read
+sgi63:15555:15757 [3] NCCL INFO Channel 16 : 3[b0000] -> 1[30000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 16 : 1[30000] -> 2[af000] via P2P/IPC/read
+sgi63:15552:15751 [0] NCCL INFO Channel 16 : 0[2f000] -> 3[b0000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 16 : 1[30000] -> 3[b0000] via P2P/IPC/read
+sgi63:15552:15751 [0] NCCL INFO Channel 16 : 0[2f000] -> 2[af000] via P2P/IPC/read
+sgi63:15555:15757 [3] NCCL INFO Channel 16 : 3[b0000] -> 0[2f000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 17 : 1[30000] -> 0[2f000] via P2P/IPC/read
+sgi63:15554:15754 [2] NCCL INFO Channel 17 : 2[af000] -> 1[30000] via P2P/IPC/read
+sgi63:15555:15757 [3] NCCL INFO Channel 17 : 3[b0000] -> 2[af000] via P2P/IPC/read
+sgi63:15552:15751 [0] NCCL INFO Channel 17 : 0[2f000] -> 3[b0000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 17 : 1[30000] -> 3[b0000] via P2P/IPC/read
+sgi63:15552:15751 [0] NCCL INFO Channel 17 : 0[2f000] -> 2[af000] via P2P/IPC/read
+sgi63:15555:15757 [3] NCCL INFO Channel 17 : 3[b0000] -> 0[2f000] via P2P/IPC/read
+sgi63:15554:15754 [2] NCCL INFO Channel 17 : 2[af000] -> 0[2f000] via P2P/IPC/read
+sgi63:15555:15757 [3] NCCL INFO Channel 17 : 3[b0000] -> 1[30000] via P2P/IPC/read
+sgi63:15555:15757 [3] NCCL INFO Channel 18 : 3[b0000] -> 0[2f000] via P2P/IPC/read
+sgi63:15554:15754 [2] NCCL INFO Channel 18 : 2[af000] -> 3[b0000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 18 : 1[30000] -> 2[af000] via P2P/IPC/read
+sgi63:15552:15751 [0] NCCL INFO Channel 18 : 0[2f000] -> 1[30000] via P2P/IPC/read
+sgi63:15555:15757 [3] NCCL INFO Channel 18 : 3[b0000] -> 2[af000] via P2P/IPC/read
+sgi63:15554:15754 [2] NCCL INFO Channel 18 : 2[af000] -> 1[30000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 18 : 1[30000] -> 0[2f000] via P2P/IPC/read
+sgi63:15555:15757 [3] NCCL INFO Channel 19 : 3[b0000] -> 2[af000] via P2P/IPC/read
+sgi63:15552:15751 [0] NCCL INFO Channel 19 : 0[2f000] -> 1[30000] via P2P/IPC/read
+sgi63:15554:15754 [2] NCCL INFO Channel 19 : 2[af000] -> 0[2f000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 19 : 1[30000] -> 3[b0000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 19 : 1[30000] -> 2[af000] via P2P/IPC/read
+sgi63:15554:15754 [2] NCCL INFO Channel 19 : 2[af000] -> 3[b0000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 19 : 1[30000] -> 0[2f000] via P2P/IPC/read
+sgi63:15554:15754 [2] NCCL INFO Channel 19 : 2[af000] -> 1[30000] via P2P/IPC/read
+sgi63:15555:15757 [3] NCCL INFO Channel 20 : 3[b0000] -> 1[30000] via P2P/IPC/read
+sgi63:15552:15751 [0] NCCL INFO Channel 20 : 0[2f000] -> 2[af000] via P2P/IPC/read
+sgi63:15554:15754 [2] NCCL INFO Channel 20 : 2[af000] -> 3[b0000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 20 : 1[30000] -> 0[2f000] via P2P/IPC/read
+sgi63:15552:15751 [0] NCCL INFO Channel 20 : 0[2f000] -> 1[30000] via P2P/IPC/read
+sgi63:15555:15757 [3] NCCL INFO Channel 20 : 3[b0000] -> 2[af000] via P2P/IPC/read
+sgi63:15554:15754 [2] NCCL INFO Channel 20 : 2[af000] -> 1[30000] via P2P/IPC/read
+sgi63:15555:15757 [3] NCCL INFO Channel 21 : 3[b0000] -> 0[2f000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 20 : 1[30000] -> 2[af000] via P2P/IPC/read
+sgi63:15552:15751 [0] NCCL INFO Channel 21 : 0[2f000] -> 2[af000] via P2P/IPC/read
+sgi63:15554:15754 [2] NCCL INFO Channel 21 : 2[af000] -> 1[30000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 21 : 1[30000] -> 3[b0000] via P2P/IPC/read
+sgi63:15555:15757 [3] NCCL INFO Channel 21 : 3[b0000] -> 2[af000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 21 : 1[30000] -> 0[2f000] via P2P/IPC/read
+sgi63:15552:15751 [0] NCCL INFO Channel 21 : 0[2f000] -> 1[30000] via P2P/IPC/read
+sgi63:15554:15754 [2] NCCL INFO Channel 21 : 2[af000] -> 3[b0000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 21 : 1[30000] -> 2[af000] via P2P/IPC/read
+sgi63:15552:15751 [0] NCCL INFO Channel 22 : 0[2f000] -> 3[b0000] via P2P/IPC/read
+sgi63:15555:15757 [3] NCCL INFO Channel 22 : 3[b0000] -> 1[30000] via P2P/IPC/read
+sgi63:15554:15754 [2] NCCL INFO Channel 22 : 2[af000] -> 0[2f000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 22 : 1[30000] -> 2[af000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 22 : 1[30000] -> 3[b0000] via P2P/IPC/read
+sgi63:15555:15757 [3] NCCL INFO Channel 22 : 3[b0000] -> 0[2f000] via P2P/IPC/read
+sgi63:15552:15751 [0] NCCL INFO Channel 22 : 0[2f000] -> 2[af000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 23 : 1[30000] -> 0[2f000] via P2P/IPC/read
+sgi63:15554:15754 [2] NCCL INFO Channel 23 : 2[af000] -> 1[30000] via P2P/IPC/read
+sgi63:15555:15757 [3] NCCL INFO Channel 23 : 3[b0000] -> 2[af000] via P2P/IPC/read
+sgi63:15552:15751 [0] NCCL INFO Channel 23 : 0[2f000] -> 3[b0000] via P2P/IPC/read
+sgi63:15554:15754 [2] NCCL INFO Channel 23 : 2[af000] -> 0[2f000] via P2P/IPC/read
+sgi63:15555:15757 [3] NCCL INFO Channel 23 : 3[b0000] -> 1[30000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO Channel 23 : 1[30000] -> 3[b0000] via P2P/IPC/read
+sgi63:15555:15757 [3] NCCL INFO Channel 23 : 3[b0000] -> 0[2f000] via P2P/IPC/read
+sgi63:15552:15751 [0] NCCL INFO Channel 23 : 0[2f000] -> 2[af000] via P2P/IPC/read
+sgi63:15553:15755 [1] NCCL INFO 24 coll channels, 32 p2p channels, 8 p2p channels per peer
+sgi63:15553:15755 [1] NCCL INFO comm 0x2aada4002010 rank 1 nranks 4 cudaDev 1 busId 30000 - Init COMPLETE
+sgi63:15554:15754 [2] NCCL INFO 24 coll channels, 32 p2p channels, 8 p2p channels per peer
+sgi63:15555:15757 [3] NCCL INFO 24 coll channels, 32 p2p channels, 8 p2p channels per peer
+sgi63:15554:15754 [2] NCCL INFO comm 0x2b2dd4002010 rank 2 nranks 4 cudaDev 2 busId af000 - Init COMPLETE
+sgi63:15555:15757 [3] NCCL INFO comm 0x2abeb8002010 rank 3 nranks 4 cudaDev 3 busId b0000 - Init COMPLETE
+sgi63:15552:15751 [0] NCCL INFO 24 coll channels, 32 p2p channels, 8 p2p channels per peer
+sgi63:15552:15751 [0] NCCL INFO comm 0x2b4af4002010 rank 0 nranks 4 cudaDev 0 busId 2f000 - Init COMPLETE
+sgi63:15552:15552 [0] NCCL INFO Launch mode Parallel
+[sgi63:0/4] 2022-03-10 08:34:59,200 (trainer:280) INFO: 1/35epoch started
+/scicore/home/graber0001/schran0000/espnet/tools/venv/lib/python3.7/site-packages/torch/_tensor.py:575: UserWarning: floor_divide is deprecated, and will be removed in a future version of pytorch. It currently rounds toward 0 (like the 'trunc' function NOT 'floor'). This results in incorrect rounding for negative values.
+To keep the current behavior, use torch.div(a, b, rounding_mode='trunc'), or for actual floor division, use torch.div(a, b, rounding_mode='floor'). (Triggered internally at  /pytorch/aten/src/ATen/native/BinaryOps.cpp:467.)
+  return torch.floor_divide(self, other)
+[sgi63:0/4] 2022-03-10 08:35:16,942 (distributed:788) INFO: Reducer buckets have been rebuilt in this iteration.
+[sgi63:0/4] 2022-03-10 08:55:06,311 (trainer:676) INFO: 1epoch:train:1-3991batch: iter_time=4.252e-04, forward_time=0.060, loss_ctc=171.326, loss_att=111.594, acc=0.094, loss=129.514, backward_time=0.109, optim_step_time=0.050, optim0_lr0=3.996e-05, train_time=0.605
+[sgi63:0/4] 2022-03-10 09:14:52,970 (trainer:676) INFO: 1epoch:train:3992-7982batch: iter_time=0.001, forward_time=0.058, loss_ctc=127.377, loss_att=89.034, acc=0.174, loss=100.537, backward_time=0.111, optim_step_time=0.049, optim0_lr0=1.198e-04, train_time=0.594
+[sgi63:0/4] 2022-03-10 09:34:36,053 (trainer:676) INFO: 1epoch:train:7983-11973batch: iter_time=4.842e-04, forward_time=0.059, loss_ctc=126.264, loss_att=82.184, acc=0.208, loss=95.408, backward_time=0.112, optim_step_time=0.049, optim0_lr0=1.996e-04, train_time=0.593
+[sgi63:0/4] 2022-03-10 09:56:02,022 (trainer:676) INFO: 1epoch:train:11974-15964batch: iter_time=0.028, forward_time=0.057, loss_ctc=126.178, loss_att=79.366, acc=0.230, loss=93.410, backward_time=0.112, optim_step_time=0.047, optim0_lr0=2.794e-04, train_time=0.644
+[sgi63:0/4] 2022-03-10 10:15:33,249 (trainer:676) INFO: 1epoch:train:15965-19955batch: iter_time=0.001, forward_time=0.058, loss_ctc=124.971, loss_att=76.706, acc=0.247, loss=91.186, backward_time=0.111, optim_step_time=0.048, optim0_lr0=3.592e-04, train_time=0.587
+[sgi63:0/4] 2022-03-10 10:34:58,750 (trainer:676) INFO: 1epoch:train:19956-23946batch: iter_time=5.814e-04, forward_time=0.059, loss_ctc=125.040, loss_att=75.152, acc=0.259, loss=90.119, backward_time=0.110, optim_step_time=0.048, optim0_lr0=4.391e-04, train_time=0.584
+[sgi63:0/4] 2022-03-10 10:55:36,299 (trainer:676) INFO: 1epoch:train:23947-27937batch: iter_time=0.017, forward_time=0.058, loss_ctc=122.602, loss_att=72.418, acc=0.270, loss=87.473, backward_time=0.111, optim_step_time=0.048, optim0_lr0=5.189e-04, train_time=0.620
+[sgi63:0/4] 2022-03-10 11:15:45,820 (trainer:676) INFO: 1epoch:train:27938-31928batch: iter_time=0.008, forward_time=0.058, loss_ctc=122.568, loss_att=72.059, acc=0.273, loss=87.212, backward_time=0.110, optim_step_time=0.048, optim0_lr0=5.987e-04, train_time=0.606
+[sgi63:0/4] 2022-03-10 11:35:19,525 (trainer:676) INFO: 1epoch:train:31929-35919batch: iter_time=4.229e-04, forward_time=0.059, loss_ctc=123.975, loss_att=71.649, acc=0.281, loss=87.347, backward_time=0.111, optim_step_time=0.050, optim0_lr0=6.785e-04, train_time=0.588
+[sgi63:0/4] 2022-03-10 11:55:05,411 (trainer:676) INFO: 1epoch:train:35920-39910batch: iter_time=1.694e-04, forward_time=0.059, loss_ctc=122.931, loss_att=70.646, acc=0.285, loss=86.332, backward_time=0.110, optim_step_time=0.050, optim0_lr0=7.583e-04, train_time=0.594
+[sgi63:0/4] 2022-03-10 12:14:55,949 (trainer:676) INFO: 1epoch:train:39911-43901batch: iter_time=7.432e-04, forward_time=0.059, loss_ctc=124.177, loss_att=71.212, acc=0.282, loss=87.101, backward_time=0.111, optim_step_time=0.050, optim0_lr0=8.382e-04, train_time=0.596
+[sgi63:0/4] 2022-03-10 12:34:43,591 (trainer:676) INFO: 1epoch:train:43902-47892batch: iter_time=6.194e-04, forward_time=0.058, loss_ctc=124.119, loss_att=71.148, acc=0.284, loss=87.039, backward_time=0.111, optim_step_time=0.050, optim0_lr0=9.180e-04, train_time=0.595
+[sgi63:0/4] 2022-03-10 12:57:52,373 (trainer:676) INFO: 1epoch:train:47893-51883batch: iter_time=0.023, forward_time=0.059, loss_ctc=123.600, loss_att=69.631, acc=0.295, loss=85.822, backward_time=0.110, optim_step_time=0.050, optim0_lr0=9.845e-04, train_time=0.696
+[sgi63:0/4] 2022-03-10 13:19:40,444 (trainer:676) INFO: 1epoch:train:51884-55874batch: iter_time=0.032, forward_time=0.059, loss_ctc=123.216, loss_att=67.979, acc=0.305, loss=84.550, backward_time=0.110, optim_step_time=0.050, optim0_lr0=9.635e-04, train_time=0.655
+[sgi63:0/4] 2022-03-10 13:39:25,653 (trainer:676) INFO: 1epoch:train:55875-59865batch: iter_time=6.044e-04, forward_time=0.059, loss_ctc=122.294, loss_att=67.040, acc=0.309, loss=83.616, backward_time=0.112, optim_step_time=0.049, optim0_lr0=9.296e-04, train_time=0.594
+[sgi63:0/4] 2022-03-10 13:59:02,846 (trainer:676) INFO: 1epoch:train:59866-63856batch: iter_time=5.147e-04, forward_time=0.059, loss_ctc=123.684, loss_att=66.944, acc=0.315, loss=83.966, backward_time=0.111, optim_step_time=0.049, optim0_lr0=8.991e-04, train_time=0.590
+[sgi63:0/4] 2022-03-10 14:18:44,541 (trainer:676) INFO: 1epoch:train:63857-67847batch: iter_time=6.144e-04, forward_time=0.059, loss_ctc=122.232, loss_att=65.736, acc=0.319, loss=82.685, backward_time=0.112, optim_step_time=0.049, optim0_lr0=8.715e-04, train_time=0.592
+[sgi63:0/4] 2022-03-10 14:38:24,247 (trainer:676) INFO: 1epoch:train:67848-71838batch: iter_time=6.662e-04, forward_time=0.058, loss_ctc=121.969, loss_att=64.922, acc=0.325, loss=82.036, backward_time=0.111, optim_step_time=0.049, optim0_lr0=8.462e-04, train_time=0.591
+[sgi63:0/4] 2022-03-10 14:58:04,543 (trainer:676) INFO: 1epoch:train:71839-75829batch: iter_time=3.319e-04, forward_time=0.058, loss_ctc=122.857, loss_att=64.832, acc=0.328, loss=82.240, backward_time=0.111, optim_step_time=0.049, optim0_lr0=8.230e-04, train_time=0.591
+[sgi63:0/4] 2022-03-10 15:17:47,741 (trainer:676) INFO: 1epoch:train:75830-79820batch: iter_time=5.662e-04, forward_time=0.059, loss_ctc=123.392, loss_att=64.591, acc=0.333, loss=82.231, backward_time=0.111, optim_step_time=0.049, optim0_lr0=8.016e-04, train_time=0.593
+/scicore/home/graber0001/schran0000/espnet/tools/venv/lib/python3.7/site-packages/torch/_tensor.py:575: UserWarning: floor_divide is deprecated, and will be removed in a future version of pytorch. It currently rounds toward 0 (like the 'trunc' function NOT 'floor'). This results in incorrect rounding for negative values.
+To keep the current behavior, use torch.div(a, b, rounding_mode='trunc'), or for actual floor division, use torch.div(a, b, rounding_mode='floor'). (Triggered internally at  /pytorch/aten/src/ATen/native/BinaryOps.cpp:467.)
+  return torch.floor_divide(self, other)
+/scicore/home/graber0001/schran0000/espnet/tools/venv/lib/python3.7/site-packages/torch/_tensor.py:575: UserWarning: floor_divide is deprecated, and will be removed in a future version of pytorch. It currently rounds toward 0 (like the 'trunc' function NOT 'floor'). This results in incorrect rounding for negative values.
+To keep the current behavior, use torch.div(a, b, rounding_mode='trunc'), or for actual floor division, use torch.div(a, b, rounding_mode='floor'). (Triggered internally at  /pytorch/aten/src/ATen/native/BinaryOps.cpp:467.)
+  return torch.floor_divide(self, other)
+/scicore/home/graber0001/schran0000/espnet/tools/venv/lib/python3.7/site-packages/torch/_tensor.py:575: UserWarning: floor_divide is deprecated, and will be removed in a future version of pytorch. It currently rounds toward 0 (like the 'trunc' function NOT 'floor'). This results in incorrect rounding for negative values.
+To keep the current behavior, use torch.div(a, b, rounding_mode='trunc'), or for actual floor division, use torch.div(a, b, rounding_mode='floor'). (Triggered internally at  /pytorch/aten/src/ATen/native/BinaryOps.cpp:467.)
+  return torch.floor_divide(self, other)
+[sgi63:0/4] 2022-03-10 15:20:49,469 (trainer:334) INFO: 1epoch results: [train] iter_time=0.006, forward_time=0.059, loss_ctc=126.222, loss_att=73.736, acc=0.271, loss=89.482, backward_time=0.111, optim_step_time=0.049, optim0_lr0=6.434e-04, train_time=0.605, time=6 hours, 42 minutes and 58.09 seconds, total_count=79835, gpu_max_cached_mem_GB=6.742, [valid] loss_ctc=167.442, cer_ctc=1.000, loss_att=70.849, acc=0.325, cer=0.621, wer=1.000, loss=99.827, time=1 minute and 56.6 seconds, total_count=635, gpu_max_cached_mem_GB=6.742, [att_plot] time=55.55 seconds, total_count=0, gpu_max_cached_mem_GB=6.742
+[sgi63:0/4] 2022-03-10 15:20:52,689 (trainer:383) INFO: The best model has been updated: valid.acc
+[sgi63:0/4] 2022-03-10 15:20:52,689 (trainer:275) INFO: 2/35epoch started. Estimated time to finish: 1 week, 2 days and 14 hours
+[sgi63:0/4] 2022-03-10 15:40:40,456 (trainer:676) INFO: 2epoch:train:1-3991batch: iter_time=8.151e-04, forward_time=0.059, loss_ctc=123.302, loss_att=63.830, acc=0.336, loss=81.672, backward_time=0.110, optim_step_time=0.049, optim0_lr0=7.817e-04, train_time=0.595
+[sgi63:0/4] 2022-03-10 16:00:25,520 (trainer:676) INFO: 2epoch:train:3992-7982batch: iter_time=0.002, forward_time=0.059, loss_ctc=122.111, loss_att=62.837, acc=0.340, loss=80.619, backward_time=0.110, optim_step_time=0.049, optim0_lr0=7.633e-04, train_time=0.594
+[sgi63:0/4] 2022-03-10 16:20:06,467 (trainer:676) INFO: 2epoch:train:7983-11973batch: iter_time=5.158e-04, forward_time=0.059, loss_ctc=123.072, loss_att=62.989, acc=0.343, loss=81.014, backward_time=0.111, optim_step_time=0.049, optim0_lr0=7.462e-04, train_time=0.592
+[sgi63:0/4] 2022-03-10 16:39:41,438 (trainer:676) INFO: 2epoch:train:11974-15964batch: iter_time=6.153e-04, forward_time=0.058, loss_ctc=123.679, loss_att=63.089, acc=0.345, loss=81.266, backward_time=0.109, optim_step_time=0.049, optim0_lr0=7.301e-04, train_time=0.588
+[sgi63:0/4] 2022-03-10 16:59:19,527 (trainer:676) INFO: 2epoch:train:15965-19955batch: iter_time=0.001, forward_time=0.059, loss_ctc=122.653, loss_att=62.478, acc=0.346, loss=80.531, backward_time=0.110, optim_step_time=0.049, optim0_lr0=7.151e-04, train_time=0.590
+[sgi63:0/4] 2022-03-10 17:18:54,832 (trainer:676) INFO: 2epoch:train:19956-23946batch: iter_time=2.267e-04, forward_time=0.058, loss_ctc=122.942, loss_att=62.434, acc=0.347, loss=80.586, backward_time=0.109, optim_step_time=0.048, optim0_lr0=7.009e-04, train_time=0.589
+[sgi63:0/4] 2022-03-10 17:38:34,055 (trainer:676) INFO: 2epoch:train:23947-27937batch: iter_time=6.362e-04, forward_time=0.060, loss_ctc=123.688, loss_att=62.575, acc=0.349, loss=80.909, backward_time=0.111, optim_step_time=0.049, optim0_lr0=6.876e-04, train_time=0.591
+[sgi63:0/4] 2022-03-10 17:58:14,907 (trainer:676) INFO: 2epoch:train:27938-31928batch: iter_time=4.114e-04, forward_time=0.060, loss_ctc=121.479, loss_att=61.066, acc=0.353, loss=79.190, backward_time=0.110, optim_step_time=0.051, optim0_lr0=6.749e-04, train_time=0.591
+[sgi63:0/4] 2022-03-10 18:18:07,934 (trainer:676) INFO: 2epoch:train:31929-35919batch: iter_time=0.004, forward_time=0.060, loss_ctc=121.022, loss_att=60.743, acc=0.353, loss=78.826, backward_time=0.110, optim_step_time=0.051, optim0_lr0=6.630e-04, train_time=0.598
+[sgi63:0/4] 2022-03-10 18:37:45,046 (trainer:676) INFO: 2epoch:train:35920-39910batch: iter_time=5.742e-04, forward_time=0.057, loss_ctc=122.711, loss_att=61.298, acc=0.355, loss=79.722, backward_time=0.110, optim_step_time=0.047, optim0_lr0=6.517e-04, train_time=0.590
+[sgi63:0/4] 2022-03-10 18:57:32,006 (trainer:676) INFO: 2epoch:train:39911-43901batch: iter_time=5.876e-04, forward_time=0.059, loss_ctc=121.858, loss_att=60.817, acc=0.356, loss=79.129, backward_time=0.112, optim_step_time=0.049, optim0_lr0=6.409e-04, train_time=0.595
+[sgi63:0/4] 2022-03-10 19:17:13,279 (trainer:676) INFO: 2epoch:train:43902-47892batch: iter_time=5.579e-04, forward_time=0.060, loss_ctc=122.224, loss_att=60.794, acc=0.356, loss=79.223, backward_time=0.110, optim_step_time=0.051, optim0_lr0=6.306e-04, train_time=0.592
+[sgi63:0/4] 2022-03-10 19:36:54,750 (trainer:676) INFO: 2epoch:train:47893-51883batch: iter_time=1.173e-04, forward_time=0.059, loss_ctc=121.847, loss_att=60.467, acc=0.358, loss=78.881, backward_time=0.110, optim_step_time=0.049, optim0_lr0=6.209e-04, train_time=0.592
+[sgi63:0/4] 2022-03-10 19:56:32,741 (trainer:676) INFO: 2epoch:train:51884-55874batch: iter_time=1.215e-04, forward_time=0.059, loss_ctc=120.349, loss_att=59.664, acc=0.359, loss=77.870, backward_time=0.110, optim_step_time=0.050, optim0_lr0=6.115e-04, train_time=0.590
+[sgi63:0/4] 2022-03-10 20:16:16,765 (trainer:676) INFO: 2epoch:train:55875-59865batch: iter_time=0.001, forward_time=0.059, loss_ctc=121.894, loss_att=60.204, acc=0.360, loss=78.711, backward_time=0.110, optim_step_time=0.050, optim0_lr0=6.026e-04, train_time=0.593
+[sgi63:0/4] 2022-03-10 20:35:58,560 (trainer:676) INFO: 2epoch:train:59866-63856batch: iter_time=6.338e-04, forward_time=0.059, loss_ctc=120.249, loss_att=59.286, acc=0.362, loss=77.575, backward_time=0.111, optim_step_time=0.049, optim0_lr0=5.940e-04, train_time=0.592
+[sgi63:0/4] 2022-03-10 20:55:31,409 (trainer:676) INFO: 2epoch:train:63857-67847batch: iter_time=1.201e-04, forward_time=0.059, loss_ctc=121.803, loss_att=59.838, acc=0.364, loss=78.428, backward_time=0.109, optim_step_time=0.049, optim0_lr0=5.858e-04, train_time=0.587
+[sgi63:0/4] 2022-03-10 21:15:11,719 (trainer:676) INFO: 2epoch:train:67848-71838batch: iter_time=0.001, forward_time=0.059, loss_ctc=120.970, loss_att=59.416, acc=0.363, loss=77.882, backward_time=0.110, optim_step_time=0.049, optim0_lr0=5.780e-04, train_time=0.591
+[sgi63:0/4] 2022-03-10 21:34:53,142 (trainer:676) INFO: 2epoch:train:71839-75829batch: iter_time=5.813e-04, forward_time=0.060, loss_ctc=121.482, loss_att=59.500, acc=0.365, loss=78.095, backward_time=0.111, optim_step_time=0.050, optim0_lr0=5.704e-04, train_time=0.592
+[sgi63:0/4] 2022-03-10 21:54:29,836 (trainer:676) INFO: 2epoch:train:75830-79820batch: iter_time=1.344e-04, forward_time=0.059, loss_ctc=122.017, loss_att=59.652, acc=0.365, loss=78.361, backward_time=0.111, optim_step_time=0.049, optim0_lr0=5.632e-04, train_time=0.589
+[sgi63:0/4] 2022-03-10 21:57:26,718 (trainer:334) INFO: 2epoch results: [train] iter_time=7.814e-04, forward_time=0.059, loss_ctc=122.062, loss_att=61.143, acc=0.354, loss=79.419, backward_time=0.110, optim_step_time=0.049, optim0_lr0=6.556e-04, train_time=0.591, time=6 hours, 33 minutes and 46.64 seconds, total_count=159670, gpu_max_cached_mem_GB=6.742, [valid] loss_ctc=148.510, cer_ctc=1.000, loss_att=66.092, acc=0.355, cer=0.597, wer=1.000, loss=90.817, time=1 minute and 57.13 seconds, total_count=1270, gpu_max_cached_mem_GB=6.742, [att_plot] time=50.25 seconds, total_count=0, gpu_max_cached_mem_GB=6.742
+[sgi63:0/4] 2022-03-10 21:57:29,817 (trainer:383) INFO: The best model has been updated: valid.acc
+[sgi63:0/4] 2022-03-10 21:57:29,818 (trainer:275) INFO: 3/35epoch started. Estimated time to finish: 1 week, 2 days and 4 hours
+[sgi63:0/4] 2022-03-10 22:17:19,205 (trainer:676) INFO: 3epoch:train:1-3991batch: iter_time=5.745e-04, forward_time=0.059, loss_ctc=122.579, loss_att=58.995, acc=0.371, loss=78.070, backward_time=0.111, optim_step_time=0.049, optim0_lr0=5.561e-04, train_time=0.596
+[sgi63:0/4] 2022-03-10 22:36:54,156 (trainer:676) INFO: 3epoch:train:3992-7982batch: iter_time=5.038e-04, forward_time=0.059, loss_ctc=122.371, loss_att=58.906, acc=0.371, loss=77.945, backward_time=0.110, optim_step_time=0.049, optim0_lr0=5.494e-04, train_time=0.589
+[sgi63:0/4] 2022-03-10 22:56:27,780 (trainer:676) INFO: 3epoch:train:7983-11973batch: iter_time=1.199e-04, forward_time=0.059, loss_ctc=121.688, loss_att=58.624, acc=0.370, loss=77.543, backward_time=0.110, optim_step_time=0.049, optim0_lr0=5.429e-04, train_time=0.588
+[sgi63:0/4] 2022-03-10 23:16:07,894 (trainer:676) INFO: 3epoch:train:11974-15964batch: iter_time=8.341e-04, forward_time=0.059, loss_ctc=120.948, loss_att=58.190, acc=0.372, loss=77.018, backward_time=0.110, optim_step_time=0.050, optim0_lr0=5.366e-04, train_time=0.591
+[sgi63:0/4] 2022-03-10 23:35:47,816 (trainer:676) INFO: 3epoch:train:15965-19955batch: iter_time=4.793e-04, forward_time=0.060, loss_ctc=120.241, loss_att=57.732, acc=0.373, loss=76.485, backward_time=0.111, optim_step_time=0.050, optim0_lr0=5.306e-04, train_time=0.591
+[sgi63:0/4] 2022-03-10 23:55:22,216 (trainer:676) INFO: 3epoch:train:19956-23946batch: iter_time=1.208e-04, forward_time=0.058, loss_ctc=122.851, loss_att=58.911, acc=0.374, loss=78.093, backward_time=0.110, optim_step_time=0.048, optim0_lr0=5.247e-04, train_time=0.588
+[sgi63:0/4] 2022-03-11 00:15:00,125 (trainer:676) INFO: 3epoch:train:23947-27937batch: iter_time=8.644e-04, forward_time=0.059, loss_ctc=120.457, loss_att=57.706, acc=0.375, loss=76.531, backward_time=0.111, optim_step_time=0.049, optim0_lr0=5.190e-04, train_time=0.590
+[sgi63:0/4] 2022-03-11 00:34:42,098 (trainer:676) INFO: 3epoch:train:27938-31928batch: iter_time=5.675e-04, forward_time=0.059, loss_ctc=120.868, loss_att=57.747, acc=0.376, loss=76.683, backward_time=0.111, optim_step_time=0.049, optim0_lr0=5.135e-04, train_time=0.592
+[sgi63:0/4] 2022-03-11 00:54:23,257 (trainer:676) INFO: 3epoch:train:31929-35919batch: iter_time=1.198e-04, forward_time=0.058, loss_ctc=121.718, loss_att=58.092, acc=0.376, loss=77.180, backward_time=0.111, optim_step_time=0.049, optim0_lr0=5.082e-04, train_time=0.592
+[sgi63:0/4] 2022-03-11 01:14:00,891 (trainer:676) INFO: 3epoch:train:35920-39910batch: iter_time=0.001, forward_time=0.059, loss_ctc=122.547, loss_att=58.451, acc=0.376, loss=77.680, backward_time=0.110, optim_step_time=0.049, optim0_lr0=5.031e-04, train_time=0.590
+[sgi63:0/4] 2022-03-11 01:33:37,296 (trainer:676) INFO: 3epoch:train:39911-43901batch: iter_time=1.227e-04, forward_time=0.060, loss_ctc=120.872, loss_att=57.561, acc=0.377, loss=76.554, backward_time=0.111, optim_step_time=0.050, optim0_lr0=4.980e-04, train_time=0.589
+[sgi63:0/4] 2022-03-11 01:53:16,213 (trainer:676) INFO: 3epoch:train:43902-47892batch: iter_time=6.594e-04, forward_time=0.059, loss_ctc=121.708, loss_att=58.010, acc=0.377, loss=77.119, backward_time=0.110, optim_step_time=0.049, optim0_lr0=4.932e-04, train_time=0.590
+[sgi63:0/4] 2022-03-11 02:12:48,000 (trainer:676) INFO: 3epoch:train:47893-51883batch: iter_time=9.886e-04, forward_time=0.059, loss_ctc=121.336, loss_att=57.751, acc=0.376, loss=76.827, backward_time=0.109, optim_step_time=0.049, optim0_lr0=4.885e-04, train_time=0.587
+[sgi63:0/4] 2022-03-11 02:32:22,376 (trainer:676) INFO: 3epoch:train:51884-55874batch: iter_time=9.790e-04, forward_time=0.059, loss_ctc=123.285, loss_att=58.589, acc=0.378, loss=77.997, backward_time=0.109, optim_step_time=0.049, optim0_lr0=4.839e-04, train_time=0.588
+[sgi63:0/4] 2022-03-11 02:52:00,884 (trainer:676) INFO: 3epoch:train:55875-59865batch: iter_time=6.381e-04, forward_time=0.059, loss_ctc=120.847, loss_att=57.296, acc=0.378, loss=76.361, backward_time=0.110, optim_step_time=0.049, optim0_lr0=4.794e-04, train_time=0.590
+[sgi63:0/4] 2022-03-11 03:11:48,477 (trainer:676) INFO: 3epoch:train:59866-63856batch: iter_time=0.001, forward_time=0.060, loss_ctc=121.144, loss_att=57.375, acc=0.380, loss=76.506, backward_time=0.111, optim_step_time=0.051, optim0_lr0=4.751e-04, train_time=0.595
+[sgi63:0/4] 2022-03-11 03:31:28,513 (trainer:676) INFO: 3epoch:train:63857-67847batch: iter_time=1.197e-04, forward_time=0.060, loss_ctc=122.577, loss_att=58.061, acc=0.379, loss=77.415, backward_time=0.111, optim_step_time=0.050, optim0_lr0=4.709e-04, train_time=0.591
+[sgi63:0/4] 2022-03-11 03:50:59,974 (trainer:676) INFO: 3epoch:train:67848-71838batch: iter_time=5.709e-04, forward_time=0.059, loss_ctc=121.859, loss_att=57.622, acc=0.380, loss=76.893, backward_time=0.108, optim_step_time=0.049, optim0_lr0=4.668e-04, train_time=0.587
+[sgi63:0/4] 2022-03-11 04:10:41,223 (trainer:676) INFO: 3epoch:train:71839-75829batch: iter_time=9.809e-04, forward_time=0.059, loss_ctc=121.666, loss_att=57.434, acc=0.381, loss=76.703, backward_time=0.111, optim_step_time=0.049, optim0_lr0=4.627e-04, train_time=0.592
+[sgi63:0/4] 2022-03-11 04:30:10,462 (trainer:676) INFO: 3epoch:train:75830-79820batch: iter_time=1.194e-04, forward_time=0.060, loss_ctc=122.569, loss_att=57.916, acc=0.381, loss=77.312, backward_time=0.110, optim_step_time=0.049, optim0_lr0=4.588e-04, train_time=0.586
+[sgi63:0/4] 2022-03-11 04:33:05,153 (trainer:334) INFO: 3epoch results: [train] iter_time=5.721e-04, forward_time=0.059, loss_ctc=121.697, loss_att=58.044, acc=0.376, loss=77.140, backward_time=0.110, optim_step_time=0.049, optim0_lr0=5.031e-04, train_time=0.590, time=6 hours, 32 minutes and 50.34 seconds, total_count=239505, gpu_max_cached_mem_GB=6.742, [valid] loss_ctc=142.493, cer_ctc=1.000, loss_att=64.525, acc=0.370, cer=0.596, wer=1.000, loss=87.915, time=1 minute and 54.58 seconds, total_count=1905, gpu_max_cached_mem_GB=6.742, [att_plot] time=50.42 seconds, total_count=0, gpu_max_cached_mem_GB=6.742
+[sgi63:0/4] 2022-03-11 04:33:08,286 (trainer:383) INFO: The best model has been updated: valid.acc
+[sgi63:0/4] 2022-03-11 04:33:08,287 (trainer:275) INFO: 4/35epoch started. Estimated time to finish: 1 week, 1 day and 21 hours
+[sgi63:0/4] 2022-03-11 04:52:51,810 (trainer:676) INFO: 4epoch:train:1-3991batch: iter_time=6.155e-04, forward_time=0.059, loss_ctc=122.020, loss_att=56.893, acc=0.385, loss=76.431, backward_time=0.111, optim_step_time=0.049, optim0_lr0=4.550e-04, train_time=0.593
+[sgi63:0/4] 2022-03-11 05:12:12,888 (trainer:676) INFO: 4epoch:train:3992-7982batch: iter_time=9.066e-04, forward_time=0.058, loss_ctc=122.220, loss_att=56.888, acc=0.385, loss=76.487, backward_time=0.110, optim_step_time=0.047, optim0_lr0=4.513e-04, train_time=0.582
+[sgi63:0/4] 2022-03-11 05:31:45,107 (trainer:676) INFO: 4epoch:train:7983-11973batch: iter_time=1.206e-04, forward_time=0.059, loss_ctc=122.618, loss_att=56.941, acc=0.386, loss=76.644, backward_time=0.112, optim_step_time=0.049, optim0_lr0=4.477e-04, train_time=0.587
+[sgi63:0/4] 2022-03-11 05:51:20,682 (trainer:676) INFO: 4epoch:train:11974-15964batch: iter_time=5.474e-04, forward_time=0.058, loss_ctc=123.062, loss_att=57.259, acc=0.386, loss=77.000, backward_time=0.112, optim_step_time=0.048, optim0_lr0=4.441e-04, train_time=0.589
+[sgi63:0/4] 2022-03-11 06:10:53,655 (trainer:676) INFO: 4epoch:train:15965-19955batch: iter_time=8.168e-04, forward_time=0.059, loss_ctc=121.285, loss_att=56.375, acc=0.387, loss=75.848, backward_time=0.112, optim_step_time=0.048, optim0_lr0=4.407e-04, train_time=0.588
+[sgi63:0/4] 2022-03-11 06:30:22,447 (trainer:676) INFO: 4epoch:train:19956-23946batch: iter_time=1.202e-04, forward_time=0.058, loss_ctc=122.164, loss_att=56.842, acc=0.386, loss=76.439, backward_time=0.112, optim_step_time=0.047, optim0_lr0=4.373e-04, train_time=0.585
+[sgi63:0/4] 2022-03-11 06:49:50,853 (trainer:676) INFO: 4epoch:train:23947-27937batch: iter_time=5.336e-04, forward_time=0.058, loss_ctc=122.488, loss_att=56.921, acc=0.386, loss=76.591, backward_time=0.112, optim_step_time=0.047, optim0_lr0=4.340e-04, train_time=0.585
+[sgi63:0/4] 2022-03-11 07:09:10,133 (trainer:676) INFO: 4epoch:train:27938-31928batch: iter_time=0.001, forward_time=0.058, loss_ctc=121.539, loss_att=56.450, acc=0.389, loss=75.977, backward_time=0.110, optim_step_time=0.047, optim0_lr0=4.308e-04, train_time=0.581
+[sgi63:0/4] 2022-03-11 07:28:41,452 (trainer:676) INFO: 4epoch:train:31929-35919batch: iter_time=1.846e-04, forward_time=0.059, loss_ctc=120.552, loss_att=55.856, acc=0.389, loss=75.265, backward_time=0.111, optim_step_time=0.048, optim0_lr0=4.276e-04, train_time=0.587
+[sgi63:0/4] 2022-03-11 07:48:23,733 (trainer:676) INFO: 4epoch:train:35920-39910batch: iter_time=3.688e-04, forward_time=0.060, loss_ctc=122.674, loss_att=56.970, acc=0.388, loss=76.681, backward_time=0.112, optim_step_time=0.050, optim0_lr0=4.245e-04, train_time=0.592
+[sgi63:0/4] 2022-03-11 08:08:08,166 (trainer:676) INFO: 4epoch:train:39911-43901batch: iter_time=0.001, forward_time=0.060, loss_ctc=120.637, loss_att=55.958, acc=0.388, loss=75.361, backward_time=0.112, optim_step_time=0.050, optim0_lr0=4.215e-04, train_time=0.593
+ERROR:root:Error happened with path=dump/raw/train_sp/wav.scp, type=sound, id=20-90247623-4633-4cd9-abac-9643ab408ac5.flac
+Process SpawnProcess-1:
+Traceback (most recent call last):
+  File "/scicore/soft/apps/Python/3.7.4-GCCcore-8.3.0/lib/python3.7/multiprocessing/process.py", line 297, in _bootstrap
+    self.run()
+  File "/scicore/soft/apps/Python/3.7.4-GCCcore-8.3.0/lib/python3.7/multiprocessing/process.py", line 99, in run
+    self._target(*self._args, **self._kwargs)
+  File "/scicore/home/graber0001/schran0000/espnet/espnet2/tasks/abs_task.py", line 1323, in main_worker
+    distributed_option=distributed_option,
+  File "/scicore/home/graber0001/schran0000/espnet/espnet2/train/trainer.py", line 295, in run
+    distributed_option=distributed_option,
+  File "/scicore/home/graber0001/schran0000/espnet/espnet2/train/trainer.py", line 506, in train_one_epoch
+    reporter.measure_iter_time(iterator, "iter_time"), 1
+  File "/scicore/home/graber0001/schran0000/espnet/espnet2/train/reporter.py", line 275, in measure_iter_time
+    retval = next(iterator)
+  File "/scicore/home/graber0001/schran0000/espnet/tools/venv/lib/python3.7/site-packages/torch/utils/data/dataloader.py", line 521, in __next__
+    data = self._next_data()
+  File "/scicore/home/graber0001/schran0000/espnet/tools/venv/lib/python3.7/site-packages/torch/utils/data/dataloader.py", line 1203, in _next_data
+    return self._process_data(data)
+  File "/scicore/home/graber0001/schran0000/espnet/tools/venv/lib/python3.7/site-packages/torch/utils/data/dataloader.py", line 1229, in _process_data
+    data.reraise()
+  File "/scicore/home/graber0001/schran0000/espnet/tools/venv/lib/python3.7/site-packages/torch/_utils.py", line 425, in reraise
+    raise self.exc_type(msg)
+ValueError: Caught ValueError in DataLoader worker process 0.
+Original Traceback (most recent call last):
+  File "/scicore/home/graber0001/schran0000/espnet/tools/venv/lib/python3.7/site-packages/torch/utils/data/_utils/worker.py", line 287, in _worker_loop
+    data = fetcher.fetch(index)
+  File "/scicore/home/graber0001/schran0000/espnet/tools/venv/lib/python3.7/site-packages/torch/utils/data/_utils/fetch.py", line 44, in fetch
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "/scicore/home/graber0001/schran0000/espnet/tools/venv/lib/python3.7/site-packages/torch/utils/data/_utils/fetch.py", line 44, in <listcomp>
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "/scicore/home/graber0001/schran0000/espnet/espnet2/train/dataset.py", line 402, in __getitem__
+    value = loader[uid]
+  File "/scicore/home/graber0001/schran0000/espnet/espnet2/train/dataset.py", line 53, in __getitem__
+    retval = self.loader[key]
+  File "/scicore/home/graber0001/schran0000/espnet/espnet2/fileio/sound_scp.py", line 45, in __getitem__
+    array, rate = soundfile.read(wav, always_2d=self.always_2d)
+  File "/scicore/home/graber0001/schran0000/espnet/tools/venv/lib/python3.7/site-packages/soundfile.py", line 259, in read
+    data = f.read(frames, dtype, always_2d, fill_value, out)
+  File "/scicore/home/graber0001/schran0000/espnet/tools/venv/lib/python3.7/site-packages/soundfile.py", line 863, in read
+    out = self._create_empty_array(frames, always_2d, dtype)
+  File "/scicore/home/graber0001/schran0000/espnet/tools/venv/lib/python3.7/site-packages/soundfile.py", line 1291, in _create_empty_array
+    return np.empty(shape, dtype, order='C')
+ValueError: array is too big; `arr.size * arr.dtype.itemsize` is larger than the maximum possible size.
+
+Traceback (most recent call last):
+  File "/scicore/soft/apps/Python/3.7.4-GCCcore-8.3.0/lib/python3.7/runpy.py", line 193, in _run_module_as_main
+    "__main__", mod_spec)
+  File "/scicore/soft/apps/Python/3.7.4-GCCcore-8.3.0/lib/python3.7/runpy.py", line 85, in _run_code
+    exec(code, run_globals)
+  File "/scicore/home/graber0001/schran0000/espnet/espnet2/bin/asr_train.py", line 23, in <module>
+    main()
+  File "/scicore/home/graber0001/schran0000/espnet/espnet2/bin/asr_train.py", line 19, in main
+    ASRTask.main(cmd=cmd)
+  File "/scicore/home/graber0001/schran0000/espnet/espnet2/tasks/abs_task.py", line 1069, in main
+    while not ProcessContext(processes, error_queues).join():
+  File "/scicore/home/graber0001/schran0000/espnet/tools/venv/lib/python3.7/site-packages/torch/multiprocessing/spawn.py", line 144, in join
+    exit_code=exitcode
+torch.multiprocessing.spawn.ProcessExitedException: process 0 terminated with exit code 1
+# Accounting: time=84854 threads=1
+# Ended (code 1) at Fri Mar 11 08:08:23 CET 2022, elapsed time 84854 seconds
+

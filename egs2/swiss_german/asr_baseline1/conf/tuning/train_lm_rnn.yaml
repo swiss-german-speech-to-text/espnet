@@ -6,7 +6,7 @@ optim_conf:
     lr: 0.001
 grad_clip: 5.0
 batch_type: folded
-batch_size: 1024   # batch size in LM training
+batch_size: 512   # batch size in LM training
 max_epoch: 20     # if the data size is large, we can reduce this
 patience: 1
 use_wandb: "True"
