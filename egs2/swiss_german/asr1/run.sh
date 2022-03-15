@@ -30,7 +30,6 @@ fi
 local/asr.sh \
     --ngpu 4 \
     --lang "${lang}" \
-    --local_data_opts "--lang ${lang}" \
     --use_lm true \
     --lm_config "${lm_config}" \
     --token_type bpe \
