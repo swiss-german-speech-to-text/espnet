@@ -5,7 +5,7 @@ set -e
 set -u
 set -o pipefail
 
-lang=es # en de fr cy tt kab ca zh-TW it fa eu es ru tr nl eo zh-CN rw pt zh-HK cs pl uk
+lang=de # en de fr cy tt kab ca zh-TW it fa eu es ru tr nl eo zh-CN rw pt zh-HK cs pl uk
 
 train_set="train"
 train_dev="dev"
@@ -25,10 +25,13 @@ elif [[ "es" == *"${lang}"* ]]; then
   nbpe=235
 else
   nbpe=150
+  nbpe=5000
 fi
 
 local/asr.sh \
-    --ngpu 4 \
+    --stage 0 \
+    --stop_stage 10000 \
+    --ngpu ${SLURM_GPUS} \
     --lang "${lang}" \
     --use_lm true \
     --lm_config "${lm_config}" \

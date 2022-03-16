@@ -8,7 +8,7 @@
 #SBATCH --partition=a100
 #SBATCH -o scicore_out/%A_%a.out
 #SBATCH -e scicore_out/%A_%a.err
-#SBATCH --gres=gpu:4
+#SBATCH --gpus=1
 ml CMake/3.15.3-GCCcore-8.3.0
 ml SoX/14.4.2-GCCcore-8.3.0
 ml libsndfile/1.0.28-GCCcore-8.3.0
