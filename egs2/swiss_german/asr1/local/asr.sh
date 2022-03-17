@@ -589,7 +589,7 @@ if ! "${skip_data_prep}"; then
                 _opts_spm=""
             fi
             _logdir=dump/spm
-            ${train_cmd} --qos "6hours" --time "0-06:00:00" "${_logdir}"/spm.log spm_train \
+            ${train_cmd} --qos "6hours" --time "0-06:00:00" --mem "100G" "${_logdir}"/spm.log spm_train \
                 --input="${bpedir}"/train.txt \
                 --vocab_size="${nbpe}" \
                 --model_type="${bpemode}" \
