@@ -31,7 +31,7 @@ fi
 local/asr.sh \
     --stage 0 \
     --stop_stage 10000 \
-    --ngpu ${SLURM_GPUS} \
+    --ngpu 1 \
     --lang "${lang}" \
     --use_lm true \
     --lm_config "${lm_config}" \
