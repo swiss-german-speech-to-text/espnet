@@ -25,7 +25,6 @@ elif [[ "es" == *"${lang}"* ]]; then
   nbpe=235
 else
   nbpe=150
-  nbpe=5000
 fi
 
 local/asr.sh \
