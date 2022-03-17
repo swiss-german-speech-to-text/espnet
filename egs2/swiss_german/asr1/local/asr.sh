@@ -784,7 +784,7 @@ if ! "${skip_train}"; then
 
             # shellcheck disable=SC2086
             ${python} -m espnet2.bin.launch \
-                --cmd "${cuda_cmd} --name ${jobname}" \
+                --cmd "${cuda_cmd} --qos 1week --time 7-00:00:00  --name ${jobname}" \
                 --log "${lm_exp}"/train.log \
                 --ngpu "${ngpu}" \
                 --num_nodes "${num_nodes}" \
@@ -815,7 +815,7 @@ if ! "${skip_train}"; then
             # TODO(kamo): Parallelize?
             log "Perplexity calculation started... log: '${lm_exp}/perplexity_test/lm_calc_perplexity.log'"
             # shellcheck disable=SC2086
-            ${cuda_cmd} --gpu "${ngpu}" "${lm_exp}"/perplexity_test/lm_calc_perplexity.log \
+            ${cuda_cmd} --qos 6hours --time 0-06:00:00 --gpu "${ngpu}" "${lm_exp}"/perplexity_test/lm_calc_perplexity.log \
                 ${python} -m espnet2.bin.lm_calc_perplexity \
                     --ngpu "${ngpu}" \
                     --data_path_and_name_and_type "${lm_test_text},text,text" \
@@ -895,7 +895,7 @@ if ! "${skip_train}"; then
         #       but it's used only for deciding the sample ids.
 
         # shellcheck disable=SC2086
-        ${train_cmd} JOB=1:"${_nj}" "${_logdir}"/stats.JOB.log \
+        ${train_cmd} --qos "6hours" --time "0-06:00:00" JOB=1:"${_nj}" "${_logdir}"/stats.JOB.log \
             ${python} -m espnet2.bin.asr_train \
                 --collect_stats true \
                 --use_preprocessor true \
@@ -1017,7 +1017,7 @@ if ! "${skip_train}"; then
 
         # shellcheck disable=SC2086
         ${python} -m espnet2.bin.launch \
-            --cmd "${cuda_cmd} --name ${jobname}" \
+            --cmd "${cuda_cmd} --qos 1week --time 7-00:00:00 --name ${jobname}" \
             --log "${asr_exp}"/train.log \
             --ngpu "${ngpu}" \
             --num_nodes "${num_nodes}" \
