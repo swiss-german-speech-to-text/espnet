@@ -28,9 +28,9 @@ else
 fi
 
 local/asr.sh \
-    --stage 0 \
-    --stop_stage 5 \
-    --ngpu 1 \
+    --stage 6 \
+    --stop_stage 100 \
+    --ngpu 4 \
     --lang "${lang}" \
     --use_lm true \
     --lm_config "${lm_config}" \
