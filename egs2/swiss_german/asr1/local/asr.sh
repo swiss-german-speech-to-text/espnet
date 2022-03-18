@@ -588,8 +588,8 @@ if ! "${skip_data_prep}"; then
             else
                 _opts_spm=""
             fi
-
-            ${train_cmd} --qos "6hours" --time "0-06:00:00" "${_logdir}"/spm.log spm_train \
+            _logdir=dump/spm
+            ${train_cmd} --qos "6hours" --time "0-06:00:00" --mem "150G" "${_logdir}"/spm.log spm_train \
                 --input="${bpedir}"/train.txt \
                 --vocab_size="${nbpe}" \
                 --model_type="${bpemode}" \
@@ -784,7 +784,7 @@ if ! "${skip_train}"; then
 
             # shellcheck disable=SC2086
             ${python} -m espnet2.bin.launch \
-                --cmd "${cuda_cmd} --qos 1week --time 7-00:00:00  --name ${jobname}" \
+                --cmd "${cuda_cmd} --qos 1week --time 7-00:00:00 --mem "100G" --num_threads 16  --name ${jobname}" \
                 --log "${lm_exp}"/train.log \
                 --ngpu "${ngpu}" \
                 --num_nodes "${num_nodes}" \
@@ -815,7 +815,7 @@ if ! "${skip_train}"; then
             # TODO(kamo): Parallelize?
             log "Perplexity calculation started... log: '${lm_exp}/perplexity_test/lm_calc_perplexity.log'"
             # shellcheck disable=SC2086
-            ${cuda_cmd} --qos 6hours --time 0-06:00:00 --gpu "${ngpu}" "${lm_exp}"/perplexity_test/lm_calc_perplexity.log \
+            ${cuda_cmd} --qos 6hours --time 0-06:00:00 --mem "50G" --gpu "${ngpu}" "${lm_exp}"/perplexity_test/lm_calc_perplexity.log \
                 ${python} -m espnet2.bin.lm_calc_perplexity \
                     --ngpu "${ngpu}" \
                     --data_path_and_name_and_type "${lm_test_text},text,text" \
@@ -895,7 +895,7 @@ if ! "${skip_train}"; then
         #       but it's used only for deciding the sample ids.
 
         # shellcheck disable=SC2086
-        ${train_cmd} --qos "6hours" --time "0-06:00:00" JOB=1:"${_nj}" "${_logdir}"/stats.JOB.log \
+        ${train_cmd} --qos "6hours" --time "0-06:00:00" --mem "100G" JOB=1:"${_nj}" "${_logdir}"/stats.JOB.log \
             ${python} -m espnet2.bin.asr_train \
                 --collect_stats true \
                 --use_preprocessor true \
@@ -1017,7 +1017,7 @@ if ! "${skip_train}"; then
 
         # shellcheck disable=SC2086
         ${python} -m espnet2.bin.launch \
-            --cmd "${cuda_cmd} --qos 1week --time 7-00:00:00 --name ${jobname}" \
+            --cmd "${cuda_cmd} --qos 1week --time 7-00:00:00 --mem 100G --name ${jobname}" \
             --log "${asr_exp}"/train.log \
             --ngpu "${ngpu}" \
             --num_nodes "${num_nodes}" \
@@ -1141,7 +1141,7 @@ if ! "${skip_eval}"; then
             # 2. Submit decoding jobs
             log "Decoding started... log: '${_logdir}/asr_inference.*.log'"
             # shellcheck disable=SC2086
-            ${_cmd} --gpu "${_ngpu}" JOB=1:"${_nj}" "${_logdir}"/asr_inference.JOB.log \
+            ${_cmd} --gpu "${_ngpu}" --mem "100G" --qos "6hours" --time "0-06:00:00" JOB=1:"${_nj}" "${_logdir}"/asr_inference.JOB.log \
                 ${python} -m espnet2.bin.asr_inference \
                     --ngpu "${_ngpu}" \
                     --data_path_and_name_and_type "${_data}/${_scp},speech,${_type}" \
