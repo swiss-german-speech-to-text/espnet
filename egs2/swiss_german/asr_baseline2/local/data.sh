@@ -44,11 +44,37 @@ if [ ${stage} -le 1 ] && [ ${stop_stage} -ge 1 ]; then
       local/data_prep.pl downloads/stt/spc "train" data/spc/train
       local/data_prep.pl downloads/stt/spc "valid" data/spc/valid
       local/data_prep.pl downloads/stt/spc "test" data/spc/test
-
-      utils/combine_data.sh --extra_files utt2num_frames data/train data/spc/train data/spc/train
-      utils/combine_data.sh --extra_files utt2num_frames data/dev data/spc/valid data/spc/valid
     fi
 
+    DIR="data/kanton_ar_kantonsrat_alligned"
+    if [ -d "$DIR" ]; then
+      log "Preprocessing already done, skipping kanton_ar_kantonsrat_alligned"
+    else
+      mkdir $DIR
+      local/data_prep.pl downloads/stt/kanton_ar_kantonsrat/v1 "train_all" data/kanton_ar_kantonsrat_alligned/train
+      local/data_prep.pl downloads/stt/kanton_ar_kantonsrat/v1 "valid" data/kanton_ar_kantonsrat_alligned/valid
+    fi
+
+    DIR="data/kanton_ow_kantonsrat_alligned"
+    if [ -d "$DIR" ]; then
+      log "Preprocessing already done, skipping kanton_ow_kantonsrat_alligned"
+    else
+      mkdir $DIR
+      local/data_prep.pl downloads/stt/kanton_ow_kantonsrat/v1 "train_all" data/kanton_ow_kantonsrat_alligned/train
+      local/data_prep.pl downloads/stt/kanton_ow_kantonsrat/v1 "valid" data/kanton_ow_kantonsrat_alligned/valid
+    fi
+
+    DIR="data/stadt_bern_stadtrat_alligned"
+    if [ -d "$DIR" ]; then
+      log "Preprocessing already done, skipping stadt_bern_stadtrat_alligned"
+    else
+      mkdir $DIR
+      local/data_prep.pl downloads/stt/stadt_bern_stadtrat_alligned "train" data/stadt_bern_stadtrat_alligned/train
+      local/data_prep.pl downloads/stt/stadt_bern_stadtrat_alligned "valid" data/stadt_bern_stadtrat_alligned/valid
+
+      utils/combine_data.sh --extra_files utt2num_frames data/train data/spc/train data/spc/train data/stadt_bern_stadtrat_alligned/train data/stadt_bern_stadtrat_alligned/train data/kanton_ow_kantonsrat_alligned/train data/kanton_ow_kantonsrat_alligned/train data/kanton_ar_kantonsrat_alligned/train data/kanton_ar_kantonsrat_alligned/train
+      utils/combine_data.sh --extra_files utt2num_frames data/dev data/spc/valid data/spc/valid data/stadt_bern_stadtrat_alligned/valid data/stadt_bern_stadtrat_alligned/valid data/kanton_ow_kantonsrat_alligned/valid data/kanton_ow_kantonsrat_alligned/valid data/kanton_ar_kantonsrat_alligned/valid data/kanton_ar_kantonsrat_alligned/valid
+    fi
 
     DIR="data/clickworker"
     if [ -d "$DIR" ]; then

@@ -28,8 +28,8 @@ else
 fi
 
 local/asr.sh \
-    --stage 10 \
-    --stop_stage 10000 \
+    --stage 0 \
+    --stop_stage 5 \
     --ngpu 1 \
     --lang "${lang}" \
     --use_lm true \
