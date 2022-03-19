@@ -25,10 +25,10 @@ export WANDB_DIR=/scicore/home/graber0001/schran0000/wandb
 export TMPDIR=/scicore/home/graber0001/schran0000/wandb
 
 
-rsync -a $HOME/espnet/egs2/swiss_german/asr_student1/dump $TMPDIR/dump
-rsync -a $HOME/espnet/egs2/swiss_german/asr_student1/exp $TMPDIR/exp
+rsync -a $HOME/espnet/egs2/swiss_german/asr_student_alligned/dump $TMPDIR/dump
+rsync -a $HOME/espnet/egs2/swiss_german/asr_student_alligned/exp $TMPDIR/exp
 
 ./run.sh
 
-rsync -au $TMPDIR/dump $HOME/espnet/egs2/swiss_german/asr_student1/dump
-rsync -au $TMPDIR/exp $HOME/espnet/egs2/swiss_german/asr_student1/exp
+rsync -au $TMPDIR/dump $HOME/espnet/egs2/swiss_german/asr_student_alligned/dump
+rsync -au $TMPDIR/exp $HOME/espnet/egs2/swiss_german/asr_student_alligned/exp
