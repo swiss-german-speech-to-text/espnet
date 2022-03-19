@@ -41,7 +41,7 @@ model_conf:
 
 # optimization related
 optim: adam
-accum_grad: 4
+accum_grad: 1
 grad_clip: 5
 max_epoch: 50
 optim_conf:
@@ -53,7 +53,7 @@ scheduler_conf:
 
 # minibatch related
 batch_type: numel
-batch_bins: 2500000
+batch_bins: 10000000
 
 best_model_criterion:
 -   - valid

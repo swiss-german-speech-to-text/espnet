@@ -49,7 +49,6 @@ if [ ${stage} -le 1 ] && [ ${stop_stage} -ge 1 ]; then
       utils/combine_data.sh --extra_files utt2num_frames data/dev data/spc/valid data/spc/valid
     fi
 
-
     DIR="data/clickworker"
     if [ -d "$DIR" ]; then
       log "Preprocessing already done, skipping clickworker"
@@ -77,6 +76,31 @@ if [ ${stage} -le 1 ] && [ ${stop_stage} -ge 1 ]; then
       local/data_prep.pl downloads/stt/snf/testset/v0.2 "export_v0.2" data/snf/test
       # TODO test / valid split
     fi
+
+    DIR="data/kanton_ar_kantonsrat"
+    if [ -d "$DIR" ]; then
+      log "Preprocessing already done, skipping kanton_ar_kantonsrat"
+    else
+      mkdir $DIR
+      local/data_prep.pl downloads/stt/kanton_ar_kantonsrat/v1 "train_all" data/kanton_ar_kantonsrat/no_labels
+    fi
+
+    DIR="data/kanton_ow_kantonsrat"
+    if [ -d "$DIR" ]; then
+      log "Preprocessing already done, skipping kanton_ow_kantonsrat"
+    else
+      mkdir $DIR
+      local/data_prep.pl downloads/stt/kanton_ow_kantonsrat/v1 "train_all" data/kanton_ow_kantonsrat/no_labels
+    fi
+
+    DIR="data/stadt_bern_stadtrat_aligned"
+    if [ -d "$DIR" ]; then
+      log "Preprocessing already done, skipping kanton_ar_kantonsrat"
+    else
+      mkdir $DIR
+      local/data_prep.pl downloads/stt/stadt_bern_stadtrat_aligned "train" data/stadt_bern_stadtrat/no_labels
+    fi
+
 
     mkdir -p "data/lm"
     python3 local/prepare_lm.py downloads/lm/combined/train.txt data/lm/train

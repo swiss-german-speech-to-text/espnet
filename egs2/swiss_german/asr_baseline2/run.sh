@@ -32,6 +32,8 @@ local/asr.sh \
     --stop_stage 100 \
     --ngpu 4 \
     --lang "${lang}" \
+    --dumpdir $TMPDIR/dump \
+    --expdir $TMPDIR/exp \
     --use_lm true \
     --lm_config "${lm_config}" \
     --token_type bpe \
