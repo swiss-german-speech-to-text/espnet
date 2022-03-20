@@ -13,7 +13,7 @@ test_set="spc/test spc/valid clickworker/valid clickworker/test dialektsammlung/
 lm_train_set="lm/train/text"
 lm_val_set="lm/valid/text"
 
-asr_config=conf/tuning/train_asr_conformer5.yaml
+asr_config=conf/tuning/train_asr_transformer.yaml
 lm_config=conf/train_lm.yaml
 inference_config=conf/tuning/tuning/decode_transformer.yaml
 
@@ -28,12 +28,12 @@ else
 fi
 
 local/asr.sh \
-    --stage 10 \
+    --stage 3 \
     --stop_stage 10000 \
-    --ngpu 1 \
+    --ngpu 4 \
     --lang "${lang}" \
-    --dumpdir $TMPDIR/dump \
-    --expdir $TMPDIR/exp \
+    --dumpdir $TMPDIR/dump2 \
+    --expdir $TMPDIR/exp2 \
     --use_lm true \
     --lm_config "${lm_config}" \
     --token_type bpe \
