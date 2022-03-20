@@ -22,8 +22,6 @@ export PATH=/scicore/home/graber0001/schran0000/opt/bin:$PATH
 export LD_LIBRARY_PATH=/scicore/home/graber0001/schran0000/opt/lib:$LD_LIBRARY_PATH
 export PKG_CONFIG_PATH=/scicore/home/graber0001/schran0000/opt/lib/pkgconfig:$PKG_CONFIG_PATH
 export WANDB_DIR=/scicore/home/graber0001/schran0000/wandb
-export TMPDIR=/scicore/home/graber0001/schran0000/wandb
-
 
 rsync -a $HOME/espnet/egs2/swiss_german/asr_student_alligned/dump $TMPDIR/dump
 rsync -a $HOME/espnet/egs2/swiss_german/asr_student_alligned/exp $TMPDIR/exp

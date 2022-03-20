@@ -27,7 +27,7 @@ model_conf:
 
 # minibatch related
 batch_type: folded
-batch_size: 32
+batch_size: 256
 
 # optimization related
 optim: adam
