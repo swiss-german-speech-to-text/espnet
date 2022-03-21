@@ -26,10 +26,11 @@ model_conf:
     ctc_weight: 0.5
 
 # minibatch related
-batch_size: 30
+batch_size: 256
 
 # optimization related
 optim: adadelta
 max_epoch: 15
 patience: 3
 
+init: chainer
