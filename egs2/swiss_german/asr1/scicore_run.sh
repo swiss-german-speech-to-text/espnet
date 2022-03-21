@@ -23,10 +23,10 @@ export LD_LIBRARY_PATH=/scicore/home/graber0001/schran0000/opt/lib:$LD_LIBRARY_P
 export PKG_CONFIG_PATH=/scicore/home/graber0001/schran0000/opt/lib/pkgconfig:$PKG_CONFIG_PATH
 export WANDB_DIR=/scicore/home/graber0001/schran0000/wandb
 
-rsync -a $HOME/espnet/egs2/swiss_german/asr1/dump2 $TMPDIR/dump2
-rsync -a $HOME/espnet/egs2/swiss_german/asr1/exp2 $TMPDIR/exp2
+rsync -a $HOME/espnet/egs2/swiss_german/asr1/dump2 $TMPDIR/
+rsync -a $HOME/espnet/egs2/swiss_german/asr1/exp2 $TMPDIR/
 
 ./run.sh
 
-rsync -au $TMPDIR/dump2 $HOME/espnet/egs2/swiss_german/asr1/dump2
-rsync -au $TMPDIR/exp2 $HOME/espnet/egs2/swiss_german/asr1/exp2
+rsync -au $TMPDIR/dump2 $HOME/espnet/egs2/swiss_german/asr1/
+rsync -au $TMPDIR/exp2 $HOME/espnet/egs2/swiss_german/asr1/
