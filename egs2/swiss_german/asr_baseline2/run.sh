@@ -13,9 +13,9 @@ test_set="spc/test spc/valid clickworker/valid clickworker/test dialektsammlung/
 lm_train_set="lm/train/text"
 lm_val_set="lm/valid/text"
 
-asr_config=conf/tuning/train_asr_conformer5.yaml
+asr_config=conf/tuning/train_asr_rnn.yaml
 lm_config=conf/train_lm.yaml
-inference_config=conf/tuning/tuning/decode_transformer.yaml
+inference_config=conf/tuning/tuning/decode_rnn.yaml
 
 if [[ "zh" == *"${lang}"* ]]; then
   nbpe=2500
