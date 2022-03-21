@@ -23,10 +23,10 @@ export LD_LIBRARY_PATH=/scicore/home/graber0001/schran0000/opt/lib:$LD_LIBRARY_P
 export PKG_CONFIG_PATH=/scicore/home/graber0001/schran0000/opt/lib/pkgconfig:$PKG_CONFIG_PATH
 export WANDB_DIR=/scicore/home/graber0001/schran0000/wandb
 
-rsync -a $HOME/espnet/egs2/swiss_german/asr_student_alligned/dump $TMPDIR/dump
-rsync -a $HOME/espnet/egs2/swiss_german/asr_student_alligned/exp $TMPDIR/exp
+rsync -a $HOME/espnet/egs2/swiss_german/asr_student_alligned/dump $TMPDIR/
+rsync -a $HOME/espnet/egs2/swiss_german/asr_student_alligned/exp $TMPDIR/
 
 ./run.sh
 
-rsync -au $TMPDIR/dump $HOME/espnet/egs2/swiss_german/asr_student_alligned/dump
-rsync -au $TMPDIR/exp $HOME/espnet/egs2/swiss_german/asr_student_alligned/exp
+rsync -au $TMPDIR/dump $HOME/espnet/egs2/swiss_german/asr_student_alligned/
+rsync -au $TMPDIR/exp $HOME/espnet/egs2/swiss_german/asr_student_alligned/
