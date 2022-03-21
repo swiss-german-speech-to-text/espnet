@@ -28,7 +28,7 @@ else
 fi
 
 local/asr.sh \
-    --stage 6 \
+    --stage 3 \
     --stop_stage 100 \
     --ngpu 4 \
     --lang "${lang}" \
