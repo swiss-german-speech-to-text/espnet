@@ -22,10 +22,11 @@ export LD_LIBRARY_PATH=/scicore/home/graber0001/schran0000/opt/lib:$LD_LIBRARY_P
 export PKG_CONFIG_PATH=/scicore/home/graber0001/schran0000/opt/lib/pkgconfig:$PKG_CONFIG_PATH
 export WANDB_DIR=/scicore/home/graber0001/schran0000/wandb
 
-#rsync -a $HOME/espnet/egs2/swiss_german/asr1/dump_transformer $TMPDIR/
-#rsync -a $HOME/espnet/egs2/swiss_german/asr1/exp_transformer $TMPDIR/
+rsync -a $HOME/espnet/egs2/swiss_german/asr1/dump_transformer $TMPDIR/
+rsync -a $HOME/espnet/egs2/swiss_german/asr1/exp_transformer $TMPDIR/
+ln -s $TMPDIR /scratch/schran0000/slurm-job.39975767
 
 ./run.sh
 
-#rsync -au $TMPDIR/dump_transformer $HOME/espnet/egs2/swiss_german/asr1/
-#rsync -au $TMPDIR/exp_transformer $HOME/espnet/egs2/swiss_german/asr1/
+rsync -au $TMPDIR/dump_transformer $HOME/espnet/egs2/swiss_german/asr1/
+rsync -au $TMPDIR/exp_transformer $HOME/espnet/egs2/swiss_german/asr1/
