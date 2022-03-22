@@ -1,13 +1,14 @@
 #!/bin/bash
 #SBATCH --job-name=stt4sg_old_espnet
-#SBATCH --time=0-06:00:00
+#SBATCH --time=1-00:00:00
 #SBATCH --cpus-per-task=16
 #SBATCH --ntasks=1
-#SBATCH --mem=20G
-#SBATCH --qos=6hours
-#SBATCH --partition=scicore
+#SBATCH --mem=100G
+#SBATCH --qos=1day
+#SBATCH --partition=a100
 #SBATCH -o scicore_out/%A_%a.out
 #SBATCH -e scicore_out/%A_%a.err
+#SBATCH --gres=gpu:4
 ml CMake/3.15.3-GCCcore-8.3.0
 ml SoX/14.4.2-GCCcore-8.3.0
 ml libsndfile/1.0.28-GCCcore-8.3.0
