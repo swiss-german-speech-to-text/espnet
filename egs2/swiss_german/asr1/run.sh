@@ -28,12 +28,12 @@ else
 fi
 
 local/asr.sh \
-    --stage 3 \
+    --stage 10 \
     --stop_stage 10000 \
     --ngpu 4 \
     --lang "${lang}" \
-    --dumpdir $TMPDIR/dump2 \
-    --expdir $TMPDIR/exp2 \
+    --dumpdir $TMPDIR/dump_transformer \
+    --expdir $TMPDIR/exp_transformer \
     --use_lm true \
     --lm_config "${lm_config}" \
     --token_type bpe \
