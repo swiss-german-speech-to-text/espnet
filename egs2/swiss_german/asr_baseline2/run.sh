@@ -13,9 +13,9 @@ test_set="spc/test spc/valid clickworker/valid clickworker/test dialektsammlung/
 lm_train_set="lm/train/text"
 lm_val_set="lm/valid/text"
 
-asr_config=conf/tuning/train_asr_rnn.yaml
+asr_config=conf/tuning/train_asr_transformer.yaml
 lm_config=conf/train_lm.yaml
-inference_config=conf/tuning/decode_rnn.yaml
+inference_config=conf/tuning/decode_transformer.yaml
 
 if [[ "zh" == *"${lang}"* ]]; then
   nbpe=2500
@@ -32,8 +32,8 @@ local/asr.sh \
     --stop_stage 100 \
     --ngpu 4 \
     --lang "${lang}" \
-    --dumpdir $TMPDIR/dump \
-    --expdir $TMPDIR/exp \
+    --dumpdir $TMPDIR/dump_transformer \
+    --expdir $TMPDIR/exp_transformer \
     --use_lm true \
     --lm_config "${lm_config}" \
     --token_type bpe \
