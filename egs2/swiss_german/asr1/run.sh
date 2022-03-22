@@ -15,7 +15,7 @@ lm_val_set="lm/valid/text"
 
 asr_config=conf/tuning/train_asr_transformer.yaml
 lm_config=conf/train_lm.yaml
-inference_config=conf/tuning/tuning/decode_transformer.yaml
+inference_config=conf/tuning/decode_transformer.yaml
 
 if [[ "zh" == *"${lang}"* ]]; then
   nbpe=2500
