@@ -25,7 +25,7 @@ export WANDB_DIR=/scicore/home/graber0001/schran0000/wandb
 
 rsync -a $HOME/espnet/egs2/swiss_german/asr_student_alligned/dump $TMPDIR/
 rsync -a $HOME/espnet/egs2/swiss_german/asr_student_alligned/exp $TMPDIR/
-
+ln -s $TMPDIR /scratch/schran0000/slurm-job.40190631
 ./run.sh
 
 rsync -au $TMPDIR/dump $HOME/espnet/egs2/swiss_german/asr_student_alligned/
