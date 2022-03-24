@@ -9,7 +9,7 @@ lang=de # en de fr cy tt kab ca zh-TW it fa eu es ru tr nl eo zh-CN rw pt zh-HK 
 
 train_set="train"
 train_dev="dev"
-test_set="spc/test spc/valid clickworker/valid clickworker/test dialektsammlung/valid dialektsammlung/test snf/test"
+test_set="kanton_ar_kantonsrat/no_labels kanton_ow_kantonsrat/no_labels stadt_bern_stadtrat/no_labels"
 lm_train_set="lm/train/text"
 lm_val_set="lm/valid/text"
 
