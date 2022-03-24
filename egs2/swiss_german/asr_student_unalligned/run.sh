@@ -30,7 +30,7 @@ fi
 # Train teacher
 local/asr.sh \
     --stage 0 \
-    --stop_stage 10 \
+    --stop_stage 4 \
     --ngpu 4 \
     --lang "${lang}" \
     --dumpdir $TMPDIR/dump \
