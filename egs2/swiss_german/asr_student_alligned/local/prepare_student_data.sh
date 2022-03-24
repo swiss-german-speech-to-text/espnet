@@ -56,7 +56,7 @@ if [ ${stage} -le 1 ] && [ ${stop_stage} -ge 1 ]; then
       cp exp/asr_train_asr_conformer5_raw_de_bpe150_sp/decode_asr_asr_model_valid.acc.ave/kanton_ow_kantonsrat/no_labels/text data/kanton_ow_kantonsrat/teacher_labels/text
     fi
 
-    DIR="data/stadt_bern_stadtrat_aligned"
+    DIR="data/stadt_bern_stadtrat"
     if [ -d "$DIR" ]; then
       log "Preprocessing already done, skipping kanton_ar_kantonsrat"
     else

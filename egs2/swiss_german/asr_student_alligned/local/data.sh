@@ -93,7 +93,7 @@ if [ ${stage} -le 1 ] && [ ${stop_stage} -ge 1 ]; then
       local/data_prep.pl downloads/stt/kanton_ow_kantonsrat/v1 "train_all" data/kanton_ow_kantonsrat/no_labels
     fi
 
-    DIR="data/stadt_bern_stadtrat_aligned"
+    DIR="data/stadt_bern_stadtrat"
     if [ -d "$DIR" ]; then
       log "Preprocessing already done, skipping kanton_ar_kantonsrat"
     else
