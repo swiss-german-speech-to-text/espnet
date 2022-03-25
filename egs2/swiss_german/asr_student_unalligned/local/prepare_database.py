@@ -20,7 +20,7 @@ def main(source_csv: str):
 
     df = pd.DataFrame(list(zip(client_id, path, sentence, up_votes, down_votes, age, gender, accent, iou_estimate)),
                       columns=columns)
-    df.to_csv(source_csv, sep="\t", encoding='utf-8')
+    df.to_csv(source_csv, sep="\t", encoding='utf-8', index=False)
 
 
 if __name__ == '__main__':
