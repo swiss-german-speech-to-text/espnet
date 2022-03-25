@@ -24,6 +24,10 @@ mkdir $out_dir unless -d $out_dir;
 
 #open(CSV, "<", "$db_base/$dataset.tsv");
 
+if (system("python3 local/prepare_database.py $db_base/$dataset.tsv") != 0) {
+  die "Error database at $db_base/$dataset.tsv could not be prepared";
+}
+
 open(CSV, "<", "$db_base/$dataset.tsv") or die "cannot open dataset CSV file";
 open(SPKR,">", "$out_dir/utt2spk") or die "Could not open the output file $out_dir/utt2spk";
 open(GNDR,">", "$out_dir/utt2gender") or die "Could not open the output file $out_dir/utt2gender";
