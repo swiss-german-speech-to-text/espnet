@@ -1,10 +1,10 @@
 #!/bin/bash
 #SBATCH --job-name=stt4sg_old_espnet
-#SBATCH --time=7-00:00:00
-#SBATCH --cpus-per-task=32
+#SBATCH --time=1-00:00:00
+#SBATCH --cpus-per-task=16
 #SBATCH --ntasks=1
 #SBATCH --mem=300G
-#SBATCH --qos=1week
+#SBATCH --qos=1day
 #SBATCH --partition=a100
 #SBATCH -o scicore_out/%A_%a.out
 #SBATCH -e scicore_out/%A_%a.err
